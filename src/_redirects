@@ -1,4 +1,4 @@
 
-/api/*  https://isag-api.herokuapp.com  200
+/api/*  https://isag-api.herokuapp.com/:splat  200
 
 /*  /index.html 200
