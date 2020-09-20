@@ -1,0 +1,85 @@
+@import './colors';
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.flex1 {
+  flex: 1 !important;
+}
+
+.flex2 {
+  flex: 2 !important;
+}
+
+.flex3 {
+  flex: 3 !important;
+}
+
+.flex4 {
+  flex: 4 !important;
+}
+
+.flex5 {
+  flex: 5 !important;
+}
+
+.flex6 {
+  flex: 6 !important;
+}
+
+.flex7 {
+  flex: 7 !important;
+}
+
+.flex8 {
+  flex: 8 !important;
+}
+
+.flex9 {
+  flex: 9 !important;
+}
+
+.flex10 {
+  flex: 10 !important;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.top-space-15 {
+  margin-top: 15px;
+}
+
+.top-space-30 {
+  margin-top: 30px;
+}
+
+.bottom-space-10 {
+  margin-bottom: 10px !important;
+}
+
+.bottom-space-30 {
+  margin-bottom: 30px !important;
+}
+
+.text-cursor:hover {
+  cursor: text;
+}

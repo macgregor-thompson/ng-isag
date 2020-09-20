@@ -67,6 +67,12 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
+              "aot": true,
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                "src/_redirects"
+              ],
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -88,7 +94,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-isag:build"
+            "browserTarget": "ng-isag:build",
+            "proxyConfig": "src/proxy.config.json"
           },
           "configurations": {
             "production": {
