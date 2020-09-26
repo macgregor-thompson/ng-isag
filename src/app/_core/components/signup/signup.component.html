@@ -1,0 +1,35 @@
+<div class="container">
+  <mat-card class="signup-card">
+    <mat-card-header>
+      <mat-card-title class="PageHeader">Sign Up</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput type="text" placeholder="First Name" [(ngModel)]="user.firstName" required
+               aria-label="first name" name="firstName">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="Last Name" [(ngModel)]="user.lastName" required aria-label="last name"
+               name="lastName">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="username" [(ngModel)]="user.username" required aria-label="username"
+               name="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="password" [(ngModel)]="user.password" required
+               aria-label="password"
+               name="password">
+      </mat-form-field>
+      <isag-alert *ngIf="foo" alertClass="primary">
+        <div>Not accepting new users yet...Piss off.</div>
+      </isag-alert>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="signup()"
+              [disabled]="!user.firstName.length || !user.lastName?.length
+              || !user.username?.length || !user.password?.length">LOGIN
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
