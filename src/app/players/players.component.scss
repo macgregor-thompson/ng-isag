@@ -1,0 +1,78 @@
+@import '../../media-queries';
+
+.container {
+  margin-bottom: 75px;
+  @media print {
+    margin-bottom: 0;
+  }
+}
+
+.isag-card {
+  flex: 1;
+}
+
+.mat-list-item {
+  padding: 0 16px !important;
+}
+
+
+.user-avatar-container {
+  height: 32px;
+  width: 32px;
+  margin-right: 16px;
+
+  .avatar-image {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.header-btns {
+  height: 32px;
+
+  h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}
+
+.name-header {
+  margin-left: 53px;
+}
+
+.teams-header {
+  width: 195px;
+}
+
+.handicap {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.isag-list {
+  padding-top: 0;
+}
+
+@media screen and (min-width: 960px) {
+  .user-buttons {
+    display: flex;
+    align-items: center;
+
+    .team-role-group {
+      width: 295px;
+      flex-shrink: 0;
+    }
+  }
+
+  .invite-reinvite-button-wrapper {
+    margin-right: 16px;
+  }
+}
+
+.hide-mobile {
+  @include lt-md {
+    display: none;
+  }
+}

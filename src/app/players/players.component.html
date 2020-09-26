@@ -1,0 +1,44 @@
+<div class="container directory-page">
+  <mat-card class="isag-card directory-card"  [fxHide.lt-md]="selectedPlayer">
+    <mat-card-header>
+      <mat-card-title class="PageHeader">Players</mat-card-title>
+      <div class="fill-remaining-space"></div>
+      <button mat-raised-button color="primary" class="right-space-15" (click)="openAddPlayerDialog()"
+              *ngIf="stateService.isAdmin"
+              matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Player">
+        <mat-icon>person_add</mat-icon>
+        ADD PLAYER
+      </button>
+    </mat-card-header>
+    <mat-toolbar class="header-btns">
+      <h4 class="flex1 name-header">Name</h4>
+      <h4 class="handicap">Handicap</h4>
+    </mat-toolbar>
+    <mat-list class="isag-list">
+      <mat-list-item class="list-item" matRipple [class.opened]="selectedPlayer?._id === player._id"
+                     *ngFor="let player of players; let i = index;" (click)="selectPlayer(player, i)">
+        <div class="user-avatar-container">
+          <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
+        </div>
+        <div class="list-title">
+          <div>{{ player.firstName + " " + player.lastName }}</div>
+          <mat-icon *ngIf="player.iSagWinner" class="isag-icon">emoji_events</mat-icon>
+        </div>
+        <div class="handicap">
+          <span *ngIf="player.handicap > 0">+</span>
+          {{ player.handicap | absoluteValue }}
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+
+  <div class="flex1" *ngIf="selectedPlayer">
+    <div class="detail-view">
+      <isag-player-detail [player]="selectedPlayer"
+                          [canEdit]="stateService.isAdmin || stateService.currentUser?.playerId === selectedPlayer._id"
+                          (delete)="removePLayer()"
+                          (close)="closePlayerDetails()">
+      </isag-player-detail>
+    </div>
+  </div>
+</div>

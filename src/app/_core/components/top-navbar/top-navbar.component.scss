@@ -1,0 +1,36 @@
+@import '../../../../media-queries.scss';
+
+mat-toolbar {
+  position: fixed;
+  z-index: 2;
+  background-color: #ffffff;
+}
+
+.page-title {
+  margin-left: 16px;
+  font-weight: 400;
+}
+\\
+
+button {
+  margin-right: 15px;
+}
+
+.menu-button-hamburger {
+  @include gt-xs {
+    display: none;
+  }
+}
+
+.navbar {
+  display: flex;
+  @include lt-sm {
+    display: none;
+  }
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 56px;
+}
+
+

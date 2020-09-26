@@ -1,37 +1,42 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GolfersModule } from './golfers/golfers.module';
-import { HomeModule } from './home/home.module';
 import { SharedModule } from './_shared/shared.module';
-import { AngularMaterialModule } from './_angular-material/angular-material.module';
 import { CoreModule } from './_core/core.module';
+import { AppInitializerService } from './app-initializer.service';
+import { JwtInterceptor } from './_core/interceptor/jwt.interceptor';
+import { ErrorInterceptor } from './_core/interceptor/error.interceptor';
+
+export function initialize(appInitializerService: AppInitializerService) {
+  return () => appInitializerService.initialize();
+}
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-
-    AngularMaterialModule,
-
     CoreModule,
     HttpClientModule,
     SharedModule,
 
-    GolfersModule,
-    HomeModule,
-
-
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    AppInitializerService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initialize,
+      deps: [AppInitializerService],
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

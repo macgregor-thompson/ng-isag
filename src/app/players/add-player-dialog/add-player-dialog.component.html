@@ -1,0 +1,44 @@
+<mat-spinner color="accent" *ngIf="spinner"></mat-spinner>
+<div id="add-invite" fxLayout="column" mat-dialog-content>
+  <div class="header">
+    <h3>Add New Player</h3>
+  </div>
+  <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row">
+    <mat-form-field fxFlex>
+      <input matInput type="text"  placeholder="First Name" [(ngModel)]="player.firstName" required
+             aria-label="first name" name="firstName">
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <input matInput type="text" placeholder="Last Name" [(ngModel)]="player.lastName" required aria-label="last name"
+             name="lastName">
+    </mat-form-field>
+  </div>
+  <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row">
+    <mat-form-field>
+      <span matPrefix *ngIf="player.handicap > 0">+</span>
+      <input matInput type="number" placeholder="Handicap Index" [(ngModel)]="player.handicap"
+             aria-label="handicap" name="handicap">
+      <mat-hint align="start">
+        <strong>Remember most handicaps are negative.  E.g. A 10 is really a -10.</strong>
+      </mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="tel" placeholder="Phone Number" [(ngModel)]="player.phoneNumber" aria-label="phone number"
+             name="phone">
+    </mat-form-field>
+  </div>
+  <mat-form-field fxFlex class="top-space-30">
+    <input matInput type="email" placeholder="Email" [(ngModel)]="player.email" aria-label="email" name="email">
+  </mat-form-field>
+
+  <mat-card-actions class="actions bottom-space-0" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="end end">
+    <div class="fill-remaining-space"></div>
+    <div class="modal-buttons">
+      <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="addPlayer()"
+              [disabled]="!player.firstName.length || !player.lastName.length">
+        Add
+      </button>
+    </div>
+  </mat-card-actions>
+</div>

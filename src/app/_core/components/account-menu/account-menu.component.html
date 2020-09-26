@@ -1,0 +1,25 @@
+<button mat-icon-button [matMenuTriggerFor]="accountMenu" class="menu-btn">
+  <mat-icon *ngIf="!stateService.currentUser">account_circle</mat-icon>
+ <!-- <span class="avatar-image"
+        *ngIf="stateService.currentUser"
+        [style.backgroundImage]="'url('+ user?.metadata?.picture?.url +')'"></span>-->
+  <span class="user-initials" *ngIf="stateService.currentUser">
+      {{ stateService.currentUser.firstName.charAt(0) }}
+    {{ stateService.currentUser.lastName.charAt(0) }}
+    </span>
+</button>
+
+<mat-menu #accountMenu="matMenu">
+  <button mat-menu-item (click)="authService.loginOrSignUp('/login')" *ngIf="!stateService.currentUser">
+    <mat-icon>login</mat-icon>
+    <span>Login</span>
+  </button>
+  <button mat-menu-item (click)="authService.loginOrSignUp('/signup')" *ngIf="!stateService.currentUser">
+    <mat-icon>person_add</mat-icon>
+    <span>CreateUser</span>
+  </button>
+  <button mat-menu-item (click)="authService.logout()" *ngIf="stateService.currentUser">
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Logout</span>
+  </button>
+</mat-menu>

@@ -1,0 +1,19 @@
+<div class="container">
+  <mat-card class="login-card">
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput [(ngModel)]="auth.username" placeholder="Username" required aria-label="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [(ngModel)]="auth.password" placeholder="Password" type="password" required aria-label="password">
+      </mat-form-field>
+      <isag-alert *ngIf="loginFailed" alertClass="danger">
+        <div>The username and/or password is incorrect...piss off.</div>
+      </isag-alert>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="login()"
+              [disabled]="!auth.username.length || !auth.password?.length">LOGIN</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,63 @@
+<isag-top-navbar>
+  <button mat-icon-button (click)="snav.toggle()" fxHide.gt-xs>
+    <mat-icon>menu</mat-icon>
+  </button>
+</isag-top-navbar>
+<mat-sidenav-container class="example-sidenav-container">
+
+  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches"
+               [fixedInViewport]="mobileQuery.matches" [fixedTopGap]="mobileQuery.matches ? 0 : 56">
+
+    <!--<mat-sidenav #snav mode="over" disableClose="true" [opened]="opened && !mobileQuery.matches"
+                 (mouseenter)="opened = true"
+                 (mouseleave)="opened = false"
+                 [fixedInViewport]="mobileQuery.matches" [fixedTopGap]="mobileQuery.matches ? 0 : 56">-->
+    <mat-nav-list [class.closed]="!opened">
+      <a mat-list-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+         (click)="closeSideNav()">
+        <mat-icon>emoji_events</mat-icon>
+        <span class="lint-title">Results</span>
+      </a>
+      <a mat-list-item routerLink="/calcutta" routerLinkActive="active" (click)="closeSideNav()">
+        <mat-icon>attach_money</mat-icon>
+        <span class="lint-title">Calcutta</span>
+      </a>
+      <a mat-list-item routerLink="/players" routerLinkActive="active" (click)="closeSideNav()">
+        <mat-icon>people</mat-icon>
+        <span class="lint-title">Players</span>
+      </a>
+      <a mat-list-item routerLink="/rules" routerLinkActive="active" (click)="closeSideNav()">
+        <mat-icon>format_list_numbered</mat-icon>
+        <span class="lint-title">Rules</span>
+      </a>
+      <mat-divider *ngIf="stateService.isAdmin"></mat-divider>
+      <a mat-list-item routerLink="/settings" routerLinkActive="active" *ngIf="stateService.isAdmin"
+         (click)="closeSideNav()">
+        <mat-icon>settings</mat-icon>
+        <span class="lint-title">Settings</span>
+      </a>
+
+      <mat-divider fxHide.gt-xs></mat-divider>
+      <a mat-list-item (click)="authService.loginOrSignUp('/login'); closeSideNav()" *ngIf="!stateService.currentUser"
+              fxHide.gt-xs>
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </a>
+      <a mat-list-item (click)="authService.loginOrSignUp('/signup'); closeSideNav()" *ngIf="!stateService.currentUser"
+              fxHide.gt-xs>
+        <mat-icon>person_add</mat-icon>
+        <span>CreateUser</span>
+      </a>
+      <a mat-list-item (click)="authService.logout(); closeSideNav()" *ngIf="stateService.currentUser" fxHide.gt-xs>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="main-content" [class.sidenav-closed]="!opened">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,8 @@
+@import '../../../../mixins';
+
+.menu-btn {
+  .mat-icon {
+    @include md-icon-size(42px);
+    line-height: 42px;
+  }
+}

@@ -1,33 +1,35 @@
 $isag-red: #D42626;
 $isag-blue: #306da4;
+$isag-yellow: #ffdf00;
+$isag-green: #076652;
 
 $white: #fff;
 $black: #000;
 $red: #f44336;
 $orange: #ff8d3a;
 $yellow: #fdd835;
-$greed: #43a047;
+$green: #43a047;
 $blue: #1E6ACA;
 $background: #EBECF0;
 
 $dark-primary-text: rgba(black, 0.87);
 $light-primary-text: rgba(white, 0.87);
 
-$isag-accent: mat-palette((
-  50 : #e2eaf2,
-  100 : #b6cbdf,
-  200 : #85a9ca,
-  300 : #5487b4,
-  400 : #306da4,
-  500 : #0b5394,
-  600 : #0a4c8c,
-  700 : #084281,
-  800 : #063977,
-  900 : #032965,
-  A100 : #95b6ff,
-  A200 : #6294ff,
-  A400 : #2f71ff,
-  A700 : #155fff,
+$green-palette: (
+  50 : #e8f5e9,
+  100 : #c8e6c9,
+  200 : #a5d6a7,
+  300 : #81c784,
+  400 : #66bb6a,
+  500 : #4caf50,
+  600 : #43a047,
+  700 : #388e3c,
+  800 : #076652,
+  900 : #1b5e20,
+  A100 : #b9f6ca,
+  A200 : #69f0ae,
+  A400 : #00e676,
+  A700 : #00c853,
   contrast: (
     50 : #000000,
     100 : #000000,
@@ -44,9 +46,9 @@ $isag-accent: mat-palette((
     A400 : #ffffff,
     A700 : #ffffff,
   )
-), 400, 200, 600);
+);
 
-$isag-primary: mat-palette((
+$red-palette: (
   50 : #f9e0e0,
   100 : #f0b3b3,
   200 : #e68080,
@@ -77,4 +79,4 @@ $isag-primary: mat-palette((
     A400 : #000000,
     A700 : #000000,
   )
-), 400, 200, 600);
+);

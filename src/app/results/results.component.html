@@ -1,0 +1,170 @@
+  <h1 class="mat-display-1 text-center">
+    {{stateService.year}} Results
+  </h1>
+
+<!--<div class="table-container mat-elevation-z8" *ngIf="matches && matchData" style="margin-bottom: 50px;">
+  <mat-table #table [dataSource]="matchData" matSort matSortActive="name"
+             *ngIf="matches[0].format != Format.FourManScramble">
+    <ng-container matColumnDef="players">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Players</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="text-center">
+        <span [ngStyle]="{color: team.team.colorScheme}">
+          {{team.playerA.displayName}} & {{team.playerB.displayName}}
+        </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="netScore">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Net Score</mat-header-cell>
+      <mat-cell *matCellDef="let team; let first = first;" class="text-center">
+        <span class="total-score-div" [ngStyle]="{'background-color': team.team.colorScheme}">
+          {{team.netTotal}}
+        </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="stackPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Stack Points</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="text-center">{{team.stackPoints}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="matchPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Match Points</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="text-center">{{team.matchPoints}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="totalPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Team Points</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="text-center">{{team.matchPoints + team.stackPoints}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="individualPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Individual Points</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="text-center">{{(team.matchPoints + team.stackPoints) / 2}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="team">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Team</mat-header-cell>
+      <mat-cell *matCellDef="let team" class="text-center">
+        <app-team-chip [team]="team.team"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
+  </mat-table>
+
+  <mat-table #table [dataSource]="matchData" matSort matSortActive="name"
+             *ngIf="matches[0]?.format === Format.FourManScramble">
+    <ng-container matColumnDef="teamPlayers">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Players</mat-header-cell>
+      <mat-cell *matCellDef="let t" class="text-center">
+        <span [ngStyle]="{color: t.team.colorScheme}">
+          {{t.playerA.displayName}}, {{t.playerB.displayName}},
+          {{t.playerC.displayName}}, & {{t.playerD.displayName}}
+        </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamScore">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Score</mat-header-cell>
+      <mat-cell *matCellDef="let t; let first = first;" class="text-center">
+        <span class="total-score-div" [ngStyle]="{'background-color': t.team.colorScheme}">
+          {{t.total}}
+        </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="stackPoints">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Stack Points</mat-header-cell>
+      <mat-cell *matCellDef="let t" class="text-center">{{t.stackPoints}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="teamName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">Team</mat-header-cell>
+      <mat-cell *matCellDef="let t" class="text-center">
+        <app-team-chip [team]="t.team"></app-team-chip>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="fourPersonScrambleColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: fourPersonScrambleColumns; let i = index; let isOdd = odd; let isEven = even; let isLast = last"></mat-row>
+  </mat-table>
+</div>
+
+<h1 class="mat-display-1 text-center" style="margin-bottom: 30px;">Scorecards</h1>
+
+
+
+<mat-accordion class="table-headers-align" [multi]="true" dynamicHeight *ngIf="matches; else loading">
+  <mat-expansion-panel *ngFor="let match of matches" [expanded]="true" style="margin-bottom: 30px;">
+    <mat-expansion-panel-header *ngIf="match.teamOne">
+      &lt;!&ndash;<mat-panel-title>
+       </mat-panel-title>&ndash;&gt;
+      &lt;!&ndash;<mat-panel-description *ngIf="match.format !== Format.FourManScramble">
+        <div>
+          <app-team-chip [team]="match.teamOne.team" [short]="true"></app-team-chip>
+          <span [ngStyle]="{'color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.roundA.playerA.displayName}}
+            &
+            {{match.teamOne.roundA.playerB?.displayName}}
+            {{match.teamOne.roundB?.playerA.displayName}}
+          </span>
+         &lt;!&ndash; <span class="total-score-div" [ngStyle]="{'background-color': match.teamOne.team.colorScheme}">
+            {{match.teamOne.netTotal}}
+          </span>&ndash;&gt;
+        </div>
+        vs.
+        <div>
+          <app-team-chip [team]="match.teamTwo.team" [short]="true"></app-team-chip>
+          <span [ngStyle]="{'color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.roundA.playerA.displayName}}
+            &
+            {{match.teamTwo.roundA.playerB?.displayName}}
+            {{match.teamTwo.roundB?.playerA.displayName}}
+          </span>
+         &lt;!&ndash; <span class="total-score-div" [ngStyle]="{'background-color': match.teamTwo.team.colorScheme}">
+            {{match.teamTwo.netTotal}}
+          </span>&ndash;&gt;
+        </div>
+        <mat-chip-list>
+          <mat-chip>{{formatName[match.format]}}</mat-chip>
+        </mat-chip-list>
+      </mat-panel-description>
+      <mat-panel-description *ngIf="match.format === Format.FourManScramble">
+        <app-team-chip [team]="match.teamOne.team"></app-team-chip>
+        vs.
+        <app-team-chip [team]="match.teamTwo.team"></app-team-chip>
+        vs.
+        <app-team-chip [team]="match.teamThree.team"></app-team-chip>
+        <mat-chip-list>
+          <mat-chip>{{formatName[match.format]}}</mat-chip>
+        </mat-chip-list>
+      </mat-panel-description>&ndash;&gt;
+
+      <mat-panel-description class="flex-between">
+        <div>
+          <button mat-stroked-button color="warn" (click)="launchPictureModal(match, $event)" *ngIf="match.picture">
+            Scorecard Image
+          </button>
+          <button *ngIf="playerService.afAuth.authState | async"
+                  mat-raised-button color="primary" routerLink="/score-editor" [queryParams]="{matchId: match.id}">
+            <mat-icon>edit</mat-icon>
+            Edit Scores
+          </button>
+        </div>
+        <mat-chip-list>
+          <mat-chip>{{formatName[match.format]}}</mat-chip>
+        </mat-chip-list>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-scorecard [match]="match" [individualScores]="individualScores"></app-scorecard>
+
+    &lt;!&ndash; <mat-action-row style="padding-right:24px;">
+       <div>
+         <button mat-raised-button color="primary" (click)="toggleIndividualScores()"
+                 *ngIf="match.format !== Format.FourManScramble">
+           <span *ngIf="!individualScores">Show</span>
+           <span *ngIf="individualScores">Hide</span>
+           Individual Scores
+         </button>
+       </div>
+       <div>
+         <button mat-raised-button color="warn" (click)="launchPictureModal(match)" *ngIf="match.picture">
+           Scorecard Image
+         </button>
+       </div>
+     </mat-action-row>&ndash;&gt;
+  </mat-expansion-panel>
+</mat-accordion>-->
