@@ -30,8 +30,15 @@
         <mat-icon>format_list_numbered</mat-icon>
         <span class="lint-title">Rules</span>
       </a>
-      <mat-divider *ngIf="stateService.isAdmin"></mat-divider>
+      <!--<mat-divider *ngIf="stateService.isAdmin"></mat-divider>
       <a mat-list-item routerLink="/settings" routerLinkActive="active" *ngIf="stateService.isAdmin"
+         (click)="closeSideNav()">
+        <mat-icon>settings</mat-icon>
+        <span class="lint-title">Settings</span>
+      </a>-->
+
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/settings" routerLinkActive="active"
          (click)="closeSideNav()">
         <mat-icon>settings</mat-icon>
         <span class="lint-title">Settings</span>

@@ -33,6 +33,12 @@
       </mat-form-field>
     </div>
     <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row">
+      <mat-form-field>
+        <input matInput type="email" placeholder="Email" [(ngModel)]="player.email" aria-label="email" name="email"
+               (ngModelChange)="updateSub.next('email')" [readonly]="!canEdit">
+      </mat-form-field>
+    </div>
+    <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row">
       <mat-form-field fxFlex>
         <span matPrefix *ngIf="player.handicap > 0">+</span>
         <input matInput type="number" placeholder="Handicap Index" [(ngModel)]="player.handicap" required
@@ -45,12 +51,6 @@
       <mat-form-field fxFlex>
         <input matInput type="tel" placeholder="Phone Number" [(ngModel)]="player.phoneNumber" aria-label="phone number"
                name="phone" (ngModelChange)="updateSub.next('phoneNumber')" [readonly]="!canEdit">
-      </mat-form-field>
-    </div>
-    <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row" class="top-space-30">
-      <mat-form-field>
-        <input matInput type="email" placeholder="Email" [(ngModel)]="player.email" aria-label="email" name="email"
-               (ngModelChange)="updateSub.next('email')" [readonly]="!canEdit">
       </mat-form-field>
     </div>
 
