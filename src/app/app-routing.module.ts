@@ -19,8 +19,8 @@ const routes: Routes = [
       { path: 'players', loadChildren: () => import('./players/players.module').then(m => m.PlayersModule)  },
       { path: 'calcutta', loadChildren: () => import('./calcutta/calcutta.module').then(m => m.CalcuttaModule)  },
       { path: 'rules', loadChildren: () => import('./rules/rules.module').then(m => m.RulesModule)  },
-      { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
-        data: { checkMinRole: Role.admin}, canLoad: [AuthGuard] },
+      { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule), },
+        /*data: { checkMinRole: Role.admin}, canLoad: [AuthGuard] },*/
     ]
   },
   { path: '**', redirectTo: '' }
