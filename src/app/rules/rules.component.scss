@@ -1,0 +1,25 @@
+@import '../../media-queries';
+
+.header {
+  display: flex;
+  flex-direction: column; //this will allow flex-end to move item to the right
+  align-items: center;
+}
+
+.header-btn-group {
+  display: flex;
+  align-self: flex-end;
+}
+
+.mat-display-1 {
+  text-align: center;
+  margin: 0 16px;
+}
+
+.mat-display-1 {
+  @include lt-sm() {
+    margin-top: 8px;
+    font-size: 1.8em;
+    line-height: 1.1;
+  }
+}

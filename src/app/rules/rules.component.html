@@ -1,7 +1,38 @@
 <div class="container rules-page">
   <mat-card class="isag-card rules-card">
-    <mat-card-header>
-      <mat-card-title class="PageHeader">Rules</mat-card-title>
+
+    <mat-card-header class="header">
+      <div class="header-btn-group" *ngIf="stateService.isAdmin">
+        <button mat-raised-button color="primary" class="right-space-15" (click)="editingRules = !editingRules"
+                *ngIf="!editingRules">
+          <mat-icon>edit</mat-icon>
+          Edit Rules
+        </button>
+        <button mat-raised-button class="right-space-15" (click)="cancel()"
+                *ngIf="editingRules">
+          <mat-icon>undo</mat-icon>
+          Cancel
+        </button>
+        <button mat-raised-button color="primary" class="right-space-15" (click)="save()"
+                *ngIf="editingRules">
+          <mat-icon>check</mat-icon>
+          Save
+        </button>
+      </div>
+
+      <h1 class="mat-display-1">{{stateService.currentYear.year}} Official iSAG Tournament Rules</h1>
     </mat-card-header>
+
+    <mat-card-content>
+      <div class="ql-container ql-snow ql-display-html" *ngIf="!editingRules">
+        <div class="ql-editor" [innerHTML]="rules?.html | safeHtml"></div>
+      </div>
+
+      <div *ngIf="editingRules">
+        <quill-editor [styles]="{minHeight: '100px'}" [(ngModel)]="rules.html"
+                      placeholder="Meeting Section Details" [preserveWhitespace]="true"></quill-editor>
+      </div>
+
+    </mat-card-content>
   </mat-card>
 </div>

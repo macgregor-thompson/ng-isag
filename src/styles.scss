@@ -8,6 +8,14 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+// this is for the rich text editor
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
+@import '~froala-editor/css/froala_editor.pkgd.min.css';
+@import '~froala-editor/css/froala_style.min.css';
+
 @import './colors';
 @import "./utils";
 @import "./mixins";
@@ -604,4 +612,55 @@ mat-sidenav {
   @include lt-sm {
     flex-direction: column;
   }
+}
+
+/*
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: $isag-yellow;
+}*/
+
+quill-editor {
+  .ql-toolbar.ql-snow {
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border-color: $isag-green;
+  }
+  .ql-container {
+    &.ql-snow {
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-color: $isag-green;
+    }
+  }
+}
+
+.ql-container.ql-snow.ql-display-html {
+  border: none;
+}
+
+@include lt-sm() {
+  .ql-container {
+    font-size: .8em;
+  }
+  .ql-editor {
+    .ql-indent-1 {
+      padding-left: 2em !important;
+    }
+    .ql-indent-2 {
+      padding-left: 4em !important;
+    }
+    .ql-indent-3 {
+      padding-left: 6em !important;
+    }
+  }
+}
+
+
+
+.mat-card-content {
+  padding: 16px;
+}
+
+.mat-body p, .mat-body-1 p, .mat-typography p {
+  margin: 0;
 }

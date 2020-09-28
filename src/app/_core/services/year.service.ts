@@ -22,7 +22,6 @@ export class YearService {
               private stateService: StateService,
               private spinnerService: SpinnerService) {
     this.years = this.appInitializerService.years;
-    this.stateService.year = Math.max(...this.years.map(y => y.year));
   }
 
   @SpinnerAndCatchError
@@ -31,7 +30,7 @@ export class YearService {
   }
 
   @SpinnerAndCatchError
-  getYearWithPlayers(year = this.stateService.year): Observable<Array<Year & { players: Player[] }>> {
+  getYearWithPlayers(year = this.stateService.currentYear): Observable<Array<Year & { players: Player[] }>> {
     return this.http.get<Array<Year & { players: Player[] }>>(`${this.yearsApi}/${year}`);
   }
 }

@@ -16,7 +16,7 @@
   </button>
   <button mat-menu-item (click)="authService.loginOrSignUp('/signup')" *ngIf="!stateService.currentUser">
     <mat-icon>person_add</mat-icon>
-    <span>CreateUser</span>
+    <span>Sign Up</span>
   </button>
   <button mat-menu-item (click)="authService.logout()" *ngIf="stateService.currentUser">
     <mat-icon>exit_to_app</mat-icon>

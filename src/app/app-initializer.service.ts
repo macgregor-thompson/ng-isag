@@ -9,6 +9,7 @@ import { TokenService } from './_core/services/token.service';
 export class AppInitializerService {
 
   years: Year[];
+  year: Year;
 
   constructor(private tokenService: TokenService) { }
 
@@ -18,5 +19,9 @@ export class AppInitializerService {
     ]);
 
     this.years = await yearsResp.json();
+    this.year = this.years.reduce((prev, current) => (prev.year > current.year) ? prev : current);
+
+    console.log('year:', this.year);
+
   }
 }

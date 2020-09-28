@@ -7,6 +7,7 @@ import { Player } from '../../_shared/models/player';
 import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { SpinnerService } from './spinner.service';
 import { CatchError } from '../decorators/catch-error';
+import { StateService } from './state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class PlayerService {
   playersApi = 'api/players';
 
   constructor(private http: HttpClient,
+              private stateService: StateService,
               private spinnerService: SpinnerService) {}
 
   @SpinnerAndCatchError
@@ -24,7 +26,7 @@ export class PlayerService {
   }
 
   @SpinnerAndCatchError
-  getByYear(year: number): Observable<Player[]> {
+  getByYear(year: number = this.stateService.currentYear.year): Observable<Player[]> {
     return this.http.get<Player[]>(`${this.playersApi}?year=${year}`);
   }
 
