@@ -4,6 +4,8 @@ $xs-width: 600px;
 $sm-width: 960px;
 $md-width: 1280px;
 $lg-width: 1920px;
+$xl-width: 5000px;
+
 
 @mixin screen-lt($px) {
   @media screen and (max-width: #{$px - $media-offset}) {

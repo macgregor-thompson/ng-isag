@@ -598,3 +598,10 @@ mat-sidenav {
   }
 }
 
+
+.column-gt-xs {
+  display: flex;
+  @include lt-sm {
+    flex-direction: column;
+  }
+}
