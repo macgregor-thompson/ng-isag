@@ -8,6 +8,8 @@ import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { SpinnerService } from './spinner.service';
 import { CatchError } from '../decorators/catch-error';
 import { StateService } from './state.service';
+import { AppInitializerService } from '../../app-initializer.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,24 +17,29 @@ import { StateService } from './state.service';
 export class PlayerService {
 
   playersApi = 'api/players';
+  allPlayers: Player[];
 
   constructor(private http: HttpClient,
               private stateService: StateService,
-              private spinnerService: SpinnerService) {}
-
-  @SpinnerAndCatchError
-  getAll(): Observable<Player[]> {
-    return this.http.get<Player[]>(this.playersApi);
+              private appInitializerService: AppInitializerService,
+              private spinnerService: SpinnerService) {
+    this.allPlayers = this.appInitializerService.allPlayers;
   }
 
   @SpinnerAndCatchError
-  getByYear(year: number = this.stateService.currentYear.year): Observable<Player[]> {
-    return this.http.get<Player[]>(`${this.playersApi}?year=${year}`);
+  getAll(): Observable<Player[]> {
+    return this.http.get<Player[]>(this.playersApi)
+      .pipe(tap(p => this.allPlayers = p));
+  }
+
+  getByYear(year = this.stateService.currentYear.year): Observable<Player[]> {
+    return this.http.get<Player[]>(`${this.playersApi}/${year}`);
   }
 
   @CatchError
   create(player: Player): Observable<Player> {
-    return this.http.post<Player>(this.playersApi, player);
+    return this.http.post<Player>(this.playersApi, player)
+      .pipe(tap(newPlayer => this.allPlayers.push(newPlayer)));
   }
 
   @CatchError
@@ -42,7 +49,11 @@ export class PlayerService {
 
   @CatchError
   delete(playerId: string): Observable<void> {
-    return this.http.patch<void>(`${this.playersApi}/${playerId}`, { deleted: true } );
+    return this.http.patch<void>(`${this.playersApi}/${playerId}`, { deleted: true } )
+      .pipe(tap(player => {
+        const index = this.allPlayers.findIndex(p => p._id === playerId);
+        this.allPlayers.splice(index, 1);
+      }));
   }
 
 }

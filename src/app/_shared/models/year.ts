@@ -1,7 +1,18 @@
 export class Year {
   _id: string;
   year: number;
-  course: string;
   date: Date;
+  current: boolean;
+  public: boolean;
   playerIds: string[];
+
+  constructor(year) {
+    this.year = year;
+
+    const date = new Date(`4/1/${this.year}`);
+    while (date.getDay() !== 6) {
+      date.setDate(date.getDate() + 1);
+    }
+    this.date = date;
+  }
 }

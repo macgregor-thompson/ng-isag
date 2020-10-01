@@ -17,13 +17,12 @@ export class AddPlayerDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddPlayerDialogComponent>,
               private playerService: PlayerService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   addPlayer(): void {
     this.spinner = true;
     this.playerService.create(this.player).subscribe({
-      next: newPlayer => this.dialogRef.close(newPlayer),
+      next: () => this.dialogRef.close(),
       error: () => this.spinner = false
     });
   }

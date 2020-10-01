@@ -21,64 +21,65 @@
     </mat-slide-toggle>
   </div>
 
-    <div class="column-gt-xs" [class.top-space-15]="!stateService.isAdmin">
-      <mat-form-field>
-        <input matInput type="text"  placeholder="First Name" [(ngModel)]="player.firstName" required
-               aria-label="first name" name="firstName" (ngModelChange)="updateSub.next('firstName')" [readonly]="!canEdit">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" placeholder="Last Name" [(ngModel)]="player.lastName" required aria-label="last name"
-               name="lastName" (ngModelChange)="updateSub.next('lastName')" [readonly]="!canEdit">
-      </mat-form-field>
-    </div>
-
-      <mat-form-field>
-        <input matInput type="email" placeholder="Email" [(ngModel)]="player.email" aria-label="email" name="email"
-               (ngModelChange)="updateSub.next('email')" [readonly]="!canEdit">
-      </mat-form-field>
-
-    <div class="column-gt-xs">
-      <mat-form-field >
-        <span matPrefix *ngIf="player.handicap > 0">+</span>
-        <input matInput type="number" placeholder="Handicap Index" [(ngModel)]="player.handicap" required
-               aria-label="handicap" name="handicap" (ngModelChange)="updateSub.next('handicap')"
-               [readonly]="!canEdit">
-        <mat-hint align="start" *ngIf="canEdit">
-          <strong>Remember most handicaps are negative.  E.g. A 10 is really a -10.</strong>
-        </mat-hint>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="tel" placeholder="Phone Number" [(ngModel)]="player.phoneNumber" aria-label="phone number"
-               name="phone" (ngModelChange)="updateSub.next('phoneNumber')" [readonly]="!canEdit">
-      </mat-form-field>
-    </div>
-
-    <div class="column-gt-xs">
-      <!--<mat-form-field fxFlex>
-        <input matInput type="text" placeholder="Nickname" [(ngModel)]="player.nickname" aria-label="Nickname"
-               name="nickName" (ngModelChange)="updateSub.next('nickname')">
-      </mat-form-field>-->
-      <mat-form-field>
-        <input matInput type="text"  placeholder="City" [(ngModel)]="player.city"
-               aria-label="city" name="city" (ngModelChange)="updateSub.next('city')" [readonly]="!canEdit">
-      </mat-form-field>
-      <mat-form-field class="state">
-        <input matInput type="text"  placeholder="State" [(ngModel)]="player.state"
-               aria-label="state" name="state" (ngModelChange)="updateSub.next('state')" [readonly]="!canEdit">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Date of Birth</mat-label>
-        <input matInput [matDatepicker]="picker" aria-label="date of birth" (focus)="picker.open()"
-               [(ngModel)]="player.dateOfBirth" (ngModelChange)="update('dateOfBirth')" [readonly]="!canEdit">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker startView="year" [startAt]="startDate" [disabled]="!canEdit"></mat-datepicker>
-      </mat-form-field>
-    </div>
-
+  <div class="column-gt-xs" [class.top-space-15]="!stateService.isAdmin">
     <mat-form-field>
-      <mat-label>Bio</mat-label>
-      <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
-                cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5" aria-label="bio"
-                [(ngModel)]="player.bio" (ngModelChange)="updateSub.next('bio')" [readonly]="!canEdit"></textarea>
+      <input matInput type="text" placeholder="First Name" [(ngModel)]="player.firstName" required
+             aria-label="first name" name="firstName" (ngModelChange)="updateSub.next('firstName')"
+             [readonly]="!canEdit">
     </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Last Name" [(ngModel)]="player.lastName" required aria-label="last name"
+             name="lastName" (ngModelChange)="updateSub.next('lastName')" [readonly]="!canEdit">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <input matInput type="email" placeholder="Email" [(ngModel)]="player.email" aria-label="email" name="email"
+           (ngModelChange)="updateSub.next('email')" [readonly]="!canEdit">
+  </mat-form-field>
+
+  <div class="column-gt-xs">
+    <mat-form-field>
+      <span matPrefix *ngIf="player.handicap > 0">+</span>
+      <input matInput type="number" placeholder="Handicap Index" [(ngModel)]="player.handicap" required
+             aria-label="handicap" name="handicap" (ngModelChange)="updateSub.next('handicap')"
+             [readonly]="!canEdit">
+      <mat-hint align="start" *ngIf="canEdit">
+        <strong>Remember most handicaps are negative. E.g. A 10 is really a -10.</strong>
+      </mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="tel" placeholder="Phone Number" [(ngModel)]="player.phoneNumber" aria-label="phone number"
+             name="phone" (ngModelChange)="updateSub.next('phoneNumber')" [readonly]="!canEdit">
+    </mat-form-field>
+  </div>
+
+  <div class="column-gt-xs">
+    <!--<mat-form-field fxFlex>
+      <input matInput type="text" placeholder="Nickname" [(ngModel)]="player.nickname" aria-label="Nickname"
+             name="nickName" (ngModelChange)="updateSub.next('nickname')">
+    </mat-form-field>-->
+    <mat-form-field>
+      <input matInput type="text" placeholder="City" [(ngModel)]="player.city"
+             aria-label="city" name="city" (ngModelChange)="updateSub.next('city')" [readonly]="!canEdit">
+    </mat-form-field>
+    <mat-form-field class="state">
+      <input matInput type="text" placeholder="State" [(ngModel)]="player.state"
+             aria-label="state" name="state" (ngModelChange)="updateSub.next('state')" [readonly]="!canEdit">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Date of Birth</mat-label>
+      <input matInput [matDatepicker]="picker" aria-label="date of birth" (focus)="picker.open()"
+             [(ngModel)]="player.dateOfBirth" (ngModelChange)="update('dateOfBirth')" [readonly]="!canEdit">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year" [startAt]="startDate" [disabled]="!canEdit"></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>Bio</mat-label>
+    <textarea matInput name="bio" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5" aria-label="bio"
+              [(ngModel)]="player.bio" (ngModelChange)="updateSub.next('bio')" [readonly]="!canEdit"></textarea>
+  </mat-form-field>
 </mat-card>

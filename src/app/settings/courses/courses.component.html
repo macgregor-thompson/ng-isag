@@ -3,5 +3,16 @@
     <mat-card-header>
       <mat-card-title class="PageHeader">Courses</mat-card-title>
     </mat-card-header>
+    <mat-toolbar class="header-btns">
+      <h4 class="flex1 name-header">Name</h4>
+    </mat-toolbar>
+    <mat-list class="isag-list">
+      <mat-list-item class="list-item" matRipple [class.opened]="selectedCourse?._id === course._id"
+                     *ngFor="let course of courses; let i = index;" (click)="selectCourse(course)">
+        <div class="list-title">
+          <div>{{ course.name  }}</div>
+        </div>
+      </mat-list-item>
+    </mat-list>
   </mat-card>
 </div>

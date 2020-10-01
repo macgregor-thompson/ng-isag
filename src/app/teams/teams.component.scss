@@ -1,0 +1,94 @@
+@import '../../media-queries';
+
+.year-select {
+   width: 120px;
+    margin-right: 16px;
+}
+
+.team-row {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.player {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+}
+
+.divider {
+  content: "";
+  height: 45px;
+  width: 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 10px;
+}
+
+.handicap-form {
+  width: 70px;
+}
+
+.handicap {
+  width: 30px;
+}
+
+.isag-list {
+}
+
+.player-input {
+  width: 100%;
+  padding: 8px;
+}
+
+.mat-list-base .auto-height {
+  height: auto;
+}
+
+.team-number {
+  font-weight: 900;
+  font-size: 1.2em;
+  margin-left: 1em;
+  width: 30px;
+}
+
+.edit-btn {
+  span {
+    mat-icon {
+      margin-right: 4px;
+    }
+    display: flex;
+    align-items: center;
+  }
+}
+
+mat-card-header {
+  button {
+    margin-right: 16px;
+  }
+}
+
+.player-div {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+@include lt-sm() {
+  .mat-list-base .mat-list-item {
+    height: auto;
+  }
+  .team-row {
+    flex-wrap: wrap;
+  }
+  .divider {
+    display: none;
+  }
+  .player-div {
+    padding: 3px;
+  }
+};
+
+.mat-list-item:nth-child(2n) {
+  background-color: #dedede;
+}

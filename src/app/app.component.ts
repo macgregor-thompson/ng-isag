@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
+import { MatIconRegistry } from '@angular/material/icon';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { SpinnerService } from './_core/services/spinner.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { StateService } from './_core/services/state.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { PlatformLocation } from '@angular/common';
 
 @Component({
   selector: 'isag-root',
@@ -14,7 +18,17 @@ export class AppComponent {
   constructor(public spinnerService: SpinnerService,
               public router: Router,
               private activatedRoute: ActivatedRoute,
-              private stateService: StateService) {
+              private stateService: StateService,
+              private matIconRegistry: MatIconRegistry,
+              domSanitizer: DomSanitizer,
+              location: PlatformLocation) {
+    const baseHref = location.getBaseHrefFromDOM();
+
+    this.matIconRegistry.addSvgIcon(
+      `isag_bra`,
+      domSanitizer.bypassSecurityTrustResourceUrl(`${baseHref}assets/icons/bra.svg`)
+    );
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.activatedRoute),

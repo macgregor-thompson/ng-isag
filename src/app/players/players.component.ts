@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Player } from '../_shared/models/player';
 import { PlayerService } from '../_core/services/player.service';
 import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.component';
 import { StateService } from '../_core/services/state.service';
+import { YearService } from '../_core/services/year.service';
+import { SpinnerService } from '../_core/services/spinner.service';
+import { Year } from '../_shared/models/year';
 
 @Component({
   selector: 'isag-players',
@@ -17,28 +19,28 @@ import { StateService } from '../_core/services/state.service';
 })
 export class PlayersComponent implements OnInit {
 
-  players: Player[];
   selectedPlayer: Player;
   selectedIndex: number;
   subscriptions = new Subscription();
+  players: Player[];
+  yearAll = { _id: 'all', year: 0 };
+  selectedYear = this.yearAll as Year;
 
-  constructor(private playerService: PlayerService,
+  constructor(public playerService: PlayerService,
               public stateService: StateService,
               public dialog: MatDialog,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              public yearService: YearService,
+              private spinnerService: SpinnerService) { }
 
   ngOnInit(): void {
-    this.playerService.getAll().subscribe(p => this.players = p);
+    this.spinnerService.stop();
   }
 
   openAddPlayerDialog() {
-    const dialogRef = this.dialog.open(AddPlayerDialogComponent, {
+    this.dialog.open(AddPlayerDialogComponent, {
       id: 'add-invite-modal',
       width: '650px',
-    });
-    dialogRef.afterClosed().subscribe((newPlayer: Player) => {
-      if (newPlayer) this.players = [...(this.players || []), newPlayer ];
     });
   }
 
@@ -52,10 +54,8 @@ export class PlayersComponent implements OnInit {
    this.router.navigate([]);
   }
 
-  removePLayer() {
-    this.closePlayerDetails();
-    this.players.splice(this.selectedIndex, 1);
-    this.players = this.players.slice();
+  yearsAreSame(option, value): boolean {
+    return option._id === value._id;
   }
 
 }

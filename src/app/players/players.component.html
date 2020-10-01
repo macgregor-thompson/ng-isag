@@ -1,9 +1,20 @@
 <div class="container directory-page">
   <mat-card class="isag-card directory-card"  [fxHide.lt-md]="selectedPlayer">
     <mat-card-header>
-      <mat-card-title class="PageHeader">Players</mat-card-title>
+      <mat-card-title>
+        <span>{{  selectedYear.year ? selectedYear.year : 'All' }}</span>&nbsp;Players
+      </mat-card-title>
       <div class="fill-remaining-space"></div>
-      <button mat-raised-button color="primary" class="right-space-15" (click)="openAddPlayerDialog()"
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame">
+          <mat-option [value]="yearAll">All</mat-option>
+          <mat-option *ngFor="let year of yearService.years" [value]="year">
+            {{ year.year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="openAddPlayerDialog()"
               *ngIf="stateService.isAdmin"
               matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Player">
         <mat-icon>person_add</mat-icon>
@@ -11,12 +22,14 @@
       </button>
     </mat-card-header>
     <mat-toolbar class="header-btns">
-      <h4 class="flex1 name-header">Name</h4>
+      <h4 class="flex1 name-header" [style.margin-left]="selectedYear.year ? '64px' : '53px'">Name</h4>
       <h4 class="handicap">Handicap</h4>
     </mat-toolbar>
     <mat-list class="isag-list">
       <mat-list-item class="list-item" matRipple [class.opened]="selectedPlayer?._id === player._id"
-                     *ngFor="let player of players; let i = index;" (click)="selectPlayer(player, i)">
+                     *ngFor="let player of playerService.allPlayers | filterPlayersByYear: selectedYear
+                      | sortByName; let i = index;" (click)="selectPlayer(player, i)">
+        <div *ngIf="selectedYear.year">{{i + 1}}.</div>
         <div class="user-avatar-container">
           <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
         </div>
@@ -36,7 +49,6 @@
     <div class="detail-view">
       <isag-player-detail [player]="selectedPlayer"
                           [canEdit]="stateService.isAdmin || stateService.currentUser?.playerId === selectedPlayer._id"
-                          (delete)="removePLayer()"
                           (close)="closePlayerDetails()">
       </isag-player-detail>
     </div>

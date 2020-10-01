@@ -13,10 +13,9 @@ export class SettingsComponent implements OnInit {
   selectedIndex: 0 | 1 | 2 | 3 = 0;
 
   routes = [
-    { path: 'teams', title: 'Teams' },
     { path: 'years', title: 'Years' },
     { path: 'courses', title: 'Courses' },
-    { path: 'users', title: 'Users' }
+    { path: 'users', title: 'Users' },
 
   ];
 
@@ -32,13 +31,13 @@ export class SettingsComponent implements OnInit {
     const tab = this.activatedRoute.snapshot.paramMap.get('tab');
     this.stateService.setTitle(`${this.toTitle(tab)} | Settings`);
     switch (tab.toLowerCase()) {
-      case 'years':
-        this.selectedIndex = 2;
-        break;
       case 'courses':
         this.selectedIndex = 1;
         break;
-      case 'teams':
+      case 'users':
+        this.selectedIndex = 2;
+        break;
+      case 'years':
       default:
         this.selectedIndex = 0;
         break;

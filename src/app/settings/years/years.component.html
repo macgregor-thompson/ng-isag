@@ -1,7 +1,50 @@
 <div class="container years-page">
   <mat-card class="isag-card years-card">
     <mat-card-header>
-      <mat-card-title class="PageHeader">Years</mat-card-title>
+      <mat-card-title>Years</mat-card-title>
+      <div class="fill-remaining-space"></div>
+      <button mat-raised-button color="primary" class="right-space-15" (click)="openAddYearDialog()"
+              *ngIf="stateService.isAdmin"
+              matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Year">
+        <mat-icon>today</mat-icon>
+        ADD YEAR
+      </button>
     </mat-card-header>
+    <mat-card-content>
+      <mat-toolbar class="header-btns">
+        <h4 class="year">Year</h4>
+        <h4 class="date">Date</h4>
+        <h4 class="num-players"># Players</h4>
+        <h4 class="default">Default</h4>
+        <h4 class="public">Public</h4>
+      </mat-toolbar>
+      <mat-list class="isag-list">
+        <mat-list-item class="list-item year-list-item" matRipple [class.opened]="selectedYear?._id === year._id"
+                       *ngFor="let year of yearService.years | orderBy: 'year' : false" (click)="selectYear(year)">
+          <div class="year">{{ year.year }}</div>
+          <div class="date">{{ year.date | date }}</div>
+          <div class="players">{{ year.playerIds.length }}</div>
+          <div class="current">
+            <mat-radio-group aria-label="Set as Current Year" [value]="year.current"
+                             (change)="setCurrent(year)" [disabled]="!stateService.isAdmin || !year.public" isagStopPropagation isagStopRipple>
+              <mat-radio-button color="primary" [value]="true"></mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="public">
+            <mat-slide-toggle color="primary" [(ngModel)]="year.public" (ngModelChange)="updateIsPublic(year)"
+                              isagStopPropagation isagStopRipple [disabled]="!stateService.isAdmin"></mat-slide-toggle>
+          </div>
+
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
   </mat-card>
+
+  <div class="flex1" *ngIf="selectedYear">
+    <div class="detail-view">
+      <isag-year-detail [year]="selectedYear"
+                        (close)="closeYearDetails()">
+      </isag-year-detail>
+    </div>
+  </div>
 </div>

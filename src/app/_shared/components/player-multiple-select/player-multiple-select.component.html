@@ -1,0 +1,31 @@
+<button mat-flat-button color="primary" [matMenuTriggerFor]="userSelectMenu" class="menu-btn user"
+        matTooltip="Add Players"
+        matTooltipClass="isag-tooltip" matTooltipPosition="above">
+  <mat-icon>person_add</mat-icon>
+  ADD PLAYERS
+</button>
+
+<mat-menu #userSelectMenu="matMenu" class="player-multiple-select-menu">
+  <ng-template matMenuContent>
+    <div class="user-search">
+      <mat-form-field class="user-search-field">
+        <input #userSearchInput matInput placeholder="Search users" value="" isagStopPropagation type="text"
+               name="user-search" aria-label="user search" [readonly]="!stateService.isAdmin">
+      </mat-form-field>
+    </div>
+    <div class="multi-user-select-options" isagStopPropagation>
+      <button mat-menu-item (click)="onSelect(player)" [disabled]="!stateService.isAdmin"
+              *ngFor="let player of (players || playerService.allPlayers) | filterOutSelectedPlayers: playersToFilterOut
+               | searchPlayer: userSearchInput.value | sortByName" isagStopPropagation>
+        <mat-checkbox (change)="onSelect(player)" [checked]="!!selectedPlayers[player._id]"
+                      isagStopPropagation></mat-checkbox>
+        <span class="name">
+          {{ player.firstName + ' ' + player.lastName }}
+        </span>
+      </button>
+    </div>
+    <button mat-flat-button color="primary" (click)="onSelectPlayers()" [disabled]="disableSave()" class="ok-btn">
+      OK
+    </button>
+  </ng-template>
+</mat-menu>

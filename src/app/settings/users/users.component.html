@@ -1,7 +1,28 @@
-<div class="container users-page">
-  <mat-card class="isag-card users-card">
+<div class="container directory-page">
+  <mat-card class="isag-card directory-card">
     <mat-card-header>
-      <mat-card-title class="PageHeader">Users</mat-card-title>
+      <mat-card-title>Users</mat-card-title>
     </mat-card-header>
+
+    <mat-toolbar class="header-btns">
+      <h4 class="flex1 name-header">Name</h4>
+      <h4 class="role">Role</h4>
+    </mat-toolbar>
+    <mat-list class="isag-list">
+      <mat-list-item class="list-item"
+                     *ngFor="let user of users; let i = index;">
+        <div class="list-title">
+          {{ user.firstName + " " + user.lastName }}
+        </div>
+        <div class="role">
+          <mat-select [(value)]="user.role" [disabled]="user.role === Role.GOD">
+            <mat-option [value]="Role.GOD">God</mat-option>
+            <mat-option [value]="Role.ADMIN">Admin</mat-option>
+            <mat-option [value]="Role.EDITOR">Editor</mat-option>
+            <mat-option [value]="Role.USER">User</mat-option>
+          </mat-select>
+        </div>
+      </mat-list-item>
+    </mat-list>
   </mat-card>
 </div>

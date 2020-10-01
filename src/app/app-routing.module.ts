@@ -13,14 +13,16 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent,
     children: [
-      { path: '', loadChildren: () => import('./results/results.module').then(m => m.ResultsModule) },
       { path: 'login', component: LoginComponent, data: { title: 'Login' } },
       { path: 'signup', component: SignupComponent, data: { title: 'Signup' } },
+
+      { path: '', loadChildren: () => import('./results/results.module').then(m => m.ResultsModule) },
+      { path: 'teams', loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)  },
       { path: 'players', loadChildren: () => import('./players/players.module').then(m => m.PlayersModule)  },
       { path: 'calcutta', loadChildren: () => import('./calcutta/calcutta.module').then(m => m.CalcuttaModule)  },
       { path: 'rules', loadChildren: () => import('./rules/rules.module').then(m => m.RulesModule)  },
       { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule), },
-        /*data: { checkMinRole: Role.admin}, canLoad: [AuthGuard] },*/
+        /*data: { checkMinRole: Role.ADMIN}, canLoad: [AuthGuard] },*/
     ]
   },
   { path: '**', redirectTo: '' }

@@ -1,3 +1,3 @@
 export enum Role {
-owner, admin, player
+  GOD, ADMIN, EDITOR, USER
 }

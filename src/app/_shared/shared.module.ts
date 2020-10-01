@@ -11,14 +11,30 @@ import { AbsoluteValuePipe } from './pipes/absolute-value.pipe';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { FormsModule } from '@angular/forms';
+import { StopRippleDirective } from './directives/stop-ripple.directive';
+import { OrderByPipe } from './pipes/order-by.pipe';
+import { SortByNamePipe } from './pipes/sort-by-name.pipe';
+import { PlayerMultipleSelectComponent } from './components/player-multiple-select/player-multiple-select.component';
+import { SearchPlayerPipe } from './pipes/search-player.pipe';
+import { FilterOutSelectedPlayersPipe } from './pipes/filter-out-selected-players.pipe';
+import { FilterPlayersByYearPipe } from './pipes/filter-players-by-year.pipe';
+import { LogPipe } from './pipes/log.pipe';
 
 @NgModule({
   declarations: [
     AlertComponent,
     StopPropagationDirective,
+    StopRippleDirective,
     AbsoluteValuePipe,
     ConfirmDialogComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    OrderByPipe,
+    SortByNamePipe,
+    PlayerMultipleSelectComponent,
+    SearchPlayerPipe,
+    FilterOutSelectedPlayersPipe,
+    FilterPlayersByYearPipe,
+    LogPipe
   ],
   imports: [
     CommonModule,
@@ -34,11 +50,23 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     QuillModule,
 
-
     AlertComponent,
     AbsoluteValuePipe,
     ConfirmDialogComponent,
     SafeHtmlPipe,
+    StopPropagationDirective,
+    StopRippleDirective,
+    OrderByPipe,
+    SortByNamePipe,
+    SearchPlayerPipe,
+    PlayerMultipleSelectComponent,
+    FilterOutSelectedPlayersPipe,
+    FilterPlayersByYearPipe,
+    LogPipe
+  ],
+  providers: [
+    FilterPlayersByYearPipe,
+    OrderByPipe
   ]
 })
-export class SharedModule { }
+export class SharedModule {}

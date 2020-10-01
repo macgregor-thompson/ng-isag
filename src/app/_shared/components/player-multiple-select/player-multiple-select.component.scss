@@ -1,0 +1,20 @@
+@import '../../../../colors.scss';
+
+mat-form-field {
+  padding: 16px 16px 0;
+}
+
+.name {
+  padding-left: 1em;
+}
+
+
+.multi-user-select-options {
+  max-width: 100%;
+  max-height: 40vh;
+  overflow-x: hidden;
+}
+
+.menu-btn {
+  width: 100%;
+}

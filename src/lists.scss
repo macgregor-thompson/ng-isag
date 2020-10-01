@@ -128,6 +128,15 @@ mat-card {
     color: #aaa;
     cursor: move;
   }
+
+}
+
+.no-pointer {
+  cursor: inherit !important;
+}
+
+.no-hover:hover {
+  background-color: inherit !important;
 }
 
 

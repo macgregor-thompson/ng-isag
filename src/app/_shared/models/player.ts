@@ -1,11 +1,12 @@
 export class Player {
   _id: string;
+  playerId?: string;
   firstName = '';
   lastName = '';
   avatarUrl?: string;
   email: string;
   phoneNumber: string;
-  handicap = 0;
+  handicap;
   deleted: boolean;
   bio: string;
   nickname: string;
@@ -13,8 +14,12 @@ export class Player {
   state: string;
   iSagWinner: boolean;
   dateOfBirth: Date;
-  age: number;
   favoriteActivities: Activity[];
+  constructor(firstName?: string, lastName?: string, handicap?: number) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.handicap = handicap;
+  }
 }
 
 export class Activity {

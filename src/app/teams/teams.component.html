@@ -1,0 +1,120 @@
+<div class="container teams-page">
+  <mat-card class="isag-card teams-card">
+    <mat-card-header>
+      <mat-card-title>
+        <span>{{  selectedYear.year }}</span>&nbsp;Teams
+      </mat-card-title>
+      <div class="fill-remaining-space"></div>
+      <mat-form-field class="year-select">
+        <mat-label>Year</mat-label>
+        <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
+                    (selectionChange)="getTeamsAndPlayers()">
+          <mat-option *ngFor="let year of yearService.years" [value]="year">
+            {{ year.year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="edit-btn" (click)="editing = !editing"
+              *ngIf="stateService.isAdmin" matTooltipClass="isag-tooltip" matTooltipPosition="before"
+              matTooltip="{{editing ? 'Save' : 'Edit' + ' Teams'}}">
+        <span *ngIf="!editing"><mat-icon>edit</mat-icon> EDIT</span>
+        <span *ngIf="editing"><mat-icon>save</mat-icon> SAVE</span>
+      </button>
+    </mat-card-header>
+
+    <mat-list class="isag-list">
+      <mat-list-item class="list-item no-hover" *ngFor="let team of teams; let i = index;"
+                     [disableRipple]="true" [class.auto-height]="editing" [class.no-pointer]="!editing">
+        <div class="team-number">{{i + 1}}.</div>
+        <div class="team-row">
+          <div class="player">
+            <div class="user-avatar-container">
+              <img *ngIf="team.playerA?.avatarUrl" class="avatar-image" [src]="team.playerA.avatarUrl" alt="user image"/>
+            </div>
+            <div *ngIf="editing" class="player-div">
+              <div class="list-title">
+                <mat-form-field class="player-input">
+                  <input matInput placeholder="A Player" value="" [(ngModel)]="team.playerA"
+                         [matAutocomplete]="playerA" aria-label="A Player" (ngModelChange)="saveTeam(team)">
+                  <mat-autocomplete #playerA="matAutocomplete" [displayWith]="getPlayerName">
+                    <mat-option *ngFor="let player of aPlayers; let i = index;" [value]="player">
+                      {{i + 1}}. {{player.firstName}} {{player.lastName}}
+                    </mat-option>
+                    <!-- <mat-divider></mat-divider>
+                     <mat-option *ngFor="let player of bPlayers; let i = index;" [value]="player">
+                       {{i + aPlayers.length + 1}}. {{player.firstName}} {{player.lastName}}
+                     </mat-option>-->
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <mat-form-field class="handicap-form">
+                <span matPrefix *ngIf="team.playerA?.handicap > 0">+</span>
+                <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerA.handicap"
+                       aria-label="handicap" name="handicap">
+              </mat-form-field>
+            </div>
+            <div *ngIf="!editing" class="player-div">
+              <div class="list-title">
+                {{team.playerA.firstName}} {{team.playerA.lastName}}
+              </div>
+              <div class="handicap">
+                <span *ngIf="team.playerA?.handicap > 0">+</span>{{ team.playerA?.handicap | absoluteValue }}
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="player">
+            <div class="user-avatar-container">
+              <img *ngIf="team.playerB?.avatarUrl" class="avatar-image" [src]="team.playerB.avatarUrl" alt="user image"/>
+            </div>
+            <div *ngIf="editing" class="player-div">
+              <div class="list-title">
+                <mat-form-field class="player-input">
+                  <input matInput placeholder="B Player" value="" [(ngModel)]="team.playerB"
+                         [matAutocomplete]="playerB" aria-label="B Player" (ngModelChange)="saveTeam(team)">
+                  <mat-autocomplete #playerB="matAutocomplete" [displayWith]="getPlayerName">
+                    <mat-option *ngFor="let player of bPlayers; let i = index;" [value]="player" class="player-option">
+                      <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
+                      <div>
+                        <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
+                        {{player.handicap | absoluteValue}}
+                      </div>
+                    </mat-option>
+                    <!--<mat-divider></mat-divider>
+                    <mat-option *ngFor="let player of aPlayers; let i = index;" [value]="player">
+                      {{i + 1}}. {{player.firstName}} {{player.lastName}}
+                    </mat-option>-->
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+              <mat-form-field class="handicap-form">
+                <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
+                <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerB.handicap"
+                       aria-label="handicap" name="handicap">
+              </mat-form-field>
+            </div>
+            <div *ngIf="!editing" class="player-div">
+              <div class="list-title">
+                {{team.playerB.firstName}} {{team.playerB.lastName}}
+              </div>
+              <div class="handicap">
+                <span *ngIf="team.playerB?.handicap > 0">+</span>{{ team.playerB?.handicap | absoluteValue }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+
+
+    <button mat-raised-button color="primary" class="right-space-15" (click)="addTeam()"
+            *ngIf="stateService.isAdmin && editing"
+            matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Player">
+      <mat-icon>sports_kabaddi</mat-icon>
+      ADD TEAM
+    </button>
+
+  </mat-card>
+</div>

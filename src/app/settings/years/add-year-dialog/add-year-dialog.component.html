@@ -1,0 +1,34 @@
+<mat-spinner color="accent" *ngIf="spinner"></mat-spinner>
+<div id="add-invite" fxLayout="column" mat-dialog-content>
+  <div class="header">
+    <h3>Add New Year</h3>
+  </div>
+
+  <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row">
+    <mat-form-field class="left-input">
+      <mat-select [(ngModel)]="year.year" (ngModelChange)="setDate()">
+        <mat-option *ngFor="let year of yearService.availableYears" [value]="year"
+                    [disabled]="yearService.existingYears[year]">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="right-input">
+      <mat-label>Date of Competition</mat-label>
+      <input matInput [matDatepicker]="picker" aria-label="date of competition" (focus)="picker.open()"
+             [(ngModel)]="year.date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <mat-card-actions class="actions bottom-space-0" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="end end">
+    <div class="fill-remaining-space"></div>
+    <div class="modal-buttons">
+      <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="addYear()" [disabled]="!year.year || !year.date">
+        Add
+      </button>
+    </div>
+  </mat-card-actions>
+</div>

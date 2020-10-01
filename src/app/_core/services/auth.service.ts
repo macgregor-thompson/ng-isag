@@ -28,7 +28,7 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(resp.user));
           localStorage.setItem('ACCESS_TOKEN', resp.access_token);
           this.stateService.currentUser = resp.user;
-          this.stateService.isAdmin = resp.user.role <= Role.admin;
+          this.stateService.isAdmin = resp.user.role <= Role.ADMIN;
           this.router.navigateByUrl(this.redirectUrl || '');
         }));
   }

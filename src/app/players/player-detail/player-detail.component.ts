@@ -20,7 +20,6 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   @Input() canEdit: boolean;
 
   @Output() close = new EventEmitter();
-  @Output() delete = new EventEmitter();
 
   subscriptions = new Subscription();
   updateSub = new Subject<keyof Player>();
@@ -59,7 +58,7 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
       panelClass: 'confirm-dialog-container'
     });
     confirmDeleteDialogRef.afterClosed().subscribe(confirm => {
-      if (confirm) this.playerService.delete(this.player._id).subscribe(() => this.delete.emit());
+      if (confirm) this.playerService.delete(this.player._id).subscribe(() => this.close.emit());
     });
   }
 

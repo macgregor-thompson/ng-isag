@@ -1,8 +1,10 @@
   <h1 class="mat-display-1 text-center">
-    {{stateService.currentYear}} Results
+    {{stateService.currentYear.year}} Results
   </h1>
 
-<!--<div class="table-container mat-elevation-z8" *ngIf="matches && matchData" style="margin-bottom: 50px;">
+
+
+  <!--<div class="table-container mat-elevation-z8" *ngIf="matches && matchData" style="margin-bottom: 50px;">
   <mat-table #table [dataSource]="matchData" matSort matSortActive="name"
              *ngIf="matches[0].format != Format.FourManScramble">
     <ng-container matColumnDef="players">

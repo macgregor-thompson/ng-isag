@@ -1,0 +1,69 @@
+<mat-spinner color="accent" *ngIf="spinner"></mat-spinner>
+
+<mat-card class="detail-card">
+  <mat-toolbar class="toolbar">
+    <button mat-icon-button (click)="close.emit()" matTooltip="Close"
+            matTooltipPosition="above" matTooltipClass="isag-tooltip" aria-label="Close player details">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+    <mat-divider [vertical]="true" class="vertical-divider"></mat-divider>
+    <h2 class="flex1">{{ year.year }}</h2>
+    <button mat-icon-button (click)="deleteYear()" class="red" matTooltip="{{'Delete ' + year.year}}"
+            matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Year"
+            *ngIf="stateService.isAdmin">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-divider></mat-divider>
+
+  <div class="column-gt-xs top-space-15">
+    <!--<mat-form-field class="left-input">
+      <mat-select [(ngModel)]="year.year" (ngModelChange)="update('year')">
+        <mat-option *ngFor="let year of yearService.availableYears" [value]="year"
+                    [disabled]="yearService.existingYears[year]">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>-->
+    <mat-form-field class="left-input">
+      <mat-label>Date of Competition</mat-label>
+      <input matInput [matDatepicker]="picker" aria-label="date of competition" (focus)="picker.open()"
+             [(ngModel)]="year.date" [readOnly]="!stateService.isAdmin">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker [disabled]="!stateService.isAdmin"></mat-datepicker>
+    </mat-form-field>
+    <div class="fill-remaining-space"></div>
+    <isag-player-multiple-select [playersToFilterOut]="playersForYear"
+                                 (selectPlayers)="addPlayers($event)"></isag-player-multiple-select>
+  </div>
+
+<!--<div class="add-players-div">
+  <div>
+    &lt;!&ndash;<mat-chip-list class="isag-chip">
+      <mat-chip selected color="accent">Players: {{year.playerIds.length}}</mat-chip>
+    </mat-chip-list>&ndash;&gt;
+  </div>
+  <div class="fill-remaining-space"></div>
+  <isag-player-multiple-select [playersToFilterOut]="playerService.allPlayers | filterPlayersByYear: year"
+                               (selectPlayers)="addPlayers($event)"></isag-player-multiple-select>
+</div>-->
+
+  <mat-list class="isag-list">
+    <mat-list-item class="list-item" *ngFor="let player of playersForYear | sortByName; let i = index;">
+      <div>{{i + 1}}.</div>
+      <div class="user-avatar-container">
+        <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
+      </div>
+      <div class="list-title">
+        <div>{{ player.firstName + " " + player.lastName }}</div>
+        <mat-icon *ngIf="player.iSagWinner" class="isag-icon">emoji_events</mat-icon>
+      </div>
+      <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
+              matTooltip="{{'Delete ' + player.firstName}}"
+              matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

@@ -49,7 +49,7 @@ export class StateService {
 
   initCurrentUser(user: User): void {
     this.currentUser = user;
-    this.isAdmin = user?.role <= Role.admin;
+    this.isAdmin = user?.role <= Role.ADMIN;
   }
 
 }

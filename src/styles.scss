@@ -71,6 +71,7 @@ body {
   flex-direction: row;
   padding: 5px;
   justify-content: center;
+  margin-bottom: 15px;
 }
 
 /* this allows the box shadow to work */
@@ -147,11 +148,6 @@ mat-list-item.active, [mat-list-item].active {
   font-weight: 500;
 }
 
-.isag-chip {
-  background-color: #e0e0e0;
-  color: rgba(0, 0, 0, .87);
-}
-
 .isag-accent-chip {
   background-color: #306DA4;
   color: rgba(255, 255, 255, .87);
@@ -182,10 +178,6 @@ mat-list-item.active, [mat-list-item].active {
 .mat-card-actions {
   display: flex !important;
   justify-content: flex-end;
-}
-
-mat-form-field {
-  width: 100%;
 }
 
 
@@ -455,8 +447,16 @@ isag-issue {
     position: fixed;
     width: calc(50vw - 85px);
     overflow-y: auto;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 140px);
   }
+  .detail-card {
+    padding-top: 0;
+  }
+
+  .mat-toolbar {
+    padding: 0;
+  }
+
 }
 
 
@@ -622,6 +622,7 @@ quill-editor {
     border-top-left-radius: 3px;
     border-color: $isag-green;
   }
+
   .ql-container {
     &.ql-snow {
       border-bottom-right-radius: 3px;
@@ -643,15 +644,16 @@ quill-editor {
     .ql-indent-1 {
       padding-left: 2em !important;
     }
+
     .ql-indent-2 {
       padding-left: 4em !important;
     }
+
     .ql-indent-3 {
       padding-left: 6em !important;
     }
   }
 }
-
 
 
 .mat-card-content {
@@ -661,3 +663,69 @@ quill-editor {
 .mat-body p, .mat-body-1 p, .mat-typography p {
   margin: 0;
 }
+
+.year-list-item .mat-radio-label-content {
+  padding: 0;
+}
+
+.header-btns {
+  height: 32px;
+
+  h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+  }
+}
+
+.multi-user-select-options {
+  .mat-checkbox .mat-checkbox-frame, .mat-checkbox-checked .mat-checkbox-background {
+    transform: scale(1.4);
+  }
+}
+
+.player-multiple-select-menu {
+  .mat-menu-content {
+    padding:0 !important;
+  }
+
+  .ok-btn {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    width: 100%;
+    height: 50px;
+  }
+}
+
+
+.isag-chip {
+  cursor: pointer;
+  margin: 4px;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 16px;
+  align-items: center;
+  min-height: 32px;
+  height: 1px;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateZ(0);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+button {
+  height: 40px;
+}
+
+.player-option {
+  .mat-option-text {
+    display: flex;
+    justify-content: space-between;
+  }
+
+}
+
