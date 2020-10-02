@@ -46,7 +46,7 @@ export class YearService {
   }
 
   @SpinnerAndCatchError
-  getYearWithPlayers(year = this.stateService.currentYear.year): Observable<Array<Year & { players: Player[] }>> {
+  getYearWithPlayers(year = this.stateService.year.year): Observable<Array<Year & { players: Player[] }>> {
     return this.http.get<Array<Year & { players: Player[] }>>(`${this.yearsApi}/${year}`);
   }
 

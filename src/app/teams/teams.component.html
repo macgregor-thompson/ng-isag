@@ -14,7 +14,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button color="primary" class="edit-btn" (click)="editing = !editing"
+      <button mat-button color="primary" class="edit-btn" (click)="editing = !editing"
               *ngIf="stateService.isAdmin" matTooltipClass="isag-tooltip" matTooltipPosition="before"
               matTooltip="{{editing ? 'Save' : 'Edit' + ' Teams'}}">
         <span *ngIf="!editing"><mat-icon>edit</mat-icon> EDIT</span>
@@ -22,7 +22,15 @@
       </button>
     </mat-card-header>
 
-    <mat-list class="isag-list">
+    <mat-toolbar class="header-btns">
+      <h4 class="flex1 a-player-header">A Players</h4>
+      <h4 class="handicap-header">Handicap</h4>
+      <div class="divider no-border"></div>
+      <h4 class="flex1 b-player-header">B Players</h4>
+      <h4 class="handicap-header">Handicap</h4>
+    </mat-toolbar>
+
+    <mat-list class="isag-list" *ngIf="teams?.length">
       <mat-list-item class="list-item no-hover" *ngFor="let team of teams; let i = index;"
                      [disableRipple]="true" [class.auto-height]="editing" [class.no-pointer]="!editing">
         <div class="team-number">{{i + 1}}.</div>
@@ -35,21 +43,24 @@
               <div class="list-title">
                 <mat-form-field class="player-input">
                   <input matInput placeholder="A Player" value="" [(ngModel)]="team.playerA"
-                         [matAutocomplete]="playerA" aria-label="A Player" (ngModelChange)="saveTeam(team)">
+                         [matAutocomplete]="playerA" aria-label="A Player"
+                         (ngModelChange)="updateSub.next([team, 'playerA'])">
                   <mat-autocomplete #playerA="matAutocomplete" [displayWith]="getPlayerName">
-                    <mat-option *ngFor="let player of aPlayers; let i = index;" [value]="player">
-                      {{i + 1}}. {{player.firstName}} {{player.lastName}}
+                    <mat-option  class="player-option" *ngFor="let player of aPlayers; let i = index;"
+                                [value]="player"  [class.hidden]="usedAPLayerIds[player._id]">
+                      <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
+                      <div>
+                        <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
+                        {{player.handicap | absoluteValue}}
+                      </div>
                     </mat-option>
-                    <!-- <mat-divider></mat-divider>
-                     <mat-option *ngFor="let player of bPlayers; let i = index;" [value]="player">
-                       {{i + aPlayers.length + 1}}. {{player.firstName}} {{player.lastName}}
-                     </mat-option>-->
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
               <mat-form-field class="handicap-form">
                 <span matPrefix *ngIf="team.playerA?.handicap > 0">+</span>
                 <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerA.handicap"
+                       (ngModelChange)="updateSub.next([team, 'playerA'])"
                        aria-label="handicap" name="handicap">
               </mat-form-field>
             </div>
@@ -73,27 +84,27 @@
               <div class="list-title">
                 <mat-form-field class="player-input">
                   <input matInput placeholder="B Player" value="" [(ngModel)]="team.playerB"
-                         [matAutocomplete]="playerB" aria-label="B Player" (ngModelChange)="saveTeam(team)">
+                         [matAutocomplete]="playerB" aria-label="B Player"
+                         (ngModelChange)="updateSub.next([team, 'playerB'])">
                   <mat-autocomplete #playerB="matAutocomplete" [displayWith]="getPlayerName">
-                    <mat-option *ngFor="let player of bPlayers; let i = index;" [value]="player" class="player-option">
+                    <mat-option class="player-option" *ngFor="let player of bPlayers; let i = index;" [value]="player"
+                                [class.hidden]="usedBPLayerIds[player._id]">
                       <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
                       <div>
                         <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
                         {{player.handicap | absoluteValue}}
                       </div>
                     </mat-option>
-                    <!--<mat-divider></mat-divider>
-                    <mat-option *ngFor="let player of aPlayers; let i = index;" [value]="player">
-                      {{i + 1}}. {{player.firstName}} {{player.lastName}}
-                    </mat-option>-->
                   </mat-autocomplete>
                 </mat-form-field>
               </div>
               <mat-form-field class="handicap-form">
                 <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
                 <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerB.handicap"
+                       (ngModelChange)="updateSub.next([team, 'playerB'])"
                        aria-label="handicap" name="handicap">
               </mat-form-field>
+
             </div>
             <div *ngIf="!editing" class="player-div">
               <div class="list-title">
@@ -105,16 +116,22 @@
             </div>
           </div>
         </div>
+        <button mat-icon-button (click)="deleteTeam(team, i)" *ngIf="editing"
+                matTooltip="Delete Team"
+                matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
+          <mat-icon>close</mat-icon>
+        </button>
       </mat-list-item>
     </mat-list>
 
-
-    <button mat-raised-button color="primary" class="right-space-15" (click)="addTeam()"
-            *ngIf="stateService.isAdmin && editing"
-            matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Player">
-      <mat-icon>sports_kabaddi</mat-icon>
-      ADD TEAM
-    </button>
-
+    <mat-card-footer *ngIf="stateService.isAdmin && editing">
+      <mat-card-actions fxLayout="row" fxLayoutAlign="end end" class="actions">
+        <button mat-raised-button color="primary" class="right-space-15" (click)="addTeam()"
+                matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Team">
+          <mat-icon>add</mat-icon>
+          ADD TEAM
+        </button>
+      </mat-card-actions>
+    </mat-card-footer>
   </mat-card>
 </div>

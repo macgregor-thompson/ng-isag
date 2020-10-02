@@ -14,25 +14,12 @@ import { Year } from '../../_shared/models/year';
 export class StateService {
   currentUser: User;
   isAdmin: boolean;
-  currentYear: Year;
+  year: Year;
   pageTitle$: BehaviorSubject<string> = new BehaviorSubject('Results');
-
-  richTextModules = {
-    toolbar: {
-      container: [
-        [{ 'font': [] }], [{ 'size': ['small', false, 'large', 'huge'] }], ['bold', 'italic', 'underline', 'strike', 'code-block'],
-        [{ 'header': 1 }, { 'header': 2 }], [{ 'color': [] }, { 'background': [] }], [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        [{ 'align': [] }], ['link']
-      ]
-    },
-   /* embedBlocker: {
-      notifyService: this.notifyService
-    }*/
-  };
 
   constructor(private tokenService: TokenService,
               private appInitializerService: AppInitializerService) {
-    this.currentYear = this.appInitializerService.year;
+    this.year = this.appInitializerService.year;
     if (this.tokenService.tokenHasNotExpired()) {
       this.initCurrentUser(JSON.parse(localStorage.getItem('user')));
     }

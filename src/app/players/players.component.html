@@ -1,5 +1,5 @@
 <div class="container directory-page">
-  <mat-card class="isag-card directory-card"  [fxHide.lt-md]="selectedPlayer">
+  <mat-card class="isag-card directory-card" [fxHide.lt-md]="selectedPlayer">
     <mat-card-header>
       <mat-card-title>
         <span>{{  selectedYear.year ? selectedYear.year : 'All' }}</span>&nbsp;Players
@@ -29,18 +29,8 @@
       <mat-list-item class="list-item" matRipple [class.opened]="selectedPlayer?._id === player._id"
                      *ngFor="let player of playerService.allPlayers | filterPlayersByYear: selectedYear
                       | sortByName; let i = index;" (click)="selectPlayer(player, i)">
-        <div *ngIf="selectedYear.year">{{i + 1}}.</div>
-        <div class="user-avatar-container">
-          <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
-        </div>
-        <div class="list-title">
-          <div>{{ player.firstName + " " + player.lastName }}</div>
-          <mat-icon *ngIf="player.iSagWinner" class="isag-icon">emoji_events</mat-icon>
-        </div>
-        <div class="handicap">
-          <span *ngIf="player.handicap > 0">+</span>
-          {{ player.handicap | absoluteValue }}
-        </div>
+        <isag-player [index]="selectedYear.year ? i + 1 : null"
+                     [player]="player"></isag-player>
       </mat-list-item>
     </mat-list>
   </mat-card>

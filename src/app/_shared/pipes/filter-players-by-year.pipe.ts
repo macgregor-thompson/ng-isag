@@ -7,10 +7,9 @@ import { Year } from '../models/year';
   name: 'filterPlayersByYear'
 })
 export class FilterPlayersByYearPipe implements PipeTransform {
-
   transform(players: Player[], year: Year): Player[]   {
     if (!players || !year.year) return players;
-    return players.filter(p => year.playerIds.includes(p._id));
+    return players.filter(p => year.aPlayerIds.includes(p._id) || year.bPlayerIds.includes(p._id));
   }
 
 }

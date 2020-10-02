@@ -32,14 +32,14 @@ export class TeamService {
               private stateService: StateService,
               private spinnerService: SpinnerService) {}
 
-  getByYear(year = this.stateService.currentYear.year): Observable<Team[]> {
+  @SpinnerAndCatchError
+  getByYear(year = this.stateService.year.year): Observable<Team[]> {
     return this.http.get<Team[]>(`${this.teamsApi}?year=${year}`);
   }
 
   @SpinnerAndCatchError
   create(team: Team): Observable<Team> {
-    const newTeam = TeamService.convertTeamPlayers(team);
-    return this.http.post<Team>(this.teamsApi, newTeam);
+    return this.http.post<Team>(this.teamsApi, team);
   }
 
   @SpinnerAndCatchError

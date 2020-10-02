@@ -1,0 +1,25 @@
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.user-avatar-container {
+  height: 32px;
+  width: 32px;
+  margin-right: 16px;
+
+  .avatar-image {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.handicap {
+  width: 60px;
+  display: flex;
+  justify-content: center;
+}
+
+:host {
+  flex: 1;
+}

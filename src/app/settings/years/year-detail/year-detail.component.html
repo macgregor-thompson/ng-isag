@@ -1,6 +1,6 @@
 <mat-spinner color="accent" *ngIf="spinner"></mat-spinner>
 
-<mat-card class="detail-card">
+<mat-card class="detail-card" cdkDropListGroup>
   <mat-toolbar class="toolbar">
     <button mat-icon-button (click)="close.emit()" matTooltip="Close"
             matTooltipPosition="above" matTooltipClass="isag-tooltip" aria-label="Close player details">
@@ -18,14 +18,6 @@
   <mat-divider></mat-divider>
 
   <div class="column-gt-xs top-space-15">
-    <!--<mat-form-field class="left-input">
-      <mat-select [(ngModel)]="year.year" (ngModelChange)="update('year')">
-        <mat-option *ngFor="let year of yearService.availableYears" [value]="year"
-                    [disabled]="yearService.existingYears[year]">
-          {{ year }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>-->
     <mat-form-field class="left-input">
       <mat-label>Date of Competition</mat-label>
       <input matInput [matDatepicker]="picker" aria-label="date of competition" (focus)="picker.open()"
@@ -34,31 +26,46 @@
       <mat-datepicker #picker [disabled]="!stateService.isAdmin"></mat-datepicker>
     </mat-form-field>
     <div class="fill-remaining-space"></div>
-    <isag-player-multiple-select [playersToFilterOut]="playersForYear"
+    <isag-player-multiple-select [playersToFilterOut]="allPlayers"
                                  (selectPlayers)="addPlayers($event)"></isag-player-multiple-select>
   </div>
 
-<!--<div class="add-players-div">
-  <div>
-    &lt;!&ndash;<mat-chip-list class="isag-chip">
-      <mat-chip selected color="accent">Players: {{year.playerIds.length}}</mat-chip>
-    </mat-chip-list>&ndash;&gt;
-  </div>
-  <div class="fill-remaining-space"></div>
-  <isag-player-multiple-select [playersToFilterOut]="playerService.allPlayers | filterPlayersByYear: year"
-                               (selectPlayers)="addPlayers($event)"></isag-player-multiple-select>
-</div>-->
+  <mat-toolbar class="header-btns">
+    <h4 class="flex1 name-header">A Players</h4>
+    <h4 class="handicap-header">Handicap</h4>
+  </mat-toolbar>
+  <mat-list id="aPlayers" class="isag-list" cdkDropList [cdkDropListData]="aPlayers" (cdkDropListDropped)="drop($event)">
+    <mat-list-item class="list-item" cdkDrag *ngFor="let player of aPlayers
+    | orderBy: 'handicap' : false; let i = index;">
+      <div class="drag-handle" cdkDragHandle fxHide.lt-sm
+           [class.invisible]="player.handicap !== bPlayers[0].handicap"
+           [cdkDragHandleDisabled]="player.handicap !== bPlayers[0].handicap">
+        <mat-icon>drag_indicator</mat-icon>
+      </div>
+      <isag-player [index]="i + 1"
+                   [player]="player"></isag-player>
+      <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
+              matTooltip="{{'Delete ' + player.firstName}}"
+              matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
 
-  <mat-list class="isag-list">
-    <mat-list-item class="list-item" *ngFor="let player of playersForYear | sortByName; let i = index;">
-      <div>{{i + 1}}.</div>
-      <div class="user-avatar-container">
-        <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
+  <mat-toolbar class="header-btns">
+    <h4 class="flex1 name-header">B Players</h4>
+    <h4 class="handicap-header">Handicap</h4>
+  </mat-toolbar>
+  <mat-list id="bPlayers" class="isag-list" cdkDropList [cdkDropListData]="bPlayers" (cdkDropListDropped)="drop($event)">
+    <mat-list-item class="list-item" cdkDrag *ngFor="let player of bPlayers
+    | orderBy: 'handicap' : false; let i = index;">
+      <div class="drag-handle" cdkDragHandle fxHide.lt-sm
+           [class.invisible]="player.handicap !== aPlayers[aPlayers.length - 1].handicap"
+           [cdkDragHandleDisabled]="player.handicap !== aPlayers[aPlayers.length - 1].handicap">
+        <mat-icon>drag_indicator</mat-icon>
       </div>
-      <div class="list-title">
-        <div>{{ player.firstName + " " + player.lastName }}</div>
-        <mat-icon *ngIf="player.iSagWinner" class="isag-icon">emoji_events</mat-icon>
-      </div>
+      <isag-player [index]="i + 1"
+                   [player]="player"></isag-player>
       <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
               matTooltip="{{'Delete ' + player.firstName}}"
               matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">

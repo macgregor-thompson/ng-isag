@@ -20,12 +20,12 @@ export class CourseService {
               private spinnerService: SpinnerService) { }
 
   @SpinnerAndCatchError
-  getAll(year: number = this.stateService.currentYear.year): Observable<Course[]> {
+  getAll(year: number = this.stateService.year.year): Observable<Course[]> {
     return this.http.get<Course[]>(`${this.courseApi}`);
   }
 
   @SpinnerAndCatchError
-  getByYear(year: number = this.stateService.currentYear.year): Observable<Course> {
+  getByYear(year: number = this.stateService.year.year): Observable<Course> {
     return this.http.get<Course>(`${this.courseApi}?year=${year}`);
   }
 }

@@ -9,6 +9,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { UsersComponent } from './users/users.component';
 import { AddYearDialogComponent } from './years/add-year-dialog/add-year-dialog.component';
 import { YearDetailComponent } from './years/year-detail/year-detail.component';
+import { CourseCardComponent } from './courses/course-card/course-card.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { YearDetailComponent } from './years/year-detail/year-detail.component';
     CoursesComponent,
     UsersComponent,
     AddYearDialogComponent,
-    YearDetailComponent
+    YearDetailComponent,
+    CourseCardComponent
   ],
   imports: [
     CommonModule,

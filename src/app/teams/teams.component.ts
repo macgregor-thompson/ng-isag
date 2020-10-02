@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { chunk as _chunk, merge as _merge } from 'lodash';
+import { merge as _merge } from 'lodash';
 
 import { YearService } from '../_core/services/year.service';
 import { Year } from '../_shared/models/year';
@@ -9,8 +9,8 @@ import { Team } from '../_shared/models/teams/team';
 import { TeamService } from '../_core/services/team.service';
 import { Player } from '../_shared/models/player';
 import { PlayerService } from '../_core/services/player.service';
-import { OrderByPipe } from '../_shared/pipes/order-by.pipe';
-import { SpinnerService } from '../_core/services/spinner.service';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'isag-teams',
@@ -22,48 +22,44 @@ export class TeamsComponent implements OnInit {
   teams: Team[];
   aPlayers: Player[];
   bPlayers: Player[];
+  usedAPLayerIds: { [playerId: string]: true };
+  usedBPLayerIds: { [playerId: string]: true };
   editing = false;
-  gettingPlayers: boolean;
-  gettingTeams: boolean;
+  updateSub = new Subject<[Team, keyof Team]>();
+  subscriptions = new Subscription();
+
 
   constructor(public yearService: YearService,
               public stateService: StateService,
               private playerService: PlayerService,
-              public spinnerService: SpinnerService,
-              private teamService: TeamService,
-              private orderByPipe: OrderByPipe) { }
+              private teamService: TeamService) { }
 
   ngOnInit(): void {
-    this.selectedYear = this.stateService.currentYear;
+    this.selectedYear = this.stateService.year;
     this.getTeamsAndPlayers();
+
+    this.subscriptions.add(this.updateSub.pipe(debounceTime(400)).subscribe(x => this.saveOrUpdateTeam(...x)));
   }
 
   getTeamsAndPlayers(): void {
+    this.usedAPLayerIds = {};
+    this.usedBPLayerIds = {};
     this.getTeams();
     this.getPlayers();
   }
 
   getPlayers(): void {
-    this.spinnerService.start();
-    this.playerService.getByYear(this.selectedYear.year).subscribe({
-      next: p => {
-        const orderedByHandicap = this.orderByPipe.transform(p, 'handicap', false);
-        [this.aPlayers, this.bPlayers] = _chunk(orderedByHandicap, (orderedByHandicap.length / 2));
-      },
-      complete: () => {
-        this.gettingPlayers = false;
-        this.turnOffSpinner();
-      }
-    });
+    [this.aPlayers, this.bPlayers] = this.playerService.aAndBPlayers(this.selectedYear);
   }
 
   getTeams(): void {
-    this.spinnerService.start();
     this.teamService.getByYear(this.selectedYear.year).subscribe({
-      next: t => this.teams = t,
-      complete: () => {
-        this.gettingTeams = false;
-        this.turnOffSpinner();
+      next: teams => {
+        this.teams = teams;
+        teams.forEach(t => {
+          this.usedAPLayerIds[t.playerA._id] = true;
+          this.usedBPLayerIds[t.playerB._id] = true;
+        });
       }
     });
   }
@@ -76,18 +72,29 @@ export class TeamsComponent implements OnInit {
     return `${player?.firstName} ${player?.lastName}`;
   }
 
-  saveTeam(team: Team): void {
-    if (team.playerA._id && team.playerB._id) {
-      team.playerA.playerId = team.playerA._id;
-      team.playerB.playerId = team.playerB._id;
-      team._id ? this.teamService.update(team._id, team).subscribe()
-        : this.teamService.create(team).subscribe({
+  saveOrUpdateTeam(team: Team, prop: keyof Team): void {
+    if (team.playerA._id && team.playerA.handicap != null
+      && team.playerB._id && team.playerB.handicap != null) {
+      if (team._id) {
+        this.teamService.update(team._id, {[prop]: team[prop]}).subscribe();
+      } else {
+        this.usedAPLayerIds[team.playerA._id] = true;
+        this.usedBPLayerIds[team.playerB._id] = true;
+        this.teamService.create(team).subscribe({
           next: t => _merge(team, t)
         });
+      }
     }
   }
 
-  turnOffSpinner(): void {
-    if (!this.gettingTeams && !this.gettingPlayers) this.spinnerService.stop();
+  deleteTeam(team: Team, i: number): void {
+    this.teamService.delete(team._id).subscribe({
+      next: () => {
+        this.teams.splice(i, 1);
+        delete this.usedAPLayerIds[team.playerA._id];
+        delete this.usedBPLayerIds[team.playerB._id];
+      }
+    });
   }
+
 }

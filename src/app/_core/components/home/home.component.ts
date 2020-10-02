@@ -1,9 +1,11 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+
 import { StateService } from '../../services/state.service';
 import { AuthService } from '../../services/auth.service';
-import { filter, switchMap } from 'rxjs/operators';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { YearService } from '../../services/year.service';
+import { query } from '@angular/animations';
 
 @Component({
   selector: 'isag-home',
@@ -17,12 +19,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @ViewChild('snav') sidenav;
 
-
   constructor(changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher,
               public stateService: StateService,
-              public authService: AuthService,
-              private router: Router) {
+              public authService: AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () =>  changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);

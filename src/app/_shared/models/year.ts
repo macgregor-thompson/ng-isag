@@ -4,7 +4,9 @@ export class Year {
   date: Date;
   current: boolean;
   public: boolean;
-  playerIds: string[];
+  completed: boolean;
+  aPlayerIds: string[];
+  bPlayerIds: string[];
 
   constructor(year) {
     this.year = year;

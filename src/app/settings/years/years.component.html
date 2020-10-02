@@ -1,5 +1,5 @@
 <div class="container years-page">
-  <mat-card class="isag-card years-card">
+  <mat-card class="isag-card years-card"  [fxHide.lt-md]="selectedYear">
     <mat-card-header>
       <mat-card-title>Years</mat-card-title>
       <div class="fill-remaining-space"></div>
@@ -23,7 +23,7 @@
                        *ngFor="let year of yearService.years | orderBy: 'year' : false" (click)="selectYear(year)">
           <div class="year">{{ year.year }}</div>
           <div class="date">{{ year.date | date }}</div>
-          <div class="players">{{ year.playerIds.length }}</div>
+          <div class="players">{{ year.aPlayerIds?.length + year.bPlayerIds?.length }}</div>
           <div class="current">
             <mat-radio-group aria-label="Set as Current Year" [value]="year.current"
                              (change)="setCurrent(year)" [disabled]="!stateService.isAdmin || !year.public" isagStopPropagation isagStopRipple>

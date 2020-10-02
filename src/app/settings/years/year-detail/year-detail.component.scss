@@ -1,3 +1,5 @@
+@import '../../../../colors.scss';
+
 mat-form-field {
   width: 100%;
   margin: 0 5px;
@@ -5,12 +7,28 @@ mat-form-field {
   min-width: 150px;
 }
 
-.handicap {
-  width: 50px;
-}
-
 .add-players-div {
   display: flex;
   justify-content: space-between;
 }
 
+.isag-list {
+  padding-top: 0;
+  margin: 0 -16px;
+}
+
+.name-header {
+  margin-left: 14px;
+}
+
+.handicap-header {
+  width: 60px;
+  margin-right: 34px;}
+
+.header-btns {
+  margin-top: 30px;
+}
+
+.drag-handle {
+  color: $isag-green;
+}

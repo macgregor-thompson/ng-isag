@@ -20,7 +20,7 @@ export class RulesService {
               private spinnerService: SpinnerService) { }
 
   @SpinnerAndCatchError
-  getByYear(year: number = this.stateService.currentYear.year): Observable<Rules> {
+  getByYear(year: number = this.stateService.year.year): Observable<Rules> {
     return this.http.get<Rules>(`${this.rulesApi}?year=${year}`);
   }
 

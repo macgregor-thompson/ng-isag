@@ -1,0 +1,14 @@
+<div class="row">
+  <div *ngIf="index">{{index}}.</div>
+  <div class="user-avatar-container" *ngIf="showAvatars">
+    <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
+  </div>
+  <div class="list-title">
+    <div>{{ player.firstName + " " + player.lastName }}</div>
+    <mat-icon *ngIf="player.iSagWinner" class="isag-icon">emoji_events</mat-icon>
+  </div>
+  <div class="handicap">
+    <span *ngIf="player.handicap > 0">+</span>
+    {{ player.handicap | absoluteValue }}
+  </div>
+</div>

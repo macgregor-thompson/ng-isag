@@ -24,12 +24,11 @@ export class SettingsComponent implements OnInit {
               private router: Router,
               public stateService: StateService) {
     this.spinnerService.stop();
-
   }
 
   ngOnInit(): void {
     const tab = this.activatedRoute.snapshot.paramMap.get('tab');
-    this.stateService.setTitle(`${this.toTitle(tab)} | Settings`);
+    this.stateService.setTitle(`Settings | ${this.toTitle(tab)}`);
     switch (tab.toLowerCase()) {
       case 'courses':
         this.selectedIndex = 1;
@@ -45,7 +44,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateQueryParam(event: MatTabChangeEvent) {
-    this.stateService.setTitle(`${event.tab.textLabel} | Settings`);
+    this.stateService.setTitle(`Settings | ${event.tab.textLabel}`);
     this.router.navigate(['settings/', event.tab.textLabel.toLowerCase()], );
   }
 

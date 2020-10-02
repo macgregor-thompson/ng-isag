@@ -1,6 +1,5 @@
 export class Player {
   _id: string;
-  playerId?: string;
   firstName = '';
   lastName = '';
   avatarUrl?: string;
