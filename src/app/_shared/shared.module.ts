@@ -20,6 +20,7 @@ import { FilterOutSelectedPlayersPipe } from './pipes/filter-out-selected-player
 import { FilterPlayersByYearPipe } from './pipes/filter-players-by-year.pipe';
 import { LogPipe } from './pipes/log.pipe';
 import { PlayerComponent } from './components/player/player.component';
+import { ScorecardComponent } from './components/scorecard/scorecard.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PlayerComponent } from './components/player/player.component';
     FilterOutSelectedPlayersPipe,
     FilterPlayersByYearPipe,
     LogPipe,
-    PlayerComponent
+    PlayerComponent,
+    ScorecardComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +67,8 @@ import { PlayerComponent } from './components/player/player.component';
     FilterOutSelectedPlayersPipe,
     FilterPlayersByYearPipe,
     LogPipe,
-    PlayerComponent
+    PlayerComponent,
+    ScorecardComponent
   ],
   providers: [
     FilterPlayersByYearPipe,

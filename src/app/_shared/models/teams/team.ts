@@ -6,6 +6,7 @@ export class Team {
 
   playerA: Player;
   playerB: Player;
+
   constructor(year: number) {
     this.year = year;
     this.playerA = new Player('A', 'Player');

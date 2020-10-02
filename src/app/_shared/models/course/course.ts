@@ -1,17 +1,17 @@
-import { Hole } from './hole';
+import { NineHoles } from './nine-holes';
 
 export class Course {
   _id: string;
   name = '';
+  year: number;
   slope = 140;
   courseRating = 72;
   tees = '';
-  frontNine: Hole[];
-  backNine: Hole[];
+  frontNine: NineHoles;
+  backNine: NineHoles;
+  frontNineYards: number;
+  backNineYards: number;
+  frontNinePar: number;
+  backNinePar: number;
   scorecardUrl?: string;
-  constructor() {
-    this.frontNine = [...Array(9).keys()].map(i => new Hole(i + 1));
-    this.backNine = [...Array(9).keys()].map(i => new Hole(i + 10));
-  }
-
 }

@@ -1,17 +1,16 @@
 <div class="container courses-page">
-  <mat-card class="isag-card courses-card">
+  <mat-card class="isag-card courses-card" *ngFor="let course of courses; let i = index;">
     <mat-card-header>
-      <mat-card-title>Courses</mat-card-title>
+      <mat-card-title>
+       <div> {{ course.name }}</div>
+      </mat-card-title>
+      <div class="fill-remaining-space"></div>
+      <mat-chip-list *ngIf="course.year" class="year-chip">
+        <mat-chip selected color="accent">{{course.year}}</mat-chip>
+      </mat-chip-list>
     </mat-card-header>
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let course of courses; let i = index;">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div>{{ course.name  }}</div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <pre>{{course | json}}</pre>
-      </mat-expansion-panel>
-    </mat-accordion>
+    <mat-card-content>
+      <isag-course-card [course]="course"></isag-course-card>
+    </mat-card-content>
   </mat-card>
 </div>

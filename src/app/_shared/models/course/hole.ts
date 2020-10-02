@@ -1,9 +1,5 @@
 export class Hole {
-  number: number;
-  par = 4;
+  par: number;
   yardage: number;
   handicap: number;
-  constructor(number) {
-    this.number = number;
-  }
 }

@@ -1,1 +1,71 @@
-<p>course-card works!</p>
+<div class="table-wrapper">
+  <table class="mat-elevation-z8 scorecard-table main-table">
+    <tr class="hole-headers" [attr.colspan]="">
+      <th>Hole</th>
+      <th *ngFor="let header of frontNine">{{header}}</th>
+      <th *ngFor="let header of backNine" class="back-nine">{{header}}</th>
+      <th class="small-view"></th>
+    </tr>
+    <tr>
+      <!--<th class="flex-between">
+        <div class="tees">{{course.tees}}</div>
+        <div>{{course.courseRating}}&nbsp;/&nbsp;{{course.slope}}</div>
+      </th>-->
+      <th>Yards</th>
+      <th *ngFor="let hole of course.frontNine | keyvalue">{{hole.value.yardage}}</th>
+      <th>{{course.frontNineYards}}</th>
+      <th *ngFor="let hole of course.backNine | keyvalue" class="back-nine">{{hole.value.yardage}}</th>
+      <th class="back-nine">{{course.backNineYards}}</th>
+      <th class="back-nine">{{course.frontNineYards + course.backNineYards}}</th>
+      <th class="small-view"></th>
+    </tr>
+    <tr>
+      <th>Handicap</th>
+      <th *ngFor="let hole of course.frontNine | keyvalue">{{hole.value.handicap}}</th>
+      <th></th>
+      <th *ngFor="let hole of course.backNine | keyvalue" class="back-nine">{{hole.value.handicap}}</th>
+      <th class="back-nine"></th>
+      <th class="back-nine"></th>
+      <th class="small-view"></th>
+    </tr>
+    <tr>
+      <th>Par</th>
+      <th *ngFor="let hole of course.frontNine | keyvalue">{{hole.value.par}}</th>
+      <th>{{course.frontNinePar}}</th>
+      <th *ngFor="let hole of course.backNine | keyvalue"  class="back-nine">{{hole.value.par}}</th>
+      <th class="back-nine">{{course.backNinePar}}</th>
+      <th class="back-nine">{{course.frontNinePar + course.backNinePar}}</th>
+      <th class="small-view"></th>
+    </tr>
+  </table>
+
+<!--  <div class="small-table">
+    <table class="mat-elevation-z8 scorecard-table">
+      &lt;!&ndash; responsive view &ndash;&gt;
+      <tr class="hole-headers">
+        <th>Hole</th>
+        <th *ngFor="let header of backNine">{{header}}</th>
+      </tr>
+      <tr>
+        <th>Yards</th>
+        <th *ngFor="let hole of course.backNine | keyvalue">{{hole.value.yardage}}</th>
+        <th>{{course.backNineYards}}</th>
+        <th>{{course.frontNineYards + course.backNineYards}}</th>
+      </tr>
+      <tr>
+        <th>Handicap</th>
+        <th *ngFor="let hole of course.backNine | keyvalue">{{hole.value.handicap}}</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>Par</th>
+        <th *ngFor="let hole of course.backNine | keyvalue">{{hole.value.par}}</th>
+        <th>{{course.backNinePar}}</th>
+        <th>{{course.frontNinePar + course.backNinePar}}</th>
+      </tr>
+    </table>
+  </div>-->
+
+
+</div>
