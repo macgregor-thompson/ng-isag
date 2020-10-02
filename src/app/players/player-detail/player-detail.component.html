@@ -55,10 +55,6 @@
   </div>
 
   <div class="column-gt-xs">
-    <!--<mat-form-field fxFlex>
-      <input matInput type="text" placeholder="Nickname" [(ngModel)]="player.nickname" aria-label="Nickname"
-             name="nickName" (ngModelChange)="updateSub.next('nickname')">
-    </mat-form-field>-->
     <mat-form-field>
       <input matInput type="text" placeholder="City" [(ngModel)]="player.city"
              aria-label="city" name="city" (ngModelChange)="updateSub.next('city')" [readonly]="!canEdit">

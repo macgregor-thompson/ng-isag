@@ -58,7 +58,7 @@
       <a mat-list-item (click)="authService.loginOrSignUp('/signup'); closeSideNav()" *ngIf="!stateService.currentUser"
               fxHide.gt-xs>
         <mat-icon>person_add</mat-icon>
-        <span>CreateUser</span>
+        <span>Sign Up</span>
       </a>
       <a mat-list-item (click)="authService.logout(); closeSideNav()" *ngIf="stateService.currentUser" fxHide.gt-xs>
         <mat-icon>exit_to_app</mat-icon>
