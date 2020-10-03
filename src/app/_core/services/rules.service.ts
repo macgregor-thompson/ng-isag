@@ -34,9 +34,9 @@ export class RulesService {
     return this.http.patch<void>(`${this.rulesApi}/${rulesId}`, update);
   }
 
- /* @CatchError
+  @CatchError
   delete(rulesId: string): Observable<void> {
     return this.http.patch<void>(`${this.rulesApi}/${rulesId}`, { deleted: true } );
-  }*/
+  }
 
 }

@@ -9,7 +9,6 @@ import { StateService } from './state.service';
 import { AppInitializerService } from '../../app-initializer.service';
 import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { SpinnerService } from './spinner.service';
-import { CatchError } from '../decorators/catch-error';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +31,9 @@ export class YearService {
     this.availableYears = (() => {
       let year = new Date().getFullYear() + 5;
       const years = [year];
-      while ( year >= 1985 ) years.push(year--);
+      while (year >= 1985) {
+        years.push(year--);
+      }
       return years;
     })();
     this.nextAvailableYear = (this.years.reduce((prev, current) => (prev.year > current.year) ? prev : current)).year + 1;
@@ -62,7 +63,7 @@ export class YearService {
 
   @SpinnerAndCatchError
   setCurrent(yearId: string): Observable<Year> {
-    return this.http.patch<Year>(`${this.yearsApi}/${yearId}/SetCurrent`, { });
+    return this.http.patch<Year>(`${this.yearsApi}/${yearId}/SetCurrent`, {});
   }
 
   @SpinnerAndCatchError
@@ -70,7 +71,7 @@ export class YearService {
     const index = this.years.findIndex(y => y._id === yearId);
     this.years.splice(index, 1);
     this.years = this.years.slice();
-    return this.http.delete<Year>(`${this.yearsApi}/${yearId}`);
+    return this.update(yearId, { deleted: true });
   }
 
   yearsAreSame(option, value): boolean {

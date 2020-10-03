@@ -1,0 +1,112 @@
+<mat-spinner color="accent" *ngIf="spinner"></mat-spinner>
+<h2 mat-dialog-title>Add New Course</h2>
+<mat-dialog-content>
+  <div class="column-gt-xs">
+    <mat-form-field class="flex2 input-margin">
+      <input matInput type="text"  placeholder="Course Name" [(ngModel)]="course.name" required
+             aria-label="course name" name="courseName">
+    </mat-form-field>
+    <mat-form-field class="flex1 input-margin">
+      <input matInput type="text"  placeholder="Tees" [(ngModel)]="course.tees"
+             aria-label="course tees" name="courseTees">
+    </mat-form-field>
+    <mat-form-field class="flex1 input-margin">
+      <input matInput type="number"  placeholder="Course Rating" [(ngModel)]="course.courseRating"
+             aria-label="course rating" name="courseRating" min="60" max="80"
+             [min]="60" [max]="80" isagValidateMinMax>
+    </mat-form-field>
+    <mat-form-field class="flex1 input-margin">
+      <input matInput type="number"  placeholder="Slope" [(ngModel)]="course.slope"
+             aria-label="slope" name="slope"  min="55" max="155"
+             [min]="55" [max]="155" isagValidateMinMax>
+    </mat-form-field>
+    <mat-form-field class="flex1">
+      <mat-label>Year</mat-label>
+      <mat-select [(ngModel)]="course.year" >
+        <mat-option *ngFor="let year of yearService.availableYears" [value]="year"
+                    [disabled]="data.unavailableYears[year]">
+          {{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="mat-elevation-z8 scorecard-table main-table">
+      <tr class="hole-headers" [attr.colspan]="">
+        <th *ngFor="let header of courseService.holeHeaders">{{header}}</th>
+      </tr>
+      <tr>
+        <th>Yards</th>
+        <td *ngFor="let hole of course.frontNine | keyvalue">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="course.frontNine[hole.key].yardage" required
+                   aria-label="yards" name="yard" (ngModelChange)="updateYards()" min="1" max="1000"
+                   [min]="1" [max]="1000" isagValidateMinMax>
+          </mat-form-field>
+        </td>
+        <th>{{course.frontNineYards}}</th>
+        <td *ngFor="let hole of course.backNine | keyvalue">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="course.backNine[hole.key].yardage" required
+                   aria-label="yards" name="yard" (ngModelChange)="updateYards()" min="1" max="1000"
+                   [min]="1" [max]="1000" isagValidateMinMax>
+          </mat-form-field>
+        </td>
+        <th>{{course.backNineYards}}</th>
+        <th>
+          <div *ngIf="course.frontNineYards || course.backNineYards">
+            {{course.frontNineYards + course.backNineYards}}
+          </div>
+        </th>
+      </tr>
+      <tr>
+        <th>Handicap</th>
+        <td *ngFor="let hole of course.frontNine | keyvalue">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="course.frontNine[hole.key].handicap" required
+                   aria-label="handicap" name="handicap" min="1" max="18" [min]="1" [max]="18" isagValidateMinMax>
+          </mat-form-field>
+        </td>
+        <th></th>
+        <td *ngFor="let hole of course.backNine | keyvalue" class="back-nine">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="course.backNine[hole.key].handicap" required
+                   aria-label="handicap" name="handicap" min="1" max="18" [min]="1" [max]="18" isagValidateMinMax>
+          </mat-form-field>
+        </td>
+        <th class="no-right-border"></th>
+        <th  class="no-left-border"></th>
+      </tr>
+      <tr>
+        <th>Par</th>
+        <td *ngFor="let hole of course.frontNine | keyvalue">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="course.frontNine[hole.key].par" required
+                   aria-label="par" name="par" min="3" max="5"
+                   [min]="3" [max]="5" (ngModelChange)="updatePar()" isagValidateMinMax>
+          </mat-form-field>
+        </td>
+        <th>{{course.frontNinePar}}</th>
+        <td *ngFor="let hole of course.backNine | keyvalue"  class="back-nine">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="course.backNine[hole.key].par" required
+                   aria-label="par" name="par" min="3" max="5"
+                   [min]="3" [max]="5"  (ngModelChange)="updatePar()" isagValidateMinMax>
+          </mat-form-field>
+        </td>
+        <th>{{course.backNinePar}}</th>
+        <th>
+          <div *ngIf="course.frontNinePar || course.backNinePar">
+            {{course.frontNinePar + course.backNinePar}}
+          </div>
+        </th>
+      </tr>
+    </table>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addCourse()" [disabled]="!canSave()">Add</button>
+</mat-dialog-actions>

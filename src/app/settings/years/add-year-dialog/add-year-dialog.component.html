@@ -1,9 +1,6 @@
 <mat-spinner color="accent" *ngIf="spinner"></mat-spinner>
-<div id="add-invite" fxLayout="column" mat-dialog-content>
-  <div class="header">
-    <h3>Add New Year</h3>
-  </div>
-
+<h2 mat-dialog-title>Add New Year</h2>
+<mat-dialog-content>
   <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row">
     <mat-form-field class="left-input">
       <mat-select [(ngModel)]="year.year" (ngModelChange)="setDate()">
@@ -21,14 +18,9 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
+</mat-dialog-content>
 
-  <mat-card-actions class="actions bottom-space-0" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="end end">
-    <div class="fill-remaining-space"></div>
-    <div class="modal-buttons">
-      <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
-      <button mat-raised-button color="primary" (click)="addYear()" [disabled]="!year.year || !year.date">
-        Add
-      </button>
-    </div>
-  </mat-card-actions>
-</div>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addYear()" [disabled]="!year.year || !year.date">Add</button>
+</mat-dialog-actions>

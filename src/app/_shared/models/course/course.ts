@@ -4,8 +4,8 @@ export class Course {
   _id: string;
   name = '';
   year: number;
-  slope = 140;
-  courseRating = 72;
+  slope: number;
+  courseRating: number;
   tees = '';
   frontNine: NineHoles;
   backNine: NineHoles;
@@ -14,4 +14,10 @@ export class Course {
   frontNinePar: number;
   backNinePar: number;
   scorecardUrl?: string;
+  deleted: boolean;
+
+  constructor() {
+    this.frontNine = new NineHoles(1);
+    this.backNine = new NineHoles(10);
+  }
 }

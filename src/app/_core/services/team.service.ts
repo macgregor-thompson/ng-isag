@@ -19,13 +19,15 @@ export class TeamService {
   teamsApi = 'api/teams';
 
   static playerToTeamPlayer(player: Player): TeamPlayer {
-    return { playerId: player._id, handicap: player.handicap};
+    return { playerId: player._id, handicap: player.handicap };
   }
 
   static convertTeamPlayers(team: Team): Team {
     return _merge(team,
-      {playerA: TeamService.playerToTeamPlayer(team.playerA),
-        playerB: TeamService.playerToTeamPlayer(team.playerB) });
+      {
+        playerA: TeamService.playerToTeamPlayer(team.playerA),
+        playerB: TeamService.playerToTeamPlayer(team.playerB)
+      });
   }
 
   constructor(private http: HttpClient,
@@ -49,7 +51,7 @@ export class TeamService {
 
   @SpinnerAndCatchError
   delete(teamId: string): Observable<Team> {
-    return this.http.delete<Team>(`${this.teamsApi}/${teamId}`);
+    return this.update(teamId, { deleted: true });
   }
 
 

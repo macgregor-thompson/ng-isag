@@ -7,6 +7,7 @@ export class Year {
   completed: boolean;
   aPlayerIds: string[];
   bPlayerIds: string[];
+  deleted: true;
 
   constructor(year) {
     this.year = year;

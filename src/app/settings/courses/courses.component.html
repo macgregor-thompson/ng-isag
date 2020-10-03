@@ -1,16 +1,45 @@
 <div class="container courses-page">
-  <mat-card class="isag-card courses-card" *ngFor="let course of courses; let i = index;">
+  <mat-card class="isag-card courses-card">
+    <mat-card-header>
+      <mat-card-title>
+        <div>Courses</div>
+      </mat-card-title>
+      <div class="fill-remaining-space"></div>
+      <button mat-raised-button color="primary" (click)="openAddCourseDialog()" class="right-16"
+              *ngIf="stateService.isAdmin"
+              matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Course">
+        <mat-icon>golf_course</mat-icon>
+        ADD COURSE
+      </button>
+    </mat-card-header>
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel *ngFor="let course of courses | orderBy : 'year' : false; let i = index;"
+                           [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="course-name">
+            {{ course.name }}
+          </mat-panel-title>
+          <div class="fill-remaining-space"></div>
+          <mat-chip-list *ngIf="course.year" class="year-chip">
+            <mat-chip selected color="accent">{{course.year}}</mat-chip>
+          </mat-chip-list>
+        </mat-expansion-panel-header>
+
+        <isag-course-card [course]="course"></isag-course-card>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+
+  <!--<mat-card class="isag-card courses-card" *ngFor="let course of courses; let i = index;">
     <mat-card-header>
       <mat-card-title>
        <div> {{ course.name }}</div>
       </mat-card-title>
-      <div class="fill-remaining-space"></div>
-      <mat-chip-list *ngIf="course.year" class="year-chip">
-        <mat-chip selected color="accent">{{course.year}}</mat-chip>
-      </mat-chip-list>
+
     </mat-card-header>
     <mat-card-content>
       <isag-course-card [course]="course"></isag-course-card>
     </mat-card-content>
-  </mat-card>
+  </mat-card>-->
 </div>

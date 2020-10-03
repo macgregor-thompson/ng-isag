@@ -112,7 +112,7 @@ mat-list-item.active, [mat-list-item].active {
 .mat-progress-spinner {
   top: calc(50% - 50px);
   left: calc(50% - 50px);
-  z-index: 999;
+  z-index: 1020;
   position: absolute !important;
 }
 
@@ -727,5 +727,9 @@ button {
     justify-content: space-between;
   }
 
+}
+
+.scorecard-modal {
+  max-width: 95vw !important;
 }
 

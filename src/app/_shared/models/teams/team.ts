@@ -6,6 +6,7 @@ export class Team {
 
   playerA: Player;
   playerB: Player;
+  deleted: boolean;
 
   constructor(year: number) {
     this.year = year;

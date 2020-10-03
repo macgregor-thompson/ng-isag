@@ -21,6 +21,7 @@ import { FilterPlayersByYearPipe } from './pipes/filter-players-by-year.pipe';
 import { LogPipe } from './pipes/log.pipe';
 import { PlayerComponent } from './components/player/player.component';
 import { ScorecardComponent } from './components/scorecard/scorecard.component';
+import { ValidateMinMaxDirective } from './directives/validate-min-max.directive';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ScorecardComponent } from './components/scorecard/scorecard.component';
     FilterPlayersByYearPipe,
     LogPipe,
     PlayerComponent,
-    ScorecardComponent
+    ScorecardComponent,
+    ValidateMinMaxDirective
   ],
   imports: [
     CommonModule,
@@ -68,7 +70,8 @@ import { ScorecardComponent } from './components/scorecard/scorecard.component';
     FilterPlayersByYearPipe,
     LogPipe,
     PlayerComponent,
-    ScorecardComponent
+    ScorecardComponent,
+    ValidateMinMaxDirective
   ],
   providers: [
     FilterPlayersByYearPipe,
