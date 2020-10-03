@@ -443,7 +443,7 @@ isag-issue {
 
 
 .detail-view {
-  @media screen and (min-width: 960px) {
+  @include gt-sm() {
     position: fixed;
     width: calc(50vw - 85px);
     overflow-y: auto;
@@ -456,7 +456,22 @@ isag-issue {
   .mat-toolbar {
     padding: 0;
   }
+}
 
+.detail-view-gt-md {
+  @include gt-md() {
+    position: fixed;
+    width: calc(50vw - 85px);
+    overflow-y: auto;
+    height: calc(100vh - 140px);
+  }
+  .detail-card {
+    padding-top: 0;
+  }
+
+  .mat-toolbar {
+    padding: 0;
+  }
 }
 
 
@@ -604,9 +619,16 @@ mat-sidenav {
 }
 
 
-.column-gt-xs {
+.column-lt-sm {
   display: flex;
   @include lt-sm {
+    flex-direction: column;
+  }
+}
+
+.column-lt-md {
+  display: flex;
+  @include lt-md {
     flex-direction: column;
   }
 }
@@ -733,3 +755,7 @@ button {
   max-width: 95vw !important;
 }
 
+
+.mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
+   color: inherit;
+}

@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { merge as _merge } from 'lodash';
 
 import { YearService } from '../../_core/services/year.service';
-import { Year } from '../../_shared/models/year';
+import { Year } from '../../_shared/models/years/year';
 import { StateService } from '../../_core/services/state.service';
 import { AddYearDialogComponent } from './add-year-dialog/add-year-dialog.component';
 

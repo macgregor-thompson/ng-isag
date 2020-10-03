@@ -17,60 +17,174 @@
 
   <mat-divider></mat-divider>
 
-  <div class="column-gt-xs top-space-15">
+  <div class="column-lt-sm top-space-15">
     <mat-form-field class="left-input">
       <mat-label>Date of Competition</mat-label>
       <input matInput [matDatepicker]="picker" aria-label="date of competition" (focus)="picker.open()"
-             [(ngModel)]="year.date" [readOnly]="!stateService.isAdmin">
+             [(ngModel)]="year.date" [disabled]="!stateService.isAdmin" (ngModelChange)="update('date')">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker [disabled]="!stateService.isAdmin"></mat-datepicker>
     </mat-form-field>
-    <div class="fill-remaining-space"></div>
-    <isag-player-multiple-select [playersToFilterOut]="allPlayers"
+    <mat-form-field>
+      <mat-label>Player Dues</mat-label>
+      <input matInput type="number" [(ngModel)]="year.playerDues" (ngModelChange)="updateSub.next('playerDues')"
+             [disabled]="!stateService.isAdmin" aria-label="player dues" min="0">
+      <span matPrefix>$&nbsp;</span>
+      <!--<span matSuffix>.00</span>-->
+    </mat-form-field>
+  </div>
+
+  <h4 class="top-space-15">Prize Money</h4>
+
+  <div class="column-lt-sm">
+    <mat-form-field>
+      <mat-label>1<sup>st</sup> Place</mat-label>
+      <input matInput type="number" [(ngModel)]="year.firstPlacePercentage"
+             (ngModelChange)="updateSub.next('firstPlacePercentage')" [disabled]="!stateService.isAdmin"
+             aria-label="first place" min="0">
+      <span matSuffix>%</span>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>2<sup>nd</sup> Place</mat-label>
+      <input matInput type="number" [(ngModel)]="year.secondPlacePercentage"
+             (ngModelChange)="updateSub.next('secondPlacePercentage')" [disabled]="!stateService.isAdmin"
+             aria-label="second place" min="0">
+      <span matSuffix>%</span>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>3<sup>rd</sup> Place</mat-label>
+      <input matInput type="number" [(ngModel)]="year.thirdPlacePercentage"
+             (ngModelChange)="updateSub.next('thirdPlacePercentage')" [disabled]="!stateService.isAdmin"
+             aria-label="third place" min="0">
+      <span matSuffix>%</span>
+    </mat-form-field>
+  </div>
+
+  <mat-divider class="section-divider"></mat-divider>
+
+  <div class="expense-btn-wrapper">
+    <h4 class="checklist-header">Expenses</h4>
+    <button mat-icon-button color="primary" *ngIf="stateService.isAdmin" (click)="addPrizeOrExpense('expenses')"
+            matTooltip="Add Expense" matTooltipPosition="above" matTooltipClass="ninety-tooltip"
+            matTooltipShowDelay="750">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+  </div>
+  <mat-list class="ninety-list expense-list no-hover">
+    <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"
+                   *ngFor=" let expense of year.expenses; let i = index">
+      <mat-form-field class="flex2" floatLabel="never">
+        <mat-label>Expense</mat-label>
+        <input class="d-print-none" matInput [(ngModel)]="expense.name"
+               (ngModelChange)="updatePrizeOrExpenseSub.next([i, 'expenses'])"
+               [disabled]="!stateService.isAdmin" aria-label="expense"/>
+      </mat-form-field>
+      <mat-form-field class="flex1">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="expense.cost"
+               (ngModelChange)="updatePrizeOrExpenseSub.next([i, 'expenses'])"
+               [disabled]="!stateService.isAdmin" aria-label="expense cost" min="0">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+      <button class="d-print-none" mat-icon-button (click)="deletePrizeOrExpense(i, 'expenses')" *ngIf="stateService.isAdmin"
+              matTooltip="Delete Expense" matTooltipPosition="above" aria-label="Delete Expense">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-divider class="section-divider"></mat-divider>
+
+  <div class="prizes-btn-wrapper">
+    <h4 class="checklist-header">Additional Prizes </h4>
+    <button mat-icon-button color="primary" *ngIf="stateService.isAdmin" (click)="addPrizeOrExpense('prizes')"
+            matTooltip="Add Prize" matTooltipPosition="above" matTooltipClass="ninety-tooltip"
+            matTooltipShowDelay="750">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+  </div>
+  <mat-list class="ninety-list prize-list no-hover">
+    <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"
+                   *ngFor=" let prize of year.prizes; let i = index">
+      <mat-form-field class="flex2" floatLabel="never">
+        <mat-label>Prize</mat-label>
+        <input class="d-print-none" matInput [(ngModel)]="prize.name" (ngModelChange)="updatePrizeOrExpenseSub.next([i, 'prizes'])"
+               [disabled]="!stateService.isAdmin" aria-label="expense"/>
+      </mat-form-field>
+      <mat-form-field class="flex1">
+        <mat-label>Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="prize.cost" [disabled]="!stateService.isAdmin"
+               aria-label="expense cost" (ngModelChange)="updatePrizeOrExpenseSub.next([i, 'prizes'])" min="0">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+      <button class="d-print-none" mat-icon-button (click)="deletePrizeOrExpense(i, 'prizes')" *ngIf="stateService.isAdmin"
+              matTooltip="Delete Expense" matTooltipPosition="above" aria-label="Delete Expense">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-divider class="section-divider"></mat-divider>
+
+  <div class="players-wrapper">
+    <h4 class="checklist-header">{{year.year}} Players</h4>
+
+    <isag-player-multiple-select *ngIf="stateService.isAdmin"
+                                 [playersToFilterOut]="allPlayers"
                                  (selectPlayers)="addPlayers($event)"></isag-player-multiple-select>
   </div>
 
-  <mat-toolbar class="header-btns">
-    <h4 class="flex1 name-header">A Players</h4>
-    <h4 class="handicap-header">Handicap</h4>
-  </mat-toolbar>
-  <mat-list id="aPlayers" class="isag-list" cdkDropList [cdkDropListData]="aPlayers" (cdkDropListDropped)="drop($event)">
-    <mat-list-item class="list-item" cdkDrag *ngFor="let player of aPlayers
+  <div class="player-columns">
+    <div class="player-list">
+      <mat-toolbar class="header-btns">
+        <h4 class="flex1 name-header">A Players</h4>
+        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">Handicap</h4>
+      </mat-toolbar>
+      <mat-list id="aPlayers" class="isag-list" cdkDropList [cdkDropListData]="aPlayers"
+                (cdkDropListDropped)="dropPlayer($event)">
+        <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"  cdkDrag *ngFor="let player of aPlayers
     | orderBy: 'handicap' : false; let i = index;">
-      <div class="drag-handle" cdkDragHandle fxHide.lt-sm
-           [class.invisible]="player.handicap !== bPlayers[0].handicap"
-           [cdkDragHandleDisabled]="player.handicap !== bPlayers[0].handicap">
-        <mat-icon>drag_indicator</mat-icon>
-      </div>
-      <isag-player [index]="i + 1"
-                   [player]="player"></isag-player>
-      <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
-              matTooltip="{{'Delete ' + player.firstName}}"
-              matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-list-item>
-  </mat-list>
+          <div class="drag-handle" cdkDragHandle
+               [class.invisible]="!stateService.isAdmin || player.handicap !== bPlayers[0].handicap"
+               [cdkDragHandleDisabled]="player.handicap !== bPlayers[0].handicap">
+            <mat-icon>drag_indicator</mat-icon>
+          </div>
+          <isag-player [index]="i + 1"
+                       [player]="player"></isag-player>
+          <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
+                  matTooltip="{{'Delete ' + player.firstName}}"
+                  matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
 
-  <mat-toolbar class="header-btns">
-    <h4 class="flex1 name-header">B Players</h4>
-    <h4 class="handicap-header">Handicap</h4>
-  </mat-toolbar>
-  <mat-list id="bPlayers" class="isag-list" cdkDropList [cdkDropListData]="bPlayers" (cdkDropListDropped)="drop($event)">
-    <mat-list-item class="list-item" cdkDrag *ngFor="let player of bPlayers
+    <div class="player-list">
+      <mat-toolbar class="header-btns">
+        <h4 class="flex1 name-header">B Players</h4>
+        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">Handicap</h4>
+      </mat-toolbar>
+      <mat-list id="bPlayers" class="isag-list" cdkDropList [cdkDropListData]="bPlayers"
+                (cdkDropListDropped)="dropPlayer($event)">
+        <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"  cdkDrag *ngFor="let player of bPlayers
     | orderBy: 'handicap' : false; let i = index;">
-      <div class="drag-handle" cdkDragHandle fxHide.lt-sm
-           [class.invisible]="player.handicap !== aPlayers[aPlayers.length - 1].handicap"
-           [cdkDragHandleDisabled]="player.handicap !== aPlayers[aPlayers.length - 1].handicap">
-        <mat-icon>drag_indicator</mat-icon>
-      </div>
-      <isag-player [index]="i + 1"
-                   [player]="player"></isag-player>
-      <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
-              matTooltip="{{'Delete ' + player.firstName}}"
-              matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-list-item>
-  </mat-list>
+          <div class="drag-handle" cdkDragHandle
+               [class.invisible]="!stateService.isAdmin || player.handicap !== aPlayers[aPlayers.length - 1].handicap"
+               [cdkDragHandleDisabled]="player.handicap !== aPlayers[aPlayers.length - 1].handicap">
+            <mat-icon>drag_indicator</mat-icon>
+          </div>
+          <isag-player [index]="i + 1"
+                       [player]="player"></isag-player>
+          <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
+                  matTooltip="{{'Delete ' + player.firstName}}"
+                  matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+
+
 </mat-card>

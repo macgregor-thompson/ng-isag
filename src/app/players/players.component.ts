@@ -10,7 +10,7 @@ import { AddPlayerDialogComponent } from './add-player-dialog/add-player-dialog.
 import { StateService } from '../_core/services/state.service';
 import { YearService } from '../_core/services/year.service';
 import { SpinnerService } from '../_core/services/spinner.service';
-import { Year } from '../_shared/models/year';
+import { Year } from '../_shared/models/years/year';
 
 @Component({
   selector: 'isag-players',

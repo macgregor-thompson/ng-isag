@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { YearService } from '../../../_core/services/year.service';
-import { Year } from '../../../_shared/models/year';
+import { Year } from '../../../_shared/models/years/year';
 
 @Component({
   selector: 'isag-add-year-dialog',

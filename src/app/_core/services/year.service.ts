@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Player } from '../../_shared/models/player';
-import { Year } from '../../_shared/models/year';
+import { Year } from '../../_shared/models/years/year';
 import { StateService } from './state.service';
 import { AppInitializerService } from '../../app-initializer.service';
 import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';

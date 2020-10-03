@@ -5,10 +5,11 @@
         <input matInput [(ngModel)]="auth.username" placeholder="Username" required aria-label="username">
       </mat-form-field>
       <mat-form-field>
-        <input matInput [(ngModel)]="auth.password" placeholder="Password" type="password" required aria-label="password">
+        <input matInput [(ngModel)]="auth.password" placeholder="Password" type="password" required aria-label="password"
+               (keydown.enter)="login()">
       </mat-form-field>
       <isag-alert *ngIf="loginFailed" alertClass="danger">
-        <div>The username and/or password is incorrect...piss off.</div>
+        <div>The username and/or password is incorrect</div>
       </isag-alert>
     </mat-card-content>
     <mat-card-actions>
@@ -17,3 +18,4 @@
     </mat-card-actions>
   </mat-card>
 </div>
+sd

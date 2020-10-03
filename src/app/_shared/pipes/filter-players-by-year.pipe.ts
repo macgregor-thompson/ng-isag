@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { Player } from '../models/player';
-import { Year } from '../models/year';
+import { Year } from '../models/years/year';
 
 @Pipe({
   name: 'filterPlayersByYear'

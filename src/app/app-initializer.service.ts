@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Year } from './_shared/models/year';
+import { Year } from './_shared/models/years/year';
 import { Player } from './_shared/models/player';
 
 @Injectable({

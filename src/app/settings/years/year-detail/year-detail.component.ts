@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
-import { uniq as _uniq, chunk as _chunk } from 'lodash';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { chunk as _chunk } from 'lodash';
 
-import { Year } from '../../../_shared/models/year';
+import { Year } from '../../../_shared/models/years/year';
 import { StateService } from '../../../_core/services/state.service';
 import { YearService } from '../../../_core/services/year.service';
 import { ConfirmDialogComponent } from '../../../_shared/components/confirm-dialog/confirm-dialog.component';
@@ -15,7 +15,8 @@ import { PlayerService } from '../../../_core/services/player.service';
 import { FilterPlayersByYearPipe } from '../../../_shared/pipes/filter-players-by-year.pipe';
 import { ConfirmDialogData } from '../../../_shared/models/confirm-dialog-data';
 import { OrderByPipe } from '../../../_shared/pipes/order-by.pipe';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Expense } from '../../../_shared/models/years/expense';
 
 @Component({
   selector: 'isag-year-detail',
@@ -32,6 +33,8 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
   aPlayers: Player[];
   bPlayers: Player[];
   allPlayers: Player[];
+  updateSub = new Subject<keyof Year>();
+  updatePrizeOrExpenseSub = new Subject<[number, 'expenses' | 'prizes']>();
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -43,6 +46,11 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
               private orderByPipe: OrderByPipe) { }
 
   ngOnInit(): void {
+    this.subscriptions.add(this.updateSub.pipe(debounceTime(400)).subscribe(prop => this.update(prop)));
+    this.subscriptions.add(this.updatePrizeOrExpenseSub.pipe(debounceTime(400))
+      .subscribe(x => this.updatePrizesOrExpenses(...x)));
+
+
     this.router.navigate([], { fragment: 'player-detail' });
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
@@ -104,9 +112,8 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.allPlayers = [...this.aPlayers, ...this.bPlayers];
   }
 
-  drop(event: CdkDragDrop<Player[]>) {
+  dropPlayer(event: CdkDragDrop<Player[]>) {
     if (event.previousContainer !== event.container) {
-      console.log(event.previousContainer.data[event.previousIndex]);
       const index = event.container.id === 'aPlayers' ? this.aPlayers.length - 1 : 0;
       const player = event.container.data.splice(index, 1)[0];
 
@@ -118,5 +125,26 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.aPlayers = this.aPlayers.slice(0);
     this.bPlayers = this.bPlayers.slice(0);
+  }
+
+  addPrizeOrExpense(list: 'prizes' | 'expenses'): void {
+    this.year[list].push(new Expense());
+  }
+
+  update(prop: keyof Year): void {
+    this.yearService.update(this.year._id, { [prop]: this.year[prop] }).subscribe();
+  }
+
+  deletePrizeOrExpense(i: number, list: 'prizes' | 'expenses'): void {
+    this.year[list].splice(i, 1);
+    this.update(list);
+  }
+
+
+  updatePrizesOrExpenses(i: number, list: 'prizes' | 'expenses'): void {
+    if (this.year.expenses[i].name?.length && this.year.expenses[i].cost != null) {
+      const filtered = this.year[list].filter(e => !!e.name.length && e.cost != null);
+      this.yearService.update(this.year._id, { [list]: filtered }).subscribe();
+    }
   }
 }

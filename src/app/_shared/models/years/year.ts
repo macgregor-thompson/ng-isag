@@ -1,3 +1,5 @@
+import { Expense } from './expense';
+
 export class Year {
   _id: string;
   year: number;
@@ -8,6 +10,14 @@ export class Year {
   aPlayerIds: string[];
   bPlayerIds: string[];
   deleted: true;
+
+  paidPLayerIds: string[];
+  playerDues: number;
+  expenses: Expense[];
+  prizes: Expense[];
+  firstPlacePercentage = 60;
+  secondPlacePercentage = 30;
+  thirdPlacePercentage = 10;
 
   constructor(year) {
     this.year = year;

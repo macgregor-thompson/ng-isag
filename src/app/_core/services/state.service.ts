@@ -6,7 +6,7 @@ import { User } from '../../_shared/models/user';
 import { Role } from '../../_shared/models/role.enum';
 import { TokenService } from './token.service';
 import { AppInitializerService } from '../../app-initializer.service';
-import { Year } from '../../_shared/models/year';
+import { Year } from '../../_shared/models/years/year';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { YearService } from '../_core/services/year.service';
 import { Player } from '../_shared/models/player';
-import { Year } from '../_shared/models/year';
+import { Year } from '../_shared/models/years/year';
 import { StateService } from '../_core/services/state.service';
 
 @Component({

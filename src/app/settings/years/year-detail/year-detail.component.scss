@@ -1,4 +1,5 @@
 @import '../../../../colors.scss';
+@import '../../../../media-queries';
 
 mat-form-field {
   width: 100%;
@@ -23,12 +24,86 @@ mat-form-field {
 
 .handicap-header {
   width: 60px;
-  margin-right: 34px;}
+}
 
-.header-btns {
-  margin-top: 30px;
+.header-right-margin {
+  margin-right: 34px;
 }
 
 .drag-handle {
   color: $isag-green;
+}
+
+mat-toolbar {
+  padding-right: 0;
+}
+
+.player-list {
+  flex: 1;
+  &:first-of-type {
+    margin-right: 15px;
+  }
+  &:last-of-type {
+    margin-left: 15px;
+  }
+}
+
+.player-list:last-of-type {
+  margin: 30px 0 0;
+}
+
+.player-columns {
+  @include md() {
+    display: flex;
+    flex-direction: row;
+    .player-list {
+      margin-top: 15px;
+    }
+  }
+}
+
+@include lt-md() {
+  .input-column {
+    flex: 1;
+  }
+}
+
+.expense-btn-wrapper {
+  display: flex;
+  align-items: center;
+  h4 {
+    margin: 0;
+  }
+}
+
+
+.expense-list {
+  mat-list-item {
+    height: auto;
+    padding: 3px 0;
+  }
+}
+
+.prize-list, .expense-list {
+  .list-item {
+    border: none;
+  }
+}
+
+.section-divider {
+  margin: 15px 0;
+}
+
+
+.expense-btn-wrapper, .prizes-btn-wrapper, .players-wrapper {
+  margin-top: 30px;
+}
+
+.players-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+h4 {
+  font-weight: 900;
 }

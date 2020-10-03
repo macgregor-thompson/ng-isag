@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { merge as _merge } from 'lodash';
 
 import { YearService } from '../_core/services/year.service';
-import { Year } from '../_shared/models/year';
+import { Year } from '../_shared/models/years/year';
 import { StateService } from '../_core/services/state.service';
 import { Team } from '../_shared/models/teams/team';
 import { TeamService } from '../_core/services/team.service';

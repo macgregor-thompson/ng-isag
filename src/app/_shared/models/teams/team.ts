@@ -7,6 +7,8 @@ export class Team {
   playerA: Player;
   playerB: Player;
   deleted: boolean;
+  winningBid: number;
+  winningBidder: number;
 
   constructor(year: number) {
     this.year = year;

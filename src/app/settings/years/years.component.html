@@ -1,5 +1,5 @@
 <div class="container years-page">
-  <mat-card class="isag-card years-card"  [fxHide.lt-md]="selectedYear">
+  <mat-card class="isag-card years-card" [fxHide.lt-lg]="selectedYear">
     <mat-card-header>
       <mat-card-title>Years</mat-card-title>
       <div class="fill-remaining-space"></div>
@@ -41,7 +41,7 @@
   </mat-card>
 
   <div class="flex1" *ngIf="selectedYear">
-    <div class="detail-view">
+    <div class="detail-view-gt-md">
       <isag-year-detail [year]="selectedYear"
                         (close)="closeYearDetails()">
       </isag-year-detail>

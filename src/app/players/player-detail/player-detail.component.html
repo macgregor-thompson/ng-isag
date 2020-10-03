@@ -21,7 +21,7 @@
     </mat-slide-toggle>
   </div>
 
-  <div class="column-gt-xs" [class.top-space-15]="!stateService.isAdmin">
+  <div class="column-lt-sm" [class.top-space-15]="!stateService.isAdmin">
     <mat-form-field>
       <input matInput type="text" placeholder="First Name" [(ngModel)]="player.firstName" required
              aria-label="first name" name="firstName" (ngModelChange)="updateSub.next('firstName')"
@@ -38,7 +38,7 @@
            (ngModelChange)="updateSub.next('email')" [readonly]="!canEdit">
   </mat-form-field>
 
-  <div class="column-gt-xs">
+  <div class="column-lt-sm">
     <mat-form-field>
       <span matPrefix *ngIf="player.handicap > 0">+</span>
       <input matInput type="number" placeholder="Handicap Index" [(ngModel)]="player.handicap" required
@@ -54,7 +54,7 @@
     </mat-form-field>
   </div>
 
-  <div class="column-gt-xs">
+  <div class="column-lt-sm">
     <mat-form-field>
       <input matInput type="text" placeholder="City" [(ngModel)]="player.city"
              aria-label="city" name="city" (ngModelChange)="updateSub.next('city')" [readonly]="!canEdit">
