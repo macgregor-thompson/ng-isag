@@ -1,16 +1,29 @@
 <mat-tab-group *ngIf="selectedIndex != null" [selectedIndex]="selectedIndex"
                (selectedTabChange)="updateQueryParam($event)" class="settings-tab-group">
 
-  <mat-tab label="Years">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>today</mat-icon>
+      Years
+    </ng-template>
     <isag-years></isag-years>
   </mat-tab>
 
-  <mat-tab label="Courses">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>golf_course</mat-icon>
+      Courses
+    </ng-template>
     <isag-courses></isag-courses>
   </mat-tab>
 
-  <mat-tab label="Users">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>account_circle</mat-icon>
+      Users
+    </ng-template>
     <isag-users></isag-users>
   </mat-tab>
+
 
 </mat-tab-group>
