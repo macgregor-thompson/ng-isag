@@ -759,3 +759,14 @@ button {
 .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
    color: inherit;
 }
+
+@include md() {
+  .player-list:last-of-type {
+    .handicap-header {
+      margin-right: 8px;
+    }
+    .handicap {
+      margin-right: 13px;
+    }
+  }
+}
