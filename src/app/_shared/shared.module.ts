@@ -20,8 +20,8 @@ import { FilterOutSelectedPlayersPipe } from './pipes/filter-out-selected-player
 import { FilterPlayersByYearPipe } from './pipes/filter-players-by-year.pipe';
 import { LogPipe } from './pipes/log.pipe';
 import { PlayerComponent } from './components/player/player.component';
-import { ScorecardComponent } from './components/scorecard/scorecard.component';
 import { ValidateMinMaxDirective } from './directives/validate-min-max.directive';
+import { CourseCardComponent } from '../settings/courses/course-card/course-card.component';
 
 @NgModule({
   declarations: [
@@ -39,8 +39,8 @@ import { ValidateMinMaxDirective } from './directives/validate-min-max.directive
     FilterPlayersByYearPipe,
     LogPipe,
     PlayerComponent,
-    ScorecardComponent,
-    ValidateMinMaxDirective
+    ValidateMinMaxDirective,
+    CourseCardComponent
   ],
   imports: [
     CommonModule,
@@ -70,8 +70,8 @@ import { ValidateMinMaxDirective } from './directives/validate-min-max.directive
     FilterPlayersByYearPipe,
     LogPipe,
     PlayerComponent,
-    ScorecardComponent,
-    ValidateMinMaxDirective
+    ValidateMinMaxDirective,
+    CourseCardComponent
   ],
   providers: [
     FilterPlayersByYearPipe,

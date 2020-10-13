@@ -1,0 +1,97 @@
+<div class="dflex">
+  <h2 mat-dialog-title>Add Scorecard</h2>
+  <div class="fill-remaining-space"></div>
+  <mat-form-field class="team-select">
+    <mat-label>Team</mat-label>
+    <mat-select [(value)]="card.team" [compareWith]="teamsAreSame" (selectionChange)="setTeamId($event.value)">
+      <mat-option *ngFor="let team of data.teams" [value]="team">
+        {{team.playerA.firstName + ' '  + team.playerA.lastName}}
+        /
+        {{team.playerB.firstName + ' '  + team.playerB.lastName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-dialog-content>
+
+  <isag-course-card [course]="data.course">
+    <ng-container  *ngIf="card.team">
+      <!-- ========= Player A Scores =========== -->
+      <tr>
+        <th>
+          {{card.team?.playerA?.firstName + ' ' + card.team.playerA.lastName}}
+        </th>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="card.playerANetScores[hole]"
+                   aria-label="handicap" name="handicap">
+          </mat-form-field>
+        </td>
+        <th>{{sumHoles(card.playerANetScores, 1, 9)}}</th>
+        <td *ngFor="let hole of [10,11,12,13,14,15,16,17,18]">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="card.playerANetScores[hole]"
+                   aria-label="handicap" name="handicap">
+          </mat-form-field>
+        </td>
+        <th class="back-nine">{{sumHoles(card.playerANetScores, 10, 9)}}</th>
+        <th class="back-nine">{{sumHoles(card.playerANetScores, 1, 18)}}</th>
+      </tr>
+      <!-- ========= Player A Scores =========== -->
+
+      <!-- ========= Player B Scores =========== -->
+      <tr>
+        <th>
+          {{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}
+        </th>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="card.playerBNetScores[hole]"
+                   aria-label="handicap" name="handicap">
+          </mat-form-field>
+        </td>
+        <th>{{sumHoles(card.playerBNetScores, 1, 9)}}</th>
+        <td *ngFor="let hole of [10,11,12,13,14,15,16,17,18]">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="card.playerBNetScores[hole]"
+                   aria-label="handicap" name="handicap">
+          </mat-form-field>
+        </td>
+        <th class="back-nine">{{sumHoles(card.playerBNetScores, 10, 9)}}</th>
+        <th class="back-nine">{{sumHoles(card.playerBNetScores, 1, 18)}}</th>
+      </tr>
+      <!-- ========= Player B Scores =========== -->
+
+
+      <!-- ========= Team Scores =========== -->
+      <tr class="team-scores-row">
+        <th>Team*</th>
+        <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="card.teamNetScores[hole]" required
+                   aria-label="handicap" name="handicap">
+          </mat-form-field>
+        </td>
+        <th>{{sumHoles(card.teamNetScores, 1, 9)}}</th>
+        <td *ngFor="let hole of [10,11,12,13,14,15,16,17,18]">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="card.teamNetScores[hole]" required
+                   aria-label="handicap" name="handicap">
+          </mat-form-field>
+        </td>
+        <th class="back-nine">{{sumHoles(card.teamNetScores, 10, 9)}}</th>
+        <th class="back-nine">{{sumHoles(card.teamNetScores, 1, 18)}}</th>
+      </tr>
+      <!-- ========= Team Scores =========== -->
+    </ng-container>
+  </isag-course-card>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()">Add</button>
+</mat-dialog-actions>
+
+
+

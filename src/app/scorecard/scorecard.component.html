@@ -1,0 +1,110 @@
+<div class="container courses-page">
+  <mat-card class="isag-card courses-card">
+    <mat-card-header>
+      <mat-card-title>
+        <div>{{selectedYear.year}} Scores</div>
+      </mat-card-title>
+      <div class="fill-remaining-space"></div>
+      <mat-form-field class="year-select">
+        <mat-label>Year</mat-label>
+        <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
+                    (selectionChange)="getData()">
+          <mat-option *ngFor="let year of yearService.years" [value]="year">
+            {{ year.year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="openAddScorecardDialog()" class="right-16"
+              *ngIf="stateService.isAdmin"
+              matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Course">
+        <mat-icon>add</mat-icon>
+        SCORECARD
+      </button>
+    </mat-card-header>
+
+    <mat-card-content *ngIf="course" class="team-card-content">
+      <isag-course-card [course]="course" [rankings]="true">
+        <ng-container  *ngFor="let card of scorecards; let even = even; let index = index">
+          <tr (click)="togglePlayerViews(card.teamId)" class="pointer" [class.even]="even">
+            <th class="ranking">{{index + 1}}</th>
+            <th>
+              <div>{{card.team.playerA.firstName + '&nbsp;'  + card.team.playerA.lastName}}</div>
+              <div>{{card.team.playerB.firstName + '&nbsp;'  + card.team.playerB.lastName}}</div>
+            </th>
+            <td *ngFor="let hole of course.frontNine | keyvalue">{{card.teamNetScores[hole.key]}}</td>
+            <th>{{card.frontNineNetScore}}</th>
+            <td *ngFor="let hole of course.backNine | keyvalue"  class="back-nine">{{card.teamNetScores[hole.key]}}</td>
+            <th class="back-nine">{{card.backNineNetScore}}</th>
+            <th class="back-nine">{{card.totalNetScore}}</th>
+          </tr>
+
+          <ng-container *ngIf="showPlayerScores[card.teamId]">
+            <tr class="player-score-row" [@rowsAnimation]  [class.even]="even">
+              <th colspan="2">
+                <div>{{card.team.playerA.firstName + '&nbsp;'  + card.team.playerA.lastName}}</div>
+              </th>
+              <td *ngFor="let hole of course.frontNine | keyvalue">{{card.teamNetScores[hole.key]}}</td>
+              <th>{{card.frontNineNetScore}}</th>
+              <td *ngFor="let hole of course.backNine | keyvalue"  class="back-nine">{{card.teamNetScores[hole.key]}}</td>
+              <th class="back-nine">{{card.backNineNetScore}}</th>
+              <th class="back-nine">{{card.totalNetScore}}</th>
+            </tr>
+            <tr class="player-score-row" [@rowsAnimation]  [class.even]="even">
+              <th colspan="2">
+                <div>{{card.team.playerB.firstName + '&nbsp;'  + card.team.playerB.lastName}}</div>
+              </th>
+              <td *ngFor="let hole of course.frontNine | keyvalue">{{card.teamNetScores[hole.key]}}</td>
+              <th>{{card.frontNineNetScore}}</th>
+              <td *ngFor="let hole of course.backNine | keyvalue"  class="back-nine">{{card.teamNetScores[hole.key]}}</td>
+              <th class="back-nine">{{card.backNineNetScore}}</th>
+              <th class="back-nine">{{card.totalNetScore}}</th>
+            </tr>
+          </ng-container>
+
+
+        </ng-container>
+
+      </isag-course-card>
+
+    </mat-card-content>
+  </mat-card>
+
+ <!-- <mat-card class="isag-card courses-card">
+    <mat-card-header>
+      <mat-card-title>
+        <div>{{selectedYear.year}} Individual Scores</div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content *ngIf="course">
+      <isag-course-card [course]="course" [rankings]="true">
+        <ng-container  *ngFor="let card of scorecards; let first = first;">
+          <tr [class.top-border]="first">
+            <th>1</th>
+            <th>
+              <div>{{card.team.playerA.firstName + '&nbsp;'  + card.team.playerA.lastName}}</div>
+            </th>
+            <td *ngFor="let hole of course.frontNine | keyvalue">{{card.playerANetScores[hole.key]}}</td>
+            <th>{{card.frontNineNetScore}}</th>
+            <td *ngFor="let hole of course.backNine | keyvalue"  class="back-nine">{{card.playerANetScores[hole.key]}}</td>
+            <th class="back-nine">{{card.backNineNetScore}}</th>
+            <th class="back-nine">{{card.totalNetScore}}</th>
+          </tr>
+          <tr>
+            <th>
+              <div>{{card.team.playerB.firstName + '&nbsp;'  + card.team.playerB.lastName}}</div>
+            </th>
+            <td *ngFor="let hole of course.frontNine | keyvalue">{{card.teamNetScores[hole.key]}}</td>
+            <th>{{card.frontNineNetScore}}</th>
+            <td *ngFor="let hole of course.backNine | keyvalue"  class="back-nine">{{card.teamNetScores[hole.key]}}</td>
+            <th class="back-nine">{{card.backNineNetScore}}</th>
+            <th class="back-nine">{{card.totalNetScore}}</th>
+          </tr>
+        </ng-container>
+
+      </isag-course-card>
+
+    </mat-card-content>
+  </mat-card>-->
+</div>
+

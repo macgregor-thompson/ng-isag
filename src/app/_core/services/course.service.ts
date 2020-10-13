@@ -31,7 +31,7 @@ export class CourseService {
 
   @SpinnerAndCatchError
   getByYear(year: number = this.stateService.year.year): Observable<Course> {
-    return this.http.get<Course>(`${this.courseApi}?year=${year}`);
+    return this.http.get<Course>(`${this.courseApi}/${year}`);
   }
 
   @SpinnerAndCatchError

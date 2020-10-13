@@ -1,0 +1,37 @@
+@import '../../../colors';
+@import '../../../media-queries';
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.scorecard-table {
+
+  mat-form-field {
+    width: 40px;
+    text-align: center;
+  }
+
+  .input-margin {
+    margin-right: 15px;
+    @include lt-sm() {
+      margin: 0;
+    }
+  }
+
+  .team-scores-row {
+    background-color: #4caf502e;
+  }
+
+}
+
+
+.team-select {
+  width: 300px;
+  margin-right: 16px;
+}
+
+
+
+
+

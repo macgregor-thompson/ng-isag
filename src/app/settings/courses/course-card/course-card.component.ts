@@ -10,6 +10,7 @@ import { Hole } from '../../../_shared/models/course/hole';
 })
 export class CourseCardComponent implements OnInit {
   @Input() course: Course;
+  @Input() rankings: boolean;
 
   frontNine = [
     '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Out',

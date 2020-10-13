@@ -770,3 +770,50 @@ button {
     }
   }
 }
+
+
+.scorecard-table {
+  width: 100%;
+  border-spacing: 0;
+
+  td, th {
+    border: 1px solid #dee2e6;
+  }
+  td {
+    padding: 0 3px;
+    text-align: center;
+
+  }
+  th {
+    padding: 5px 8px;
+  }
+
+  mat-form-field {
+    width: 40px;
+    text-align: center;
+  }
+
+  .tees {
+    margin-right: 10px;
+  }
+
+  .hole-headers {
+    th {
+      background-color: $isag-green;
+      color: #fff;
+      width: 60px;
+    }
+  }
+
+  .input-margin {
+    margin-right: 15px;
+    @include lt-sm() {
+      margin: 0;
+    }
+  }
+
+  .team-scores-row {
+    background-color: #4caf502e;
+  }
+
+}

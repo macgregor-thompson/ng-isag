@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent, data: { title: 'Login' } },
       { path: 'signup', component: SignupComponent, data: { title: 'Signup' } },
-      { path: '', loadChildren: () => import('./results/results.module').then(m => m.ResultsModule) },
+      { path: '', loadChildren: () => import('./scorecard/scorecard.module').then(m => m.ScorecardModule) },
       { path: 'teams', loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)  },
       { path: 'players', loadChildren: () => import('./players/players.module').then(m => m.PlayersModule)  },
       { path: 'calcutta', loadChildren: () => import('./calcutta/calcutta.module').then(m => m.CalcuttaModule)  },

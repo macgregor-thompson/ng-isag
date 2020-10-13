@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { merge as _merge } from 'lodash';
+import { merge as _merge } from 'lodash-es';
 
 import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { StateService } from './state.service';
