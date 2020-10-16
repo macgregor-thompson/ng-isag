@@ -27,8 +27,8 @@
     <mat-list class="isag-list player-results-list">
       <mat-list-item class="list-item no-hover"
                      *ngFor="let card of scorecards | orderBy: 'rank';
-                       let even = even; let first = first; let last = last; let index = index"
-                     [disableRipple]="true" [class.even-item]="even">
+                       let odd = odd; let first = first; let last = last; let index = index"
+                     [disableRipple]="true" [class.odd-item]="odd">
 
         <div class="list-ranking">{{(card.tied ? 'T' : '') + card.rank}}</div>
 
