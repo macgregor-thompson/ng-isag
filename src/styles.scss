@@ -19,7 +19,6 @@
 
 @import './media-queries';
 
-@import './lists';
 
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -540,9 +539,20 @@ isag-issue {
   background: $red;
 }
 
-.isag-icon {
-  margin-left: 10px;
-  color: $isag-yellow;
+.winner {
+  &, & .mat-select-value, & mat-icon, & svg {
+    margin-left: 10px;
+    color: $isag-yellow !important;
+    fill: $isag-yellow !important;
+  }
+}
+
+.loser {
+  &, & .mat-select-value, & mat-icon, & svg  {
+    margin-left: 10px;
+    color: $isag-pink !important;
+    fill: $isag-pink !important;
+  }
 }
 
 mat-form-field .mat-form-field-infix {
@@ -867,3 +877,9 @@ button {
 
 
 }
+
+
+
+
+
+

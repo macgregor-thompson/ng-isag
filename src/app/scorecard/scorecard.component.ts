@@ -3,6 +3,7 @@ import { animate, sequence, style, transition, trigger } from '@angular/animatio
 
 import { MatDialog } from '@angular/material/dialog';
 import { chain as _chain, sortBy as _sortBy, merge as _merge } from 'lodash';
+import { faTshirt } from '@fortawesome/free-solid-svg-icons';
 
 import { Year } from '../_shared/models/years/year';
 import { YearService } from '../_core/services/year.service';
@@ -40,6 +41,8 @@ export class ScorecardComponent implements OnInit {
   teams: Team[];
   course: Course;
   showPlayerScores: { [teamId: string]: boolean } = {};
+  faTshirt = faTshirt;
+
 
   constructor(public yearService: YearService,
               public stateService: StateService,
@@ -83,7 +86,8 @@ export class ScorecardComponent implements OnInit {
         course: this.course,
         teams: this.teams.filter(t => !currentCardTeamIds.includes(t._id)),
         year: this.selectedYear.year,
-        card: card }
+        card: card
+      }
     });
 
     dialogRef.afterClosed().subscribe((result: Scorecard) => {
@@ -114,48 +118,10 @@ export class ScorecardComponent implements OnInit {
     const first = this.setPlace(1, cards);
     const second = this.setPlace(2, cards.filter(s => !s.rank));
     const third = this.setPlace(3, cards.filter(s => !s.rank));
-    const last =  this.setPlace(cards.length, cards.filter(s => !s.rank), true);
+    const last = this.setPlace(cards.length, cards.filter(s => !s.rank), true);
     const nonPLaceFinishers = this.rankScorecards(cards.filter(s => !s.rank), 3);
-    //console.log(...(nonPLaceFinishers || []), last);
     this.scorecards = [first, second, third, ...(nonPLaceFinishers || []), last].filter(c => !!c);
   }
-
-/*  setPlace(place: number, cards: Scorecard[] = this.scorecards): Scorecard {
-    if (!cards?.length) return;
-    const grouped: Array<Scorecard[]> = _chain(cards).groupBy('totalNetScore').toPairs().sortBy(0).map(1).value();
-    if (grouped[0].length === 1) {
-      grouped[0][0].rank = place;
-     return grouped[0][0];
-    }
-
-    let ties: Scorecard[] = grouped[0];
-    for (let i = 18; i >= 1; i--) {
-      ties = (_chain(ties).groupBy(c => c.teamNetScores[i]).toPairs().sortBy(0).map(1).value())[0];
-      if (ties.length === 1) {
-        ties[0].rank = place;
-        return ties[0];
-      }
-    }
-  }*/
-
-/*  setLastPlace(place: number, cards: Scorecard[] = this.scorecards): Scorecard {
-    if (!cards?.length) return;
-    const grouped: Array<Scorecard[]> = _chain(cards).groupBy('totalNetScore').toPairs().sortBy(0).reverse().map(1).value();
-    if (grouped[0].length === 1) {
-      grouped[0][0].rank = place;
-      return grouped[0][0];
-    }
-
-    let ties: Scorecard[] = grouped[0];
-    for (let i = 18; i >= 1; i--) {
-      ties = (_chain(ties).groupBy(c => c.teamNetScores[i]).toPairs().sortBy(0).reverse().map(1).value())[0];
-      if (ties.length === 1) {
-        ties[0].rank = place;
-        return ties[0];
-      }
-    }
-  }*/
-
 
   setPlace(place: number, cards: Scorecard[] = this.scorecards, reverse = false): Scorecard {
     if (!cards?.length) return;
@@ -167,16 +133,13 @@ export class ScorecardComponent implements OnInit {
 
     let ties: Scorecard[] = grouped[0];
     for (let i = 18; i >= 1; i--) {
-      ties = (_chain(ties).groupBy(c => c.teamNetScores[i]).toPairs().sortBy(0).map(1).value())[0];
       ties = this.groupByScore(ties, c => c.teamNetScores[i], reverse)[0];
-
       if (ties.length === 1) {
         ties[0].rank = place;
         return ties[0];
       }
     }
   }
-
 
   groupByScore(cards: Scorecard[], groupBy, reverse = false): Scorecard[][] {
     return reverse ?
@@ -209,7 +172,7 @@ export class ScorecardComponent implements OnInit {
           if (cards[k + h].tied !== true) {
             if (cards[k].totalNetScore === cards[h + k].totalNetScore) {
               cards[k].rank = k + 1 + numPLaces;
-              cards[h + k].rank = k +  1 + numPLaces;
+              cards[h + k].rank = k + 1 + numPLaces;
               cards[k].tied = true;
               cards[h + k].tied = true;
             }

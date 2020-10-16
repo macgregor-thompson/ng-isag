@@ -25,8 +25,13 @@ export class AppComponent {
     const baseHref = location.getBaseHrefFromDOM();
 
     this.matIconRegistry.addSvgIcon(
-      `isag_bra`,
-      domSanitizer.bypassSecurityTrustResourceUrl(`${baseHref}assets/icons/bra.svg`)
+      `bra`,
+      domSanitizer.bypassSecurityTrustResourceUrl(`${baseHref}assets/icons/bra-1.svg`)
+    );
+
+    this.matIconRegistry.addSvgIcon(
+      `jacket`,
+      domSanitizer.bypassSecurityTrustResourceUrl(`${baseHref}assets/icons/jacket-1.svg`)
     );
 
     this.router.events.pipe(
