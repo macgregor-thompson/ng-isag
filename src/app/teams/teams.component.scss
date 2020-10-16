@@ -11,8 +11,8 @@
   justify-content: space-between;
 }
 
-.player {
-  flex: 1 1 auto;
+.team-player {
+  flex: 1;
   display: flex;
   align-items: center;
 }
@@ -78,7 +78,7 @@ mat-card-header {
   align-items: center;
 }
 
-@include lt-sm() {
+@include lt-md() {
   .mat-list-base .mat-list-item {
     height: auto;
   }
@@ -91,7 +91,19 @@ mat-card-header {
   .player-div {
     padding: 3px;
   }
+
+  .hide-xs {
+    display: none;
+  }
 };
+
+.show-xs {
+  display: none;
+  @include lt-md() {
+    display: block;
+  }
+}
+
 
 .mat-list-item:nth-child(2n) {
   &, &.no-hover {

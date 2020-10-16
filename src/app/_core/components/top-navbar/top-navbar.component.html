@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
   <ng-content></ng-content>
-  <img [src]="logo" class="logo-image" alt="logo" fxHide.lt-sm>
+  <img [src]="logo" class="logo-image" alt="logo" fxHide.lt-md>
   <h1 class="page-title">{{ stateService.pageTitle$ | async }}</h1>
   <div class="fill-remaining-space"></div>
-  <img [src]="logo" class="logo-image" alt="logo" fxHide.gt-xs>
-  <isag-account-menu fxHide.lt-sm></isag-account-menu>
+  <img [src]="logo" class="logo-image" alt="logo" fxHide.gt-sm>
+  <isag-account-menu fxHide.lt-md></isag-account-menu>
 </mat-toolbar>

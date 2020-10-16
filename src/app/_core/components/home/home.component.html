@@ -1,5 +1,5 @@
 <isag-top-navbar>
-  <button mat-icon-button (click)="snav.toggle()" fxHide.gt-xs>
+  <button mat-icon-button (click)="snav.toggle()" fxHide.gt-sm>
     <mat-icon>menu</mat-icon>
   </button>
 </isag-top-navbar>
@@ -49,18 +49,18 @@
         <span class="lint-title">Settings</span>
       </a>
 
-      <mat-divider fxHide.gt-xs></mat-divider>
+      <mat-divider fxHide.gt-sm></mat-divider>
       <a mat-list-item (click)="authService.loginOrSignUp('/login'); closeSideNav()" *ngIf="!stateService.currentUser"
-              fxHide.gt-xs>
+              fxHide.gt-sm>
         <mat-icon>login</mat-icon>
         <span>Login</span>
       </a>
       <a mat-list-item (click)="authService.loginOrSignUp('/signup'); closeSideNav()" *ngIf="!stateService.currentUser"
-              fxHide.gt-xs>
+              fxHide.gt-sm>
         <mat-icon>person_add</mat-icon>
         <span>Sign Up</span>
       </a>
-      <a mat-list-item (click)="authService.logout(); closeSideNav()" *ngIf="stateService.currentUser" fxHide.gt-xs>
+      <a mat-list-item (click)="authService.logout(); closeSideNav()" *ngIf="stateService.currentUser" fxHide.gt-sm>
         <mat-icon>exit_to_app</mat-icon>
         <span>Logout</span>
       </a>

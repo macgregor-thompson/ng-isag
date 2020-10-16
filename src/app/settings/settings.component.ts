@@ -28,6 +28,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     const tab = this.activatedRoute.snapshot.paramMap.get('tab');
+    console.log('tab:', tab);
     this.stateService.setTitle(`Settings | ${this.toTitle(tab)}`);
     switch (tab.toLowerCase()) {
       case 'courses':
@@ -44,6 +45,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateQueryParam(event: MatTabChangeEvent) {
+    console.log('event.tab.textLabel:', event.tab.textLabel);
     this.stateService.setTitle(`Settings | ${event.tab.textLabel}`);
     this.router.navigate(['settings/', event.tab.textLabel.toLowerCase()], );
   }

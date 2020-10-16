@@ -23,10 +23,11 @@
     </mat-card-header>
 
     <mat-toolbar class="header-btns">
-      <h4 class="flex1 a-player-header">A Players</h4>
-      <h4 class="handicap-header">Handicap</h4>
-      <div class="divider no-border"></div>
-      <h4 class="flex1 b-player-header">B Players</h4>
+      <h4 class="flex1 a-player-header hide-xs">A Players</h4>
+      <h4 class="flex1 a-player-header show-xs">Players</h4>
+      <h4 class="handicap-header hide-xs">Handicap</h4>
+      <div class="divider no-border  hide-xs"></div>
+      <h4 class="flex1 b-player-header hide-xs">B Players</h4>
       <h4 class="handicap-header">Handicap</h4>
     </mat-toolbar>
 
@@ -35,7 +36,7 @@
                      [disableRipple]="true" [class.auto-height]="editing" [class.no-pointer]="!editing">
         <div class="team-number">{{i + 1}}.</div>
         <div class="team-row">
-          <div class="player">
+          <div class="team-player">
             <div class="user-avatar-container">
               <img *ngIf="team.playerA?.avatarUrl" class="avatar-image" [src]="team.playerA.avatarUrl" alt="user image"/>
             </div>
@@ -76,7 +77,7 @@
 
           <div class="divider"></div>
 
-          <div class="player">
+          <div class="team-player">
             <div class="user-avatar-container">
               <img *ngIf="team.playerB?.avatarUrl" class="avatar-image" [src]="team.playerB.avatarUrl" alt="user image"/>
             </div>
