@@ -19,10 +19,6 @@
     }
   }
 
-  .team-scores-row {
-    background-color: #4caf502e;
-  }
-
 }
 
 
@@ -31,7 +27,10 @@
   margin-right: 16px;
 }
 
+mat-dialog-content {
+  overflow: inherit;
+}
 
-
-
-
+mat-dialog-actions {
+  margin-top: 10px;
+}

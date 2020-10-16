@@ -3,6 +3,7 @@
 
 .table-wrapper {
   overflow-x: auto;
+  max-height: calc(100vh - 200px);
 }
 
 th {

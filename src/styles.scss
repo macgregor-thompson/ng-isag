@@ -449,6 +449,7 @@ isag-issue {
     overflow-y: auto;
     height: calc(100vh - 140px);
   }
+
   .detail-card {
     padding-top: 0;
   }
@@ -465,6 +466,7 @@ isag-issue {
     overflow-y: auto;
     height: calc(100vh - 140px);
   }
+
   .detail-card {
     padding-top: 0;
   }
@@ -708,7 +710,7 @@ quill-editor {
 
 .player-multiple-select-menu {
   .mat-menu-content {
-    padding:0 !important;
+    padding: 0 !important;
   }
 
   .ok-btn {
@@ -757,7 +759,7 @@ button {
 
 
 .mat-input-element:disabled, .mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after {
-   color: inherit;
+  color: inherit;
 }
 
 @include md() {
@@ -765,6 +767,7 @@ button {
     .handicap-header {
       margin-right: 8px;
     }
+
     .handicap {
       margin-right: 13px;
     }
@@ -775,17 +778,61 @@ button {
 .scorecard-table {
   width: 100%;
   border-spacing: 0;
+  position: relative;
 
   td, th {
     border: 1px solid #dee2e6;
   }
+
   td {
     padding: 0 3px;
     text-align: center;
 
   }
+
   th {
     padding: 5px 8px;
+    background-color: $white;
+  }
+
+  // sticky headers
+  .hole-headers, .second-row, .third-row, .fourth-row {
+    th {
+      position: sticky;
+      z-index: 2;
+
+      &.left-th {
+        z-index: 3;
+      }
+    }
+  }
+
+  .hole-headers th {
+    top: 0;
+  }
+
+  .second-row th {
+    top: 32px;
+  }
+
+  .third-row th {
+    top: 64px;
+  }
+
+  .fourth-row th {
+    top: 96px;
+  }
+
+  .left-th, .team-names-th {
+    position: sticky;
+    z-index: 1;
+  }
+  .left-th {
+    left: 0;
+  }
+
+  .team-names-th {
+    left: 68px;
   }
 
   mat-form-field {
@@ -799,7 +846,7 @@ button {
 
   .hole-headers {
     th {
-      background-color: $isag-green;
+      background-color: $isag-green !important;
       color: #fff;
       width: 60px;
     }
@@ -813,7 +860,10 @@ button {
   }
 
   .team-scores-row {
-    background-color: #4caf502e;
+    &, th, td {
+      background-color: #fff8e3;
+    }
   }
+
 
 }

@@ -13,14 +13,14 @@
   </mat-form-field>
 </div>
 
-<mat-dialog-content>
+<mat-dialog-content class="no-overflow">
 
   <isag-course-card [course]="data.course">
     <ng-container  *ngIf="card.team">
       <!-- ========= Player A Scores =========== -->
       <tr>
         <th>
-          {{card.team?.playerA?.firstName + ' ' + card.team.playerA.lastName}}
+          {{card.team?.playerA?.firstName + '&nbsp;' + card.team.playerA.lastName}}
         </th>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field>
@@ -43,7 +43,7 @@
       <!-- ========= Player B Scores =========== -->
       <tr>
         <th>
-          {{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}
+          {{card.team.playerB.firstName + '&nbsp;' + card.team.playerB.lastName}}
         </th>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field>
@@ -89,8 +89,11 @@
 </mat-dialog-content>
 
 <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.card">Delete</button>
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()">Add</button>
+  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()">
+    {{ data.card ? 'Save' : 'Add'}}
+  </button>
 </mat-dialog-actions>
 
 

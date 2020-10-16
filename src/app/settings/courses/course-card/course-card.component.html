@@ -1,32 +1,32 @@
-<div class="table-wrapper">
-  <table class="mat-elevation-z8 scorecard-table main-table">
+<div class="table-wrapper mat-elevation-z4">
+  <table class="scorecard-table main-table">
     <tr class="hole-headers">
-      <th [attr.colspan]="rankings ? 2 : 1">Hole</th>
+      <th [attr.colspan]="rankings ? 2 : 1" class="left-th">Hole</th>
       <th *ngFor="let header of frontNine">{{header}}</th>
       <th *ngFor="let header of backNine">{{header}}</th>
     </tr>
-    <tr>
+    <tr class="second-row">
       <!--<th class="flex-between">
         <div class="tees">{{course.tees}}</div>
         <div>{{course.courseRating}}&nbsp;/&nbsp;{{course.slope}}</div>
       </th>-->
-      <th [attr.colspan]="rankings ? 2 : 1">Yards</th>
+      <th [attr.colspan]="rankings ? 2 : 1" class="left-th">Yards</th>
       <th *ngFor="let hole of course.frontNine | keyvalue">{{hole.value.yardage}}</th>
       <th>{{course.frontNineYards}}</th>
       <th *ngFor="let hole of course.backNine | keyvalue">{{hole.value.yardage}}</th>
       <th>{{course.backNineYards}}</th>
       <th>{{course.frontNineYards + course.backNineYards}}</th>
     </tr>
-    <tr>
-      <th [attr.colspan]="rankings ? 2 : 1">Handicap</th>
+    <tr class="third-row">
+      <th [attr.colspan]="rankings ? 2 : 1" class="left-th">Handicap</th>
       <th *ngFor="let hole of course.frontNine | keyvalue">{{hole.value.handicap}}</th>
       <th></th>
       <th *ngFor="let hole of course.backNine | keyvalue">{{hole.value.handicap}}</th>
       <th></th>
       <th></th>
     </tr>
-    <tr>
-      <th [attr.colspan]="rankings ? 2 : 1">Par</th>
+    <tr class="fourth-row">
+      <th [attr.colspan]="rankings ? 2 : 1" class="left-th">Par</th>
       <th *ngFor="let hole of course.frontNine | keyvalue">{{hole.value.par}}</th>
       <th>{{course.frontNinePar}}</th>
       <th *ngFor="let hole of course.backNine | keyvalue">{{hole.value.par}}</th>

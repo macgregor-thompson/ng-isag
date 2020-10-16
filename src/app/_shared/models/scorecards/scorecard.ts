@@ -3,10 +3,16 @@ import { Team } from '../teams/team';
 import { Scores } from './scores';
 
 export class Scorecard {
+  _id: string;
   year: number;
   courseId: string;
   teamId: string;
   deleted: boolean;
+
+  // rankings
+  rank: number;
+  tied: boolean;
+  place: 1 | 2 | 3;
 
   // team scores
   teamNetScores: Scores;

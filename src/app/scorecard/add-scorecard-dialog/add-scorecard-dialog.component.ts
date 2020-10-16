@@ -21,9 +21,9 @@ export class AddScorecardDialogComponent implements OnInit {
   backNine = ['10', '11', '12', '13', '14', '15', '16', '17', '18', 'In', 'Total'];
 
   constructor(public dialogRef: MatDialogRef<AddScorecardDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { course: Course, year: number, teams: Team[] },
+              @Inject(MAT_DIALOG_DATA) public data: { course: Course, year: number, teams: Team[], card?: Scorecard },
               private scorecardService: ScorecardService) {
-    this.card = new Scorecard(data.year, data.course._id);
+    this.card = data.card ? data.card : new Scorecard(data.year, data.course._id);
   }
 
   ngOnInit(): void {
@@ -54,8 +54,21 @@ export class AddScorecardDialogComponent implements OnInit {
 
   addScorecard(): void {
     this.setCardScores();
-    this.scorecardService.create(this.card).subscribe({
-      next: card => this.dialogRef.close({ ...card, team: this.card.team })
+    if (this.card._id) {
+      this.scorecardService.update(this.card._id, this.card).subscribe({
+        next: card => this.dialogRef.close({ ...card })
+      });
+    } else {
+      this.scorecardService.create(this.card).subscribe({
+        next: card => this.dialogRef.close({ ...card, team: this.card.team })
+      });
+    }
+  }
+
+  delete(): void {
+    this.card.deleted = true;
+    this.scorecardService.delete(this.card._id).subscribe({
+      next: () => this.dialogRef.close(this.card)
     });
   }
 
