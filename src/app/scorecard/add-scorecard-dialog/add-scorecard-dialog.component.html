@@ -1,7 +1,7 @@
 <div class="dflex">
   <h2 mat-dialog-title>Add Scorecard</h2>
   <div class="fill-remaining-space"></div>
-  <mat-form-field class="team-select">
+  <mat-form-field class="team-select" *ngIf="data.teams.length">
     <mat-label>Team</mat-label>
     <mat-select [(value)]="card.team" [compareWith]="teamsAreSame" (selectionChange)="setTeamId($event.value)">
       <mat-option *ngFor="let team of data.teams" [value]="team">
@@ -9,13 +9,15 @@
         /
         {{team.playerB.firstName + ' '  + team.playerB.lastName}}
       </mat-option>
+      <mat-option *ngIf="!data.teams.length" [value]="null">
+      </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
 <mat-dialog-content class="no-overflow">
 
-  <isag-course-card [course]="data.course">
+  <isag-course-card [course]="data.course" *ngIf="data.teams.length">
     <ng-container  *ngIf="card.team">
       <!-- ========= Player A Scores =========== -->
       <tr>
@@ -86,6 +88,9 @@
       <!-- ========= Team Scores =========== -->
     </ng-container>
   </isag-course-card>
+  <isag-alert *ngIf="!data.teams.length">
+    All Teams have a Scorecard
+  </isag-alert>
 </mat-dialog-content>
 
 <mat-dialog-actions fxLayout="row">
@@ -97,7 +102,7 @@
 
   <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.card">Delete</button>
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()">
+  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()" *ngIf="data.teams.length">
     {{ data.card ? 'Save' : 'Add'}}
   </button>
 </mat-dialog-actions>

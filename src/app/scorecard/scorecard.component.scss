@@ -16,16 +16,6 @@ mat-card-header {
   }
 }
 
-/*.team-card-content {
-  padding-top: 0;
-}*/
-
-/*.top-border {
-  th, td {
-    border-top: 5px solid #dee2e6;
-  }
-}*/
-
 .pointer:hover {
   cursor: pointer;
 }
@@ -41,6 +31,25 @@ mat-card-header {
   font-size: 1.3em;
   width: 50px;
 }
+
+@include lt-sm() {
+  .team-names-th {
+    left: 38px;
+  }
+
+  .ranking {
+    font-size: 1em;
+    width: 20px;
+  }
+
+  .scorecard-table {
+    .team-names-th, .individual-name-th {
+      padding: 5px 2px;
+    }
+  }
+}
+
+
 
 .rank-btn {
   display: none;
@@ -118,12 +127,26 @@ mat-card-header {
   font-weight: 900;
 }
 
+.list-total {
+  width: 50px;
+  text-align: right;
+  margin-right: 50px;
+}
+
+.list-ranking, .list-total {
+  width: 100px;
+  font-weight: 900;
+}
 
 @include gt-sm() {
   .player-results-list {
     ::ng-deep .mat-list-item-content {
       font-size: 1.3em;
     }
+  }
+  .player mat-icon {
+    margin-left: 20px;
+    transform: scale(1.8);
   }
 }
 
@@ -133,7 +156,12 @@ mat-card-header {
     font-weight: 900;
   }
   .list-total {
-    text-align: right;
+    margin-right: 0;
+  }
+
+  .player mat-icon {
+    margin-left: 5px;
+    transform: scale(1.2);
   }
 }
 
@@ -146,19 +174,35 @@ mat-card-header {
 }
 
 .even-item, .even-item.no-hover.list-item:hover {
- // background: #fff8e3;
+  background: #dedede;
 }
 
 .list-item {
   cursor: inherit;
 }
 
-.player mat-icon {
-  margin-left: 20px;
-  transform: scale(1.8);
-}
-
-.player-results-list .list-item{
+.player-results-list .list-item {
   height: 40px;
+  @include lt-sm() {
+    padding: 3px 8px !important;
+    height: auto;
+  }
+  .mat-list-item-content {
+    padding: 0 0 0 10px !important;
+  }
 }
 
+.player-divs {
+  flex: 1;
+  display: flex;
+  @include lt-sm() {
+    flex-direction: column;
+  }
+}
+
+
+.select-button-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}

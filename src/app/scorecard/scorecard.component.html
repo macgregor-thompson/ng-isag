@@ -6,37 +6,33 @@
         <div>{{selectedYear.year}} Results</div>
       </mat-card-title>
       <div class="fill-remaining-space"></div>
-      <mat-form-field class="year-select">
-        <mat-label>Year</mat-label>
-        <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
-                    (selectionChange)="getData()">
-          <mat-option *ngFor="let year of yearService.years" [value]="year">
-            {{ year.year }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-raised-button color="primary" (click)="openAddEditScorecardDialog()" class="right-16"
-              *ngIf="stateService.isAdmin">
-        <mat-icon>add</mat-icon>
-        SCORECARD
-      </button>
+     <div class="select-button-header">
+       <mat-form-field class="year-select">
+         <mat-label>Year</mat-label>
+         <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
+                     (selectionChange)="getData()">
+           <mat-option *ngFor="let year of yearService.years" [value]="year">
+             {{ year.year }}
+           </mat-option>
+         </mat-select>
+       </mat-form-field>
+       <button mat-raised-button color="primary" (click)="openAddEditScorecardDialog()" class="right-16"
+               *ngIf="stateService.isAdmin">
+         <mat-icon>add</mat-icon>
+         SCORECARD
+       </button>
+     </div>
     </mat-card-header>
 
-    <mat-card-content *ngIf="course">
-    <!--  <mat-toolbar class="header-btns">
-        <h4 class="ranking-header">Ranking</h4>
-        <h4 class="player-header">A Player</h4>
-        <h4 class="player-header">B Player</h4>
-        <h4 class="total-header">Total</h4>
-      </mat-toolbar>-->
-      <mat-list class="isag-list player-results-list">
-        <mat-list-item class="list-item no-hover"
-                       *ngFor="let card of scorecards | orderBy: 'rank';
+    <mat-list class="isag-list player-results-list">
+      <mat-list-item class="list-item no-hover"
+                     *ngFor="let card of scorecards | orderBy: 'rank';
                        let even = even; let first = first; let last = last; let index = index"
-                       [disableRipple]="true" [class.even-item]="even">
+                     [disableRipple]="true" [class.even-item]="even">
 
-          <div class="list-ranking">{{(card.tied ? 'T' : '') + card.rank}}</div>
+        <div class="list-ranking">{{(card.tied ? 'T' : '') + card.rank}}</div>
 
+        <div class="player-divs">
           <div class="player">
             <div>{{card.team.playerA.firstName + '&nbsp;' + card.team.playerA.lastName}}</div>
             <mat-icon *ngIf="first" svgIcon="jacket"></mat-icon>
@@ -48,14 +44,14 @@
             <mat-icon *ngIf="first" svgIcon="jacket"></mat-icon>
             <mat-icon *ngIf="last"  svgIcon="bra"></mat-icon>
           </div>
+        </div>
 
-          <div class="list-total">
-            {{card.totalNetScore - (course.frontNinePar + course.backNinePar)}}
-          </div>
+        <div class="list-total">
+          {{card.totalNetScore - (course.frontNinePar + course.backNinePar)}}
+        </div>
 
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
+      </mat-list-item>
+    </mat-list>
   </mat-card>
 
   <mat-card class="isag-card courses-card">
@@ -64,20 +60,6 @@
         <div>{{selectedYear.year}} Team Scores</div>
       </mat-card-title>
       <div class="fill-remaining-space"></div>
-      <!-- <mat-form-field class="year-select">
-         <mat-label>Year</mat-label>
-         <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
-                     (selectionChange)="getData()">
-           <mat-option *ngFor="let year of yearService.years" [value]="year">
-             {{ year.year }}
-           </mat-option>
-         </mat-select>
-       </mat-form-field>-->
-     <!-- <button mat-raised-button color="primary" (click)="openAddEditScorecardDialog()" class="right-16"
-              *ngIf="stateService.isAdmin">
-        <mat-icon>add</mat-icon>
-        SCORECARD
-      </button>-->
     </mat-card-header>
 
     <mat-card-content *ngIf="course" class="team-card-content">

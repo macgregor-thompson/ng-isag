@@ -841,10 +841,6 @@ button {
     left: 0;
   }
 
-  .team-names-th {
-    left: 68px;
-  }
-
   mat-form-field {
     width: 40px;
     text-align: center;
@@ -878,8 +874,8 @@ button {
 
 }
 
-
-
-
-
-
+.player-results-list .list-item {
+  .mat-list-item-content {
+    padding: 0 16px !important;
+  }
+}

@@ -41,6 +41,6 @@ export class Scorecard {
     this.playerANetScores = new Scores();
     this.playerBNetScores = new Scores();
     this.teamNetScores = new Scores();
-
+    this.team = null;
   }
 }

@@ -83,7 +83,7 @@ mat-card-header {
     height: auto;
   }
   .team-row {
-    flex-wrap: wrap;
+    flex-direction: column;
   }
   .divider {
     display: none;
