@@ -50,6 +50,12 @@ export class AddScorecardDialogComponent implements OnInit {
     this.card.frontNineNetScore = this.sumHoles(this.card.teamNetScores, 1, 9);
     this.card.backNineNetScore = this.sumHoles(this.card.teamNetScores, 10, 9);
     this.card.totalNetScore = this.card.frontNineNetScore + this.card.backNineNetScore;
+    this.card.playerAFrontNineNetScore = this.sumHoles(this.card.playerANetScores, 1, 9);
+    this.card.playerABackNineNetScore = this.sumHoles(this.card.playerANetScores, 10, 9);
+    this.card.playerATotalNetScore = this.sumHoles(this.card.playerANetScores, 1, 18);
+    this.card.playerBFrontNineNetScore = this.sumHoles(this.card.playerBNetScores, 1, 9);
+    this.card.playerBBackNineNetScore = this.sumHoles(this.card.playerBNetScores, 1, 9);
+    this.card.playerBTotalNetScore = this.sumHoles(this.card.playerBNetScores, 1, 9);
   }
 
   addScorecard(): void {

@@ -12,7 +12,6 @@ export class Scorecard {
   // rankings
   rank: number;
   tied: boolean;
-  place: 1 | 2 | 3;
 
   // team scores
   teamNetScores: Scores;

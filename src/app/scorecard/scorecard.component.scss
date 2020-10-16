@@ -38,6 +38,7 @@ mat-card-header {
 
 .ranking {
   font-size: 1.3em;
+  width: 50px;
 }
 
 .rank-btn {
@@ -54,20 +55,6 @@ mat-card-header {
   z-index: 5;
   top: -10px;
   right: -12px;
-}
-
-.ranking-cell {
-  width: 50px;
-
-  &:hover {
-    .ranking {
-      display: none;
-    }
-
-    .rank-btn {
-      display: inline-block;
-    }
-  }
 }
 
 .edit-card-btn {

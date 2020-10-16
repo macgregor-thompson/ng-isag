@@ -1,5 +1,6 @@
 import { Scores } from './scores';
 import { Player } from '../player';
+import { Scorecard } from './scorecard';
 
 export class PlayerScorecard {
   player: Player;
@@ -11,11 +12,11 @@ export class PlayerScorecard {
   rank: number;
   tied: boolean;
 
-  constructor(player: Player, netScores: Scores, frontNineNetScore: number, backNineNetScore: number, totalNetScore: number) {
-    this.player = player;
-    this.netScores = netScores;
-    this.frontNineNetScore = frontNineNetScore;
-    this.backNineNetScore = backNineNetScore;
-    this.totalNetScore = totalNetScore;
+  constructor(card: Scorecard, player: 'playerA' | 'playerB' ) {
+    this.player = card.team[player];
+    this.netScores = card[`${player}NetScores`];
+    this.frontNineNetScore = card[`${player}FrontNineNetScore`];
+    this.backNineNetScore = card[`${player}BackNineNetScore`];
+    this.totalNetScore = card[`${player}TotalNetScore`];
   }
 }

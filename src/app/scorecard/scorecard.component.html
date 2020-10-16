@@ -15,8 +15,7 @@
         </mat-select>
       </mat-form-field>
       <button mat-raised-button color="primary" (click)="openAddEditScorecardDialog()" class="right-16"
-              *ngIf="stateService.isAdmin"
-              matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Course">
+              *ngIf="stateService.isAdmin">
         <mat-icon>add</mat-icon>
         SCORECARD
       </button>
@@ -26,32 +25,9 @@
       <isag-course-card [course]="course" [rankings]="true">
         <ng-container  *ngFor="let card of scorecards | orderBy: 'rank'; let even = even; let index = index">
           <tr (click)="togglePlayerViews(card.teamId)" class="pointer" [class.even]="even">
-            <th class="left-th" isagStopPropagation [stopPropagation]="stateService.isAdmin">
-              <div class="ranking-cell">
-                <button *ngIf="editRankingId !== card._id"  mat-icon-button class="rank-btn" color="primary"
-                        (click)="toggleRankEdit(card._id)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-
-                <button *ngIf="editRankingId === card._id"  mat-icon-button class="cancel-btn" color="primary"
-                        (click)="editRankingId = null">
-                  <mat-icon>close</mat-icon>
-                </button>
-
-                <div *ngIf="editRankingId === card._id">
-                  <mat-form-field class="rank-select">
-                    <mat-label>Rank</mat-label>
-                    <mat-select [(value)]="card.place" (selectionChange)="rankChanged()">
-                      <mat-option [value]="1">1<sup>st</sup></mat-option>
-                      <mat-option [value]="2">2<sup>nd</sup></mat-option>
-                      <mat-option [value]="3">3<sup>rd</sup></mat-option>
-                      <mat-option [value]="scorecards.length">Last</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div *ngIf="editRankingId !== card._id" class="ranking">
-                  {{card.tied ? 'T' : '' + card.rank}}
-                </div>
+            <th class="left-th">
+              <div class="ranking">
+                {{card.tied ? 'T' : '' + card.rank}}
               </div>
             </th>
             <th class="team-names-th"  isagStopPropagation [stopPropagation]="stateService.isAdmin">

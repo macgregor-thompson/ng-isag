@@ -88,7 +88,13 @@
   </isag-course-card>
 </mat-dialog-content>
 
-<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+<mat-dialog-actions fxLayout="row">
+  <h3 *ngIf="canSave()">
+    Team Net Score to Par:
+    <strong>{{sumHoles(card.teamNetScores, 1, 18) - (data.course.frontNinePar + data.course.backNinePar)}}</strong>
+  </h3>
+  <div class="fill-remaining-space"></div>
+
   <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.card">Delete</button>
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()">
