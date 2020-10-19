@@ -83,11 +83,19 @@
               </div>
 
             </th>
-            <td *ngFor="let hole of course.frontNine | keyvalue">{{card.teamNetScores[hole.key]}}</td>
+            <td *ngFor="let hole of course.frontNine | keyvalue">
+              <div class="score" [ngClass]="scoreClass(card.teamNetScores[hole.key], hole.value.par)">
+                {{card.teamNetScores[hole.key]}}
+              </div>
+            </td>
             <th>{{card.frontNineNetScore}}</th>
-            <td *ngFor="let hole of course.backNine | keyvalue" class="back-nine">{{card.teamNetScores[hole.key]}}</td>
-            <th class="back-nine">{{card.backNineNetScore}}</th>
-            <th class="back-nine">{{card.totalNetScore}}</th>
+            <td *ngFor="let hole of course.backNine | keyvalue">
+              <div class="score" [ngClass]="scoreClass(card.teamNetScores[hole.key], hole.value.par)">
+                {{card.teamNetScores[hole.key]}}
+              </div>
+            </td>
+            <th>{{card.backNineNetScore}}</th>
+            <th>{{card.totalNetScore}}</th>
           </tr>
 
           <ng-container *ngIf="showPlayerScores[card.teamId]">
@@ -95,23 +103,39 @@
               <th colspan="2" class="left-th">
                 <div>{{card.team.playerA.firstName + '&nbsp;' + card.team.playerA.lastName}}</div>
               </th>
-              <td *ngFor="let hole of course.frontNine | keyvalue">{{card.playerANetScores[hole.key]}}</td>
+              <td *ngFor="let hole of course.frontNine | keyvalue">
+                <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
+                  {{card.playerANetScores[hole.key]}}
+                </div>
+              </td>
               <th>{{card.playerAFrontNineNetScore}}</th>
               <td *ngFor="let hole of course.backNine | keyvalue"
-                  class="back-nine">{{card.playerANetScores[hole.key]}}</td>
-              <th class="back-nine">{{card.playerABackNineNetScore}}</th>
-              <th class="back-nine">{{card.playerATotalNetScore}}</th>
+                 >
+                <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
+                  {{card.playerANetScores[hole.key]}}
+                </div>
+              </td>
+              <th>{{card.playerABackNineNetScore}}</th>
+              <th>{{card.playerATotalNetScore}}</th>
             </tr>
             <tr class="player-score-row" [@rowsAnimation] [class.even]="even">
               <th colspan="2" class="left-th">
                 <div>{{card.team.playerB.firstName + '&nbsp;' + card.team.playerB.lastName}}</div>
               </th>
-              <td *ngFor="let hole of course.frontNine | keyvalue">{{card.playerBNetScores[hole.key]}}</td>
+              <td *ngFor="let hole of course.frontNine | keyvalue">
+                <div class="score" [ngClass]="scoreClass(card.playerBNetScores[hole.key], hole.value.par)">
+                  {{card.playerBNetScores[hole.key]}}
+                </div>
+              </td>
               <th>{{card.playerBFrontNineNetScore}}</th>
               <td *ngFor="let hole of course.backNine | keyvalue"
-                  class="back-nine">{{card.playerBNetScores[hole.key]}}</td>
-              <th class="back-nine">{{card.playerBBackNineNetScore}}</th>
-              <th class="back-nine">{{card.playerBTotalNetScore}}</th>
+                 >
+                <div class="score" [ngClass]="scoreClass(card.playerBNetScores[hole.key], hole.value.par)">
+                  {{card.playerBNetScores[hole.key]}}
+                </div>
+              </td>
+              <th>{{card.playerBBackNineNetScore}}</th>
+              <th>{{card.playerBTotalNetScore}}</th>
             </tr>
           </ng-container>
 
@@ -139,11 +163,19 @@
             <th class="individual-name-th">
               <div>{{card.player.firstName + '&nbsp;' + card.player.lastName}}</div>
             </th>
-            <td *ngFor="let hole of course.frontNine | keyvalue">{{card.netScores[hole.key]}}</td>
+            <td *ngFor="let hole of course.frontNine | keyvalue">
+              <div class="score" [ngClass]="scoreClass(card.netScores[hole.key], hole.value.par)">
+                {{card.netScores[hole.key]}}
+              </div>
+            </td>
             <th>{{card.frontNineNetScore}}</th>
-            <td *ngFor="let hole of course.backNine | keyvalue" class="back-nine">{{card.netScores[hole.key]}}</td>
-            <th class="back-nine">{{card.backNineNetScore}}</th>
-            <th class="back-nine">{{card.totalNetScore}}</th>
+            <td *ngFor="let hole of course.backNine | keyvalue">
+              <div class="score" [ngClass]="scoreClass(card.netScores[hole.key], hole.value.par)">
+                {{card.netScores[hole.key]}}
+              </div>
+            </td>
+            <th>{{card.backNineNetScore}}</th>
+            <th>{{card.totalNetScore}}</th>
           </tr>
         </ng-container>
 

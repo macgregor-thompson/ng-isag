@@ -183,4 +183,28 @@ export class ScorecardComponent implements OnInit {
     return cards;
   }
 
+
+  scoreClass(score: number, par: number): string {
+    if (score == null) return '';
+    switch (score - par) {
+      case -1:
+        return  'birdie';
+      case 0:
+        return 'par';
+      case -2:
+        return 'eagle';
+      case 1:
+        return 'bogie';
+      case 2:
+      case 3:
+      case 4:
+        return 'double-bogie';
+      case -3:
+      case -4:
+        return 'double-eagle';
+      default:
+        return 'unknown';
+    }
+  }
+
 }
