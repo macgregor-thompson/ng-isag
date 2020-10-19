@@ -3,7 +3,6 @@ import { animate, sequence, style, transition, trigger } from '@angular/animatio
 
 import { MatDialog } from '@angular/material/dialog';
 import { chain as _chain, sortBy as _sortBy, merge as _merge } from 'lodash';
-import { faTshirt } from '@fortawesome/free-solid-svg-icons';
 
 import { Year } from '../_shared/models/years/year';
 import { YearService } from '../_core/services/year.service';
@@ -41,7 +40,8 @@ export class ScorecardComponent implements OnInit {
   teams: Team[];
   course: Course;
   showPlayerScores: { [teamId: string]: boolean } = {};
-  faTshirt = faTshirt;
+  selectedIndex: 0 | 1 | 2 | 3 = 0;
+
 
 
   constructor(public yearService: YearService,
@@ -188,23 +188,38 @@ export class ScorecardComponent implements OnInit {
     if (score == null) return '';
     switch (score - par) {
       case -1:
+      case -.5:
         return  'birdie';
       case 0:
         return 'par';
       case -2:
+      case -1.5:
         return 'eagle';
       case 1:
+      case 1.5:
         return 'bogie';
       case 2:
       case 3:
       case 4:
+      case 2.5:
+      case 3.5:
+      case 4.5:
         return 'double-bogie';
       case -3:
       case -4:
+      case -2.5:
+      case -3.5:
+      case -4.5:
         return 'double-eagle';
       default:
         return 'unknown';
     }
+  }
+
+  getTotalScore(score: number): string | number {
+    if (score < 0) return score;
+    if (score === 0) return 'EVEN';
+    if (score > 0) return `+${score}`;
   }
 
 }

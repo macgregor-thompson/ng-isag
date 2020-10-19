@@ -1,6 +1,21 @@
 @import "../../colors";
 @import "../../media-queries";
 
+
+::ng-deep .mat-tab-header {
+  position: fixed !important;
+  z-index: 100;
+  width: 100%;
+  background-color: #fafafa;
+  margin-top: -5px;
+}
+
+::ng-deep .mat-tab-body-wrapper {
+  margin-top: 45px;
+  padding-bottom: 65px;
+}
+
+
 .container {
   flex-direction: column;
 }
