@@ -5,7 +5,7 @@
   display: inline-block;
 }
 
-@mixin md-icon-size($size: 24px) {
+@mixin md-icon-size($size) {
   font-size: $size;
   height: $size;
   width: $size;

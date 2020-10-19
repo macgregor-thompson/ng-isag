@@ -28,7 +28,7 @@
     <mat-list class="isag-list">
       <mat-list-item class="list-item" matRipple [class.opened]="selectedPlayer?._id === player._id"
                      *ngFor="let player of playerService.allPlayers | filterPlayersByYear: selectedYear
-                      | sortByName; let i = index;" (click)="selectPlayer(player, i)">
+                      | sortByName; let i = index; let odd = odd;" (click)="selectPlayer(player, i)">
         <isag-player [index]="selectedYear.year ? i + 1 : null"
                      [player]="player"></isag-player>
       </mat-list-item>

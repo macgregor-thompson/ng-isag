@@ -32,23 +32,6 @@ mat-card-header {
   width: 50px;
 }
 
-@include lt-sm() {
-  .team-names-th {
-    left: 38px;
-  }
-
-  .ranking {
-    font-size: 1em;
-    width: 20px;
-  }
-
-  .scorecard-table {
-    .team-names-th, .individual-name-th {
-      padding: 5px 2px;
-    }
-  }
-}
-
 
 
 .rank-btn {
@@ -72,6 +55,8 @@ mat-card-header {
 }
 
 .team-names-th {
+  position: sticky;
+  left: 68px;
   display: flex;
   justify-content: center;
   &:hover {
@@ -82,6 +67,23 @@ mat-card-header {
     .edit-card-btn {
       display: block;
 
+    }
+  }
+}
+
+@include lt-sm() {
+  .team-names-th {
+    left: 38px;
+  }
+
+  .ranking {
+    font-size: 1em;
+    width: 20px;
+  }
+
+  .scorecard-table {
+    .team-names-th, .individual-name-th {
+      padding: 5px 2px;
     }
   }
 }
@@ -159,7 +161,7 @@ mat-card-header {
     margin-right: 0;
   }
 
-  .player mat-icon {
+  .isag-icon {
     margin-left: 5px;
     transform: scale(1.2);
   }

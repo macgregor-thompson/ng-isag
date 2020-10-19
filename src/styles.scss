@@ -14,11 +14,11 @@
 @import '~quill/dist/quill.snow.css';
 
 @import './colors';
-@import "./utils";
-@import "./mixins";
+@import './utils';
+@import './mixins';
+@import 'lists';
 
 @import './media-queries';
-
 
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -548,7 +548,7 @@ isag-issue {
 }
 
 .loser {
-  &, & .mat-select-value, & mat-icon, & svg  {
+  &, & .mat-select-value, & mat-icon, & svg {
     margin-left: 10px;
     color: $isag-pink !important;
     fill: $isag-pink !important;
@@ -837,6 +837,7 @@ button {
     position: sticky;
     z-index: 1;
   }
+
   .left-th {
     left: 0;
   }
@@ -878,4 +879,9 @@ button {
   .mat-list-item-content {
     padding: 0 16px !important;
   }
+}
+
+.isag-icon {
+  margin-left: 5px;
+  transform: scale(1.5);
 }

@@ -43,3 +43,11 @@ mat-card-header {
 /*.mat-list-item:nth-child(2n) {
   background-color: #dedede;
 }*/
+
+.no-hover:hover {
+   background-color: inherit !important;
+}
+
+.odd-item, .odd-item.no-hover.list-item:hover {
+  background: #dedede;
+}
