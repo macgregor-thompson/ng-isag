@@ -41,7 +41,7 @@ export class CalcuttaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getTeams();
 
-    this.subscriptions.add(this.updateSub.pipe(debounceTime(400)).subscribe(x => this.updateTeam(x.teamId, x.update)));
+    this.subscriptions.add(this.updateSub.pipe(debounceTime(1000)).subscribe(x => this.updateTeam(x.teamId, x.update)));
   }
 
   ngOnDestroy(): void {
