@@ -1,0 +1,321 @@
+@import "../../media-queries";
+@import "../../colors";
+
+.container {
+  @include lt-md() {
+    flex-direction: column;
+  }
+}
+
+@include gt-sm() {
+  .detail-view {
+    position: fixed;
+    width: calc(40vw - 70px);
+    overflow-y: auto;
+    height: calc(100vh - 90px);
+  }
+}
+
+.isag-card {
+  flex: 6;
+}
+
+.detail-card {
+  h3, h4 {
+    margin: 25px 0 0;
+    font-weight: 500;
+  }
+  mat-list {
+    margin-top: 0;
+  }
+  .money-list .mat-list-item {
+    height: auto;
+    padding: 5px 8px !important;
+  }
+
+  .mat-card-content {
+    padding: 5px 0 0;
+  }
+}
+
+.player {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+
+.no-hover:hover {
+  background-color: #fff;
+}
+
+.odd-item, .odd-item.no-hover.list-item:hover {
+  background: #dedede;
+}
+
+.list-item {
+  cursor: inherit;
+  height: auto;
+}
+
+.winning-bid {
+  color: $isag-green;
+  font-weight: 900;
+}
+
+.winning-bidder, .bidder-header {
+  flex: 1;
+}
+
+
+.team-number {
+  font-weight: 900;
+}
+
+.bidder-input {
+  flex: 1;
+}
+
+.bid-input, .bid-header {
+  margin-right: 15px;
+}
+
+.not-admin {
+  .bid-input, .bid-header {
+    margin-right: 0;
+  }
+}
+
+
+.team-header {
+  // margin-left: 50px;
+}
+
+.isag-list .mat-list-item {
+  padding: 5px 16px 0 !important;
+}
+
+.money-list {
+  .list-item {
+    justify-content: space-between;
+  }
+}
+
+.money-title {
+  flex: 1;
+}
+
+.winning-bid, .bid-header, .bid-input {
+  width: 85px;
+}
+
+
+.not-admin .isag-list .mat-list-item {
+  height: 48px;
+  padding: 0 !important;
+}
+
+.not-admin .isag-list.money-list .mat-list-item {
+  height: 48px;
+  padding: 0 16px !important;
+}
+
+.players {
+  flex-direction: column;
+  flex: 4;
+}
+
+.bidding {
+  display: flex;
+  align-items: center;
+  flex: 5;
+}
+
+.players-header {
+  padding-left: 35px;
+}
+
+.team-number {
+  width: 35px;
+  padding-left: 5px;
+}
+
+.bid-headers {
+  display: flex;
+  flex: 5;
+  padding-left: 8px;
+}
+
+.not-admin .team-number {
+  padding-left: 16px;
+}
+
+
+.players-header {
+  flex: 4;
+}
+
+.players-header-sm {
+  display: none;
+}
+
+
+@include lt-md() {
+
+  .player {
+    white-space: inherit;
+  }
+
+  .winning-bid {
+    font-weight: 900;
+  }
+
+  .bidding-header {
+    flex: 1;
+    text-align: center;
+  }
+
+  .bid-input, .bid-header {
+    margin-right: 0;
+  }
+
+  .players {
+    flex: 1;
+  }
+
+  .players-header {
+    padding-left: 40px;
+    flex: 1;
+  }
+  .bid-headers {
+    padding-left: 0;
+  }
+
+  .bid-headers, .bidding {
+    flex: 2;
+  }
+
+  .bidder-input, .bidder-header {
+    margin-left: 15px;
+  }
+
+  .bidder-header {
+    //padding-left: 8px;
+  }
+
+  .not-admin {
+    .bid-headers {
+      padding-left: 45px;
+    }
+    .player-b-header {
+      padding-left: 45px;
+    }
+    .bidder-header {
+      margin-left: 0;
+      padding-left: 0;
+    }
+  }
+
+
+}
+
+
+@include lt-sm() {
+
+  .not-admin .team-number {
+    padding-left: 8px;
+  }
+
+  .team-number {
+    width: 25px;
+    padding-left: 0;
+  }
+
+  .players-header, .players {
+    flex: 1;
+  }
+
+  .players-header {
+    padding-left: 25px;
+    flex: 2;
+  }
+
+  .bid-headers {
+    flex: 2;
+  }
+
+  .bidding {
+    flex-direction: column;
+    flex: 2;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .players {
+    flex: 2;
+  }
+
+
+
+  .bidder-input {
+    margin-left: 0;
+  }
+
+  .not-admin {
+    &.header-btns {
+      padding: 0;
+    }
+
+    .players-header {
+      padding-left: 35px;
+    }
+    .bid-headers {
+      justify-content: center;
+      padding-left: 0;
+    }
+    ::ng-deep .mat-toolbar-row, .mat-toolbar-single-row {
+      padding: 0;
+    }
+    .winning-bid {
+      text-align: center;
+    }
+
+  }
+
+
+}
+
+.not-admin {
+  @include sm() {
+    .players {
+      flex-direction: row;
+      flex: 2;
+      display: flex;
+      div {
+        flex: 1;
+      }
+    }
+
+    .players-header {
+      display: none;
+    }
+    .players-header-sm {
+      display: flex;
+      flex: 2;
+    }
+
+    .player-a-header {
+      padding-left: 35px;
+    }
+  }
+
+
+}
+
+
+.mat-chip.mat-standard-chip.mat-chip-selected.mat-other {
+  background-color: $isag-yellow;
+}

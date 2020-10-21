@@ -22,7 +22,6 @@ export class PlayersComponent implements OnInit {
   selectedPlayer: Player;
   selectedIndex: number;
   subscriptions = new Subscription();
-  players: Player[];
   yearAll = { _id: 'all', year: 0 };
   selectedYear = this.yearAll as Year;
 

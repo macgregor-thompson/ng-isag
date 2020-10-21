@@ -16,6 +16,8 @@ import { Course } from '../_shared/models/course/course';
 import { AddScorecardDialogComponent } from './add-scorecard-dialog/add-scorecard-dialog.component';
 import { ScorecardService } from '../_core/services/scorecard.service';
 import { PlayerScorecard } from '../_shared/models/scorecards/player-scorecard';
+import { Score } from '../_shared/models/scorecards/score';
+import { Expense } from '../_shared/models/years/expense';
 
 @Component({
   selector: 'isag-scorecard',
@@ -40,7 +42,10 @@ export class ScorecardComponent implements OnInit {
   teams: Team[];
   course: Course;
   showPlayerScores: { [teamId: string]: boolean } = {};
-  selectedIndex: 0 | 1 | 2 | 3 = 0;
+  firstPlaceTeam: Team;
+  secondPlaceTeam: Team;
+  thirdPlaceTeam: Team;
+  moneyForWinnings: number;
 
 
 
@@ -71,11 +76,25 @@ export class ScorecardComponent implements OnInit {
   }
 
   getTeams(): void {
-    this.teamService.getByYear(this.selectedYear.year).subscribe({ next: t => this.teams = t });
+    this.teamService.getByYear(this.selectedYear.year).subscribe({
+      next: t => {
+        this.teams = t;
+        this.setMoney();
+      }
+    });
   }
 
   getCourse(): void {
     this.courseService.getByYear(this.selectedYear.year).subscribe({ next: c => this.course = c });
+  }
+
+  setMoney(year: Year = this.selectedYear): void {
+    const totalPLayers = (year.aPlayerIds?.length || 0) + (year.bPlayerIds?.length || 0);
+    const playerDues = year.playerDues * totalPLayers;
+    const totalExpenses = year.expenses.reduce((a: number, b: Expense) => a + b.cost, 0);
+    const extraPrizes = year.prizes.reduce((a: number, b: Expense) => a + b.cost, 0);
+    const totalCalcuttaMoney = this.teams.reduce((a: number, b: Team) => a + (b.winningBid || 0), 0);
+    this.moneyForWinnings = playerDues + totalCalcuttaMoney - totalExpenses - extraPrizes;
   }
 
   openAddEditScorecardDialog(card?: Scorecard): void {
@@ -121,6 +140,9 @@ export class ScorecardComponent implements OnInit {
     const last = this.setPlace(cards.length, cards.filter(s => !s.rank), true);
     const nonPLaceFinishers = this.rankScorecards(cards.filter(s => !s.rank), 3);
     this.scorecards = [first, second, third, ...(nonPLaceFinishers || []), last].filter(c => !!c);
+    this.firstPlaceTeam = first.team;
+    this.secondPlaceTeam = second.team;
+    this.thirdPlaceTeam = third.team;
   }
 
   setPlace(place: number, cards: Scorecard[] = this.scorecards, reverse = false): Scorecard {
@@ -129,6 +151,7 @@ export class ScorecardComponent implements OnInit {
     if (grouped[0].length === 1) {
       grouped[0][0].rank = place;
       return grouped[0][0];
+
     }
 
     let ties: Scorecard[] = grouped[0];

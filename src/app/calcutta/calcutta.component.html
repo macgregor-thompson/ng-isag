@@ -1,7 +1,165 @@
 <div class="container calcutta-page">
-  <mat-card class="isag-card calcutta-card">
+  <mat-card class="isag-card calcutta-card" [class.not-admin]="!stateService.isAdmin">
     <mat-card-header>
       <mat-card-title class="PageHeader">Calcutta</mat-card-title>
+      <div class="fill-remaining-space"></div>
+
+      <mat-form-field class="year-select">
+        <mat-label>Year</mat-label>
+        <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
+                    (selectionChange)="getTeams()">
+          <mat-option *ngFor="let year of yearService.years" [value]="year">
+            {{ year.year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-card-header>
+
+    <mat-toolbar class="header-btns" >
+      <h4 class="players-header">Players</h4>
+      <div class="players-header-sm">
+        <h4 class="player-a-header flex1">Player A</h4>
+        <h4 class="player-b-header flex1">Player B</h4>
+      </div>
+      <div class="bid-headers" fxHide.lt-sm>
+        <h4 class="bid-header">Winning Bid</h4>
+        <h4 class="bidder-header">Winning Bidder</h4>
+      </div>
+      <h4 class="bid-headers" fxHide.gt-xs>Winning Bid & Bidder</h4>
+    </mat-toolbar>
+
+    <mat-list class="isag-list calcutta-list">
+      <mat-list-item class="list-item no-hover"
+                     *ngFor="let team of teams;
+                     let odd = odd; let first = first; let last = last; let index = index"
+                     [disableRipple]="true" [class.odd-item]="odd">
+
+        <div class="team-number">{{index + 1}}</div>
+
+       <div class="players">
+          <div>{{team.playerA.firstName + ' ' + team.playerA.lastName}}</div>
+          <div>{{team.playerB.firstName + ' ' + team.playerB.lastName}}</div>
+        </div>
+
+        <div class="bidding">
+
+          <ng-container *ngIf="!stateService.isAdmin">
+            <div class="winning-bid">{{team.winningBid | currency}}</div>
+            <div class="winning-bidder">{{team.winningBidder}}</div>
+          </ng-container>
+
+          <ng-container *ngIf="stateService.isAdmin">
+            <mat-form-field floatLabel="never" class="bid-input">
+              <span matPrefix>$&nbsp;</span>
+              <input matInput type="number" placeholder="Winning bid" [(ngModel)]="team.winningBid"
+                     aria-label="bid" name="bid"
+                     (ngModelChange)="updateSub.next({teamId: team._id, update: {winningBid: team.winningBid}}); updatePrizeMoney()"
+                     [readonly]="!stateService.isAdmin">
+            </mat-form-field>
+
+            <mat-form-field floatLabel="never" class="bidder-input">
+              <input matInput #bidderInput placeholder="Winning Bidder" value="" [(ngModel)]="team.winningBidder"
+                     [matAutocomplete]="winningBidder" aria-label="Winning Bidder"
+                     (ngModelChange)="updateSub.next({teamId: team._id, update: {winningBidder: team.winningBidder}})">
+              <mat-autocomplete #winningBidder="matAutocomplete">
+                <mat-option class="player-option"
+                            *ngFor="let player of playerService.allPlayers | searchPlayer: bidderInput.value"
+                            [value]="player.firstName + ' ' + player.lastName">
+                  <div>{{player.firstName}} {{player.lastName}}</div>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </ng-container>
+        </div>
+
+
+      </mat-list-item>
+    </mat-list>
   </mat-card>
+
+  <div class="flex4">
+    <div class="detail-view">
+      <mat-card class="detail-card">
+        <mat-card-header>
+          <mat-card-title>Money</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+        <h4>Winnings</h4>
+        <mat-list class="isag-list money-list">
+          <mat-list-item class="list-item no-hover" [disableRipple]="true">
+            <div class="money-title">1<sup>st</sup> Place:</div>
+            <div class="money-info">
+              <mat-chip-list>
+                <mat-chip selected class="first-place-chip">
+                  {{moneyForWinnings * selectedYear.firstPlacePercentage / 100 | currency}}
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </mat-list-item>
+          <mat-list-item class="list-item no-hover" [disableRipple]="true">
+            <div class="money-title">2<sup>nd</sup> Place:</div>
+            <div class="money-info">
+              <mat-chip-list>
+                <mat-chip selected color="other" class="second-place-chip">
+                  {{moneyForWinnings * selectedYear.secondPlacePercentage / 100 | currency}}
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </mat-list-item>
+          <mat-list-item class="list-item no-hover" [disableRipple]="true">
+            <div class="money-title">3<sup>rd</sup> Place:</div>
+            <div class="money-info">
+              <mat-chip-list>
+                <mat-chip selected color="accent" class="third-place-chip">
+                  {{moneyForWinnings * selectedYear.thirdPlacePercentage / 100 | currency}}
+                </mat-chip>
+              </mat-chip-list>
+            </div>
+          </mat-list-item>
+        </mat-list>
+
+        <ng-container *ngIf="selectedYear.prizes.length">
+          <h4>Prizes</h4>
+          <mat-list class="isag-list money-list">
+            <mat-list-item class="list-item no-hover" [disableRipple]="true"
+                           *ngFor="let prize of selectedYear.prizes">
+              <div class="money-title">{{ prize.name }}:</div>
+              <div class="money-info">{{ prize.cost | currency }}</div>
+            </mat-list-item>
+          </mat-list>
+        </ng-container>
+
+
+          <h4>Money Raised</h4>
+          <mat-list class="isag-list money-list">
+            <mat-list-item class="list-item no-hover" [disableRipple]="true">
+              <div class="money-title">Dues:</div>
+              <div class="money-info"> {{ playerDues | currency }}</div>
+            </mat-list-item>
+            <mat-list-item class="list-item no-hover" [disableRipple]="true">
+              <div class="money-title">Calcutta:</div>
+              <div class="money-info"> {{ totalCalcuttaMoney | currency }}</div>
+            </mat-list-item>
+          </mat-list>
+
+
+          <h4>Expenses</h4>
+          <mat-list class="isag-list money-list">
+            <mat-list-item class="list-item no-hover" [disableRipple]="true"
+                           *ngFor="let expense of selectedYear.expenses">
+              <div class="money-title">{{ expense.name }}:</div>
+              <div class="money-info">{{ expense.cost | currency }}</div>
+            </mat-list-item>
+          </mat-list>
+
+
+
+
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+  </div>
 </div>

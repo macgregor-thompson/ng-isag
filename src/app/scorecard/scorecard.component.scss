@@ -20,15 +20,14 @@
   flex-direction: column;
 }
 
-.year-select {
-  width: 120px;
-  margin-right: 16px;
-}
-
 mat-card-header {
   button {
     margin-right: 16px;
   }
+}
+
+mat-card-content {
+  padding-top: 8px;
 }
 
 .pointer:hover {
@@ -210,7 +209,7 @@ mat-card-header {
 }
 
 .player-divs {
-  flex: 1;
+  flex: 3;
   display: flex;
   @include lt-sm() {
     flex-direction: column;
@@ -285,3 +284,60 @@ mat-card-header {
   color: #fff;
 }
 
+.bidder {
+  flex: 1;
+}
+
+.calcutta-winnings {
+  display: flex;
+  .calcutta-div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    .winning-bidder {
+      display: flex;
+      flex: 1;
+    }
+  }
+}
+
+.winning-cards {
+  display: flex;
+  padding-bottom: 8px;
+  mat-card {
+    background-color: $isag-green;
+    color: #fff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    h3 {
+      font-weight: 500;
+    }
+    * {
+      text-align: center;
+    }
+  }
+
+  @include xs() {
+    flex-direction: column;
+    mat-card {
+      flex-direction: row;
+      h1 {
+        flex: 3;
+        font-size: 16px;
+        margin-bottom: 0;
+      }
+      h3 {
+        flex: 1;
+        font-size: 14px;
+        margin-bottom: 0;
+      }
+      .place {
+        margin-top: -5px;
+      }
+    }
+  }
+
+}
