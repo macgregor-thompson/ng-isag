@@ -43,13 +43,13 @@
 
         <div class="player-divs">
           <div class="player">
-            <div>{{card.team.playerA.firstName + '&nbsp;' + card.team.playerA.lastName}}</div>
+            <div class="name">{{card.team.playerA.firstName + ' ' + card.team.playerA.lastName}}</div>
             <mat-icon *ngIf="first" svgIcon="jacket" class="isag-icon"></mat-icon>
             <mat-icon *ngIf="last" svgIcon="bra" class="isag-icon"></mat-icon>
           </div>
 
           <div class="player">
-            <div>{{card.team.playerB.firstName + '&nbsp;' + card.team.playerB.lastName}}</div>
+            <div class="name">{{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}</div>
             <mat-icon *ngIf="first" svgIcon="jacket" class="isag-icon"></mat-icon>
             <mat-icon *ngIf="last" svgIcon="bra" class="isag-icon"></mat-icon>
           </div>
@@ -77,17 +77,17 @@
     <div class="winning-cards">
       <mat-card>
         <h3 class="place">1<sup>st</sup> Place</h3>
-        <h1>{{firstPlaceTeam.winningBidder}}</h1>
+        <h1>{{firstPlaceTeam?.winningBidder}}</h1>
         <h3>{{moneyForWinnings * selectedYear.firstPlacePercentage / 100 | currency}}</h3>
       </mat-card>
       <mat-card>
         <h3 class="place">2<sup>nd</sup> Place</h3>
-        <h1>{{secondPlaceTeam.winningBidder}}</h1>
+        <h1>{{secondPlaceTeam?.winningBidder}}</h1>
         <h3>{{moneyForWinnings * selectedYear.secondPlacePercentage / 100 | currency}}</h3>
       </mat-card>
       <mat-card>
         <h3 class="place">3<sup>rd</sup> Place</h3>
-        <h1>{{thirdPlaceTeam.winningBidder}}</h1>
+        <h1>{{thirdPlaceTeam?.winningBidder}}</h1>
         <h3>{{moneyForWinnings * selectedYear.thirdPlacePercentage / 100 | currency}}</h3>
       </mat-card>
     </div>
@@ -117,8 +117,8 @@
                 Edit Scorecard
               </button>
               <div class="player-names">
-                <div>{{card.team.playerA.firstName + '&nbsp;' + card.team.playerA.lastName}}</div>
-                <div>{{card.team.playerB.firstName + '&nbsp;' + card.team.playerB.lastName}}</div>
+                <div class="name">{{card.team.playerA.firstName + ' ' + card.team.playerA.lastName}}</div>
+                <div class="name">{{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}</div>
               </div>
 
             </th>
@@ -140,7 +140,7 @@
           <ng-container *ngIf="showPlayerScores[card.teamId]">
             <tr class="player-score-row" [@rowsAnimation] [class.even]="even">
               <th colspan="2" class="left-th">
-                <div>{{card.team.playerA.firstName + '&nbsp;' + card.team.playerA.lastName}}</div>
+                <div class="name">{{card.team.playerA.firstName + ' ' + card.team.playerA.lastName}}</div>
               </th>
               <td *ngFor="let hole of course.frontNine | keyvalue">
                 <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
@@ -159,7 +159,7 @@
             </tr>
             <tr class="player-score-row" [@rowsAnimation] [class.even]="even">
               <th colspan="2" class="left-th">
-                <div>{{card.team.playerB.firstName + '&nbsp;' + card.team.playerB.lastName}}</div>
+                <div class="name">{{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}</div>
               </th>
               <td *ngFor="let hole of course.frontNine | keyvalue">
                 <div class="score" [ngClass]="scoreClass(card.playerBNetScores[hole.key], hole.value.par)">
@@ -200,7 +200,7 @@
               <div class="individual-rank">{{(card.tied ? 'T' : '') + card.rank}}</div>
             </th>
             <th class="individual-name-th">
-              <div>{{card.player.firstName + '&nbsp;' + card.player.lastName}}</div>
+              <div class="name">{{card.player.firstName + ' ' + card.player.lastName}}</div>
             </th>
             <td *ngFor="let hole of course.frontNine | keyvalue">
               <div class="score" [ngClass]="scoreClass(card.netScores[hole.key], hole.value.par)">

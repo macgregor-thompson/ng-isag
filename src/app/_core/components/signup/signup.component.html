@@ -4,31 +4,50 @@
       <mat-card-title class="PageHeader">Sign Up</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-form-field>
-        <input matInput type="text" placeholder="First Name" [(ngModel)]="user.firstName" required
-               aria-label="first name" name="firstName">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" placeholder="Last Name" [(ngModel)]="user.lastName" required aria-label="last name"
-               name="lastName">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" placeholder="username" [(ngModel)]="user.username" required aria-label="username"
-               name="username">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="password" placeholder="password" [(ngModel)]="user.password" required
-               aria-label="password"
-               name="password">
-      </mat-form-field>
-      <isag-alert *ngIf="foo" alertClass="primary">
-        <div>Not accepting new users yet...Piss off.</div>
-      </isag-alert>
+      <form [formGroup]="registerForm">
+        <mat-form-field>
+          <input matInput type="text" placeholder="First Name"
+                 formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+                 aria-label="first name" name="firstName" required>
+          <mat-error *ngIf="f.firstName.errors?.required">First Name is required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" placeholder="Last Name"
+                 formControlName="lastName" class="form-control"
+                 [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+                 aria-label="last name" name="lastName" required>
+          <mat-error *ngIf="f.lastName.errors?.required">Last Name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="text" placeholder="Username" formControlName="username" class="form-control"
+                 [ngClass]="{ 'is-invalid': f.username.errors }"  required aria-label="username"
+                 name="username">
+          <mat-error *ngIf="f.username.errors?.required">Username is required</mat-error>
+          <mat-error *ngIf="f.username.errors?.minlength">Username must be at least 6 characters</mat-error>
+          <mat-error *ngIf="f.username.errors?.usernameTaken">This username is already taken</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" formControlName="password"  class="form-control"
+                 [ngClass]="{ 'is-invalid': f.password.errors }" required aria-label="password"
+                 name="password">
+          <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+          <mat-error *ngIf="f.password.errors?.minlength">Password must be at least 6 characters</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword"  class="form-control"
+                 [ngClass]="{ 'is-invalid': f.confirmPassword.errors}" required aria-label="confirm password"
+                 name="confirmPassword" (keyup.enter)="signup()">
+          <mat-error *ngIf="f.confirmPassword.errors?.required">Confirm Password is required</mat-error>
+          <mat-error *ngIf="f.confirmPassword.errors?.passwordsMatch">Passwords do not match</mat-error>
+        </mat-form-field>
+      </form>
+
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="signup()"
-              [disabled]="!user.firstName.length || !user.lastName?.length
-              || !user.username?.length || !user.password?.length">LOGIN
+              [disabled]="!registerForm.valid">
+        SIGN UP
       </button>
     </mat-card-actions>
   </mat-card>

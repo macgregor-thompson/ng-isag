@@ -22,7 +22,7 @@
       <!-- ========= Player A Scores =========== -->
       <tr>
         <th>
-          {{card.team?.playerA?.firstName + '&nbsp;' + card.team.playerA.lastName}}
+          <div class="name">{{card.team?.playerA?.firstName + ' ' + card.team.playerA.lastName}}</div>
         </th>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field>
@@ -45,7 +45,7 @@
       <!-- ========= Player B Scores =========== -->
       <tr>
         <th>
-          {{card.team.playerB.firstName + '&nbsp;' + card.team.playerB.lastName}}
+          <div class="name">{{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}</div>
         </th>
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field>

@@ -7,7 +7,7 @@ import { SharedModule } from '../_shared/shared.module';
 import { AccountMenuComponent } from './components/account-menu/account-menu.component';
 import { TopNavbarComponent } from './components/top-navbar/top-navbar.component';
 import { HomeComponent } from './components/home/home.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 
@@ -19,12 +19,13 @@ import { SignupComponent } from './components/signup/signup.component';
     LoginComponent,
     SignupComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SharedModule,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
   exports: [
 
   ]

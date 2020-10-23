@@ -15,7 +15,7 @@
           {{ user.firstName + " " + user.lastName }}
         </div>
         <div class="role">
-          <mat-select [(value)]="user.role" [disabled]="user.role === Role.GOD">
+          <mat-select [(value)]="user.role" [disabled]="user.role === Role.GOD || !stateService.isAdmin">
             <mat-option [value]="Role.GOD">God</mat-option>
             <mat-option [value]="Role.ADMIN">Admin</mat-option>
             <mat-option [value]="Role.EDITOR">Editor</mat-option>

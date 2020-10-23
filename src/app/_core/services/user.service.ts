@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-import { StateService } from './state.service';
 import { SpinnerService } from './spinner.service';
-import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { User } from '../../_shared/models/user';
 import { CatchError } from '../decorators/catch-error';
-import { Player } from '../../_shared/models/player';
-import { tap } from 'rxjs/operators';
+import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
+import { CreateUser } from '../../_shared/models/create-user';
+import { catchError, map } from 'rxjs/operators';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ import { tap } from 'rxjs/operators';
 export class UserService {
 
   usersApi = 'api/users';
+  private validateUsernameTimeout;
 
   constructor(private http: HttpClient,
               private spinnerService: SpinnerService) {}
@@ -24,6 +25,17 @@ export class UserService {
   @SpinnerAndCatchError
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(this.usersApi);
+  }
+
+
+
+  isUserNameTaken(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.usersApi}/username?username=${username}`);
+  }
+
+  @SpinnerAndCatchError
+  create(user: CreateUser): Observable<User> {
+    return this.http.post<User>(this.usersApi, user);
   }
 
   @CatchError
