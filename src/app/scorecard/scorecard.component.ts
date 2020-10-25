@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { animate, sequence, style, transition, trigger } from '@angular/animations';
 
 import { MatDialog } from '@angular/material/dialog';
-import { chain as _chain, sortBy as _sortBy, merge as _merge } from 'lodash';
+import { chain as _chain, sortBy as _sortBy, merge as _merge } from 'lodash-es';
 
 import { Year } from '../_shared/models/years/year';
 import { YearService } from '../_core/services/year.service';

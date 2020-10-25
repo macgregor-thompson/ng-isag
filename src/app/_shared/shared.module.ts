@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { QuillModule } from 'ngx-quill';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AngularMaterialModule } from '../_angular-material/angular-material.module';
 import { AlertComponent } from './components/alert/alert.component';
@@ -49,7 +48,6 @@ import { CourseCardComponent } from '../settings/courses/course-card/course-card
     FlexLayoutModule,
     FormsModule,
     QuillModule.forRoot(),
-    FontAwesomeModule
 
 
   ],
@@ -58,7 +56,6 @@ import { CourseCardComponent } from '../settings/courses/course-card/course-card
     FlexLayoutModule,
     FormsModule,
     QuillModule,
-    FontAwesomeModule,
 
 
     AlertComponent,
