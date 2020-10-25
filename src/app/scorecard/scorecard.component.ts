@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { animate, sequence, style, transition, trigger } from '@angular/animations';
 
 import { MatDialog } from '@angular/material/dialog';
-import { chain as _chain, sortBy as _sortBy, merge as _merge } from 'lodash-es';
+import { chain as _chain, sortBy as _sortBy, merge as _merge } from 'lodash';
 
 import { Year } from '../_shared/models/years/year';
 import { YearService } from '../_core/services/year.service';
@@ -16,7 +16,6 @@ import { Course } from '../_shared/models/course/course';
 import { AddScorecardDialogComponent } from './add-scorecard-dialog/add-scorecard-dialog.component';
 import { ScorecardService } from '../_core/services/scorecard.service';
 import { PlayerScorecard } from '../_shared/models/scorecards/player-scorecard';
-import { Score } from '../_shared/models/scorecards/score';
 import { Expense } from '../_shared/models/years/expense';
 
 @Component({
