@@ -148,8 +148,7 @@
                 </div>
               </td>
               <th>{{card.playerAFrontNineNetScore}}</th>
-              <td *ngFor="let hole of course.backNine | keyvalue"
-              >
+              <td *ngFor="let hole of course.backNine | keyvalue">
                 <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
                   {{card.playerANetScores[hole.key]}}
                 </div>
