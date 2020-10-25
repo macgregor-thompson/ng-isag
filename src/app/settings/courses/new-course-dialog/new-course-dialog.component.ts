@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { every as _every } from 'lodash-es';
+import { every as _every } from 'lodash';
 
 import { Course } from '../../../_shared/models/course/course';
 import { CourseService } from '../../../_core/services/course.service';

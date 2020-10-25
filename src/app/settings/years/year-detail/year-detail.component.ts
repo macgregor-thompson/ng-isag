@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, filter, switchMap } from 'rxjs/operators';
-import { chunk as _chunk } from 'lodash-es';
+import { chunk as _chunk } from 'lodash';
 
 import { Year } from '../../../_shared/models/years/year';
 import { StateService } from '../../../_core/services/state.service';
