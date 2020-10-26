@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { merge as _merge } from 'lodash';
+import { merge as _merge } from 'lodash-es';
 
 import { YearService } from '../_core/services/year.service';
 import { Year } from '../_shared/models/years/year';

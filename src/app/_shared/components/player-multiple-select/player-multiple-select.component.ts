@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 
-import { isEmpty as _isEmpty, cloneDeep as _cloneDeep } from 'lodash';
+import { isEmpty as _isEmpty, cloneDeep as _cloneDeep } from 'lodash-es';
 
 import { Player } from '../../models/player';
 import { PlayerService } from '../../../_core/services/player.service';

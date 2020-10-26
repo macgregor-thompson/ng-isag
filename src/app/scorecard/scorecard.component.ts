@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { animate, sequence, style, transition, trigger } from '@angular/animations';
 
 import { MatDialog } from '@angular/material/dialog';
-import { chain as _chain, sortBy as _sortBy, merge as _merge } from 'lodash';
+import {
+  sortBy as _sortBy, merge as _merge, flow as _flow,
+  groupBy as _groupBy, toPairs as _toPairs, reverse as _reverse, map as _map
+} from 'lodash-es';
 
 import { Year } from '../_shared/models/years/year';
 import { YearService } from '../_core/services/year.service';
@@ -45,7 +48,6 @@ export class ScorecardComponent implements OnInit {
   secondPlaceTeam: Team;
   thirdPlaceTeam: Team;
   moneyForWinnings: number;
-
 
 
   constructor(public yearService: YearService,
@@ -164,9 +166,13 @@ export class ScorecardComponent implements OnInit {
   }
 
   groupByScore(cards: Scorecard[], groupBy, reverse = false): Scorecard[][] {
-    return reverse ?
-      _chain(cards).groupBy(groupBy).toPairs().sortBy(0).reverse().map(1).value()
-      : _chain(cards).groupBy(groupBy).toPairs().sortBy(0).map(1).value();
+    return _flow([
+      function(values) { return _groupBy(values, groupBy); },
+      _toPairs,
+      function(values) { return _sortBy(values, 0); },
+      function(values) { return reverse ? _reverse(values) : values; },
+      function(values) { return _map(values, '1'); }
+    ])(cards);
   }
 
 
@@ -211,7 +217,7 @@ export class ScorecardComponent implements OnInit {
     switch (score - par) {
       case -1:
       case -.5:
-        return  'birdie';
+        return 'birdie';
       case 0:
         return 'par';
       case -2:
