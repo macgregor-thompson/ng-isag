@@ -110,7 +110,8 @@
                 {{(card.tied ? 'T' : '') + card.rank}}
               </div>
             </th>
-            <th class="team-names-th" isagStopPropagation [stopPropagation]="stateService.isAdmin">
+            <th class="team-names-th" [class.isAdmin]="stateService.isAdmin" isagStopPropagation
+                [stopPropagation]="stateService.isAdmin">
               <button mat-stroked-button class="edit-card-btn" color="primary"
                       (click)="openAddEditScorecardDialog(card)">
                 <mat-icon>edit</mat-icon>

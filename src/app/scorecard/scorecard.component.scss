@@ -71,7 +71,7 @@ mat-card-content {
 .team-names-th {
   position: sticky;
   left: 68px;
-  &:hover {
+  &.isAdmin:hover {
     .player-names {
       display: none;
     }
