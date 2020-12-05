@@ -27,7 +27,8 @@ export class YearService {
               private appInitializerService: AppInitializerService,
               private stateService: StateService,
               private spinnerService: SpinnerService) {
-    this.years = this.appInitializerService.years;
+    this.years = this.stateService.isAdmin ? this.appInitializerService.years
+      : this.appInitializerService.years.filter(y => !!y.public);
     this.availableYears = (() => {
       let year = new Date().getFullYear() + 5;
       const years = [year];

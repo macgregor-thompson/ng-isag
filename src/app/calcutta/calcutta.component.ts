@@ -9,7 +9,6 @@ import { StateService } from '../_core/services/state.service';
 import { PlayerService } from '../_core/services/player.service';
 import { TeamService } from '../_core/services/team.service';
 import { Team } from '../_shared/models/teams/team';
-import { Player } from '../_shared/models/player';
 import { Expense } from '../_shared/models/years/expense';
 
 
@@ -26,7 +25,6 @@ export class CalcuttaComponent implements OnInit, OnDestroy {
   totalExpenses: number;
   extraPrizes: number;
   totalCalcuttaMoney: number;
-  moneyForWinnings: number;
 
   updateSub = new Subject<{ teamId: string, update: Partial<Team> }>();
   subscriptions = new Subscription();
@@ -63,7 +61,6 @@ export class CalcuttaComponent implements OnInit, OnDestroy {
     this.totalExpenses = year.expenses.reduce((a: number, b: Expense) => a + b.cost, 0);
     this.extraPrizes = year.prizes.reduce((a: number, b: Expense) => a + b.cost, 0);
     this.updatePrizeMoney();
-    this.moneyForWinnings = this.playerDues + this.totalCalcuttaMoney - this.totalExpenses - this.extraPrizes;
 
   }
 

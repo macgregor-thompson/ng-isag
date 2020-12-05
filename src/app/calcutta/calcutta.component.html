@@ -93,7 +93,7 @@
             <div class="money-info">
               <mat-chip-list>
                 <mat-chip selected class="first-place-chip">
-                  {{moneyForWinnings * selectedYear.firstPlacePercentage / 100 | currency}}
+                  {{ (playerDues + totalCalcuttaMoney - totalExpenses - extraPrizes) * selectedYear.firstPlacePercentage / 100 | currency}}
                 </mat-chip>
               </mat-chip-list>
             </div>
@@ -103,7 +103,7 @@
             <div class="money-info">
               <mat-chip-list>
                 <mat-chip selected color="other" class="second-place-chip">
-                  {{moneyForWinnings * selectedYear.secondPlacePercentage / 100 | currency}}
+                  {{(playerDues + totalCalcuttaMoney - totalExpenses - extraPrizes) * selectedYear.secondPlacePercentage / 100 | currency}}
                 </mat-chip>
               </mat-chip-list>
             </div>
@@ -113,7 +113,7 @@
             <div class="money-info">
               <mat-chip-list>
                 <mat-chip selected color="accent" class="third-place-chip">
-                  {{moneyForWinnings * selectedYear.thirdPlacePercentage / 100 | currency}}
+                  {{(playerDues + totalCalcuttaMoney - totalExpenses - extraPrizes) * selectedYear.thirdPlacePercentage / 100 | currency}}
                 </mat-chip>
               </mat-chip-list>
             </div>

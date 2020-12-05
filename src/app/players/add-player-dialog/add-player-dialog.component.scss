@@ -1,4 +1,13 @@
+@import '../../../media-queries.scss';
+
 mat-form-field {
   margin: 0 5px;
   width: 100%;
+}
+
+.form-row {
+  display: flex;
+  @include lt-sm() {
+    flex-direction: column;
+  }
 }

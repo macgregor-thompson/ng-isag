@@ -14,7 +14,7 @@ export class Player {
   iSagWinner: boolean;
   dateOfBirth: Date;
   favoriteActivities: Activity[];
-  constructor(firstName?: string, lastName?: string, handicap?: number) {
+  constructor(firstName = '', lastName = '', handicap?: number) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.handicap = handicap;

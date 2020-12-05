@@ -23,4 +23,8 @@ export class UsersComponent implements OnInit {
    });
   }
 
+  updateRole(user: User): void {
+    this.userService.update(user._id, {role: user.role}).subscribe();
+  }
+
 }

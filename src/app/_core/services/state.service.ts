@@ -13,6 +13,7 @@ import { Year } from '../../_shared/models/years/year';
 })
 export class StateService {
   currentUser: User;
+  isGod: boolean;
   isAdmin: boolean;
   year: Year;
   pageTitle$: BehaviorSubject<string> = new BehaviorSubject('Results');
@@ -36,6 +37,7 @@ export class StateService {
 
   initCurrentUser(user: User): void {
     this.currentUser = user;
+    this.isGod = user?.role === Role.GOD;
     this.isAdmin = user?.role <= Role.ADMIN;
   }
 

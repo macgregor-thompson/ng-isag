@@ -17,8 +17,6 @@ export class PreloadStrategyService implements PreloadingStrategy {
     if (route.data) {
       const { checkMinRole } = route.data;
 
-      console.log('route.data', route.data);
-
       const isRouteAuthorized = !checkMinRole ||  this.stateService.currentUser?.role <= checkMinRole;
 
       if (checkMinRole) console.log('isRouteAuthorized:', isRouteAuthorized);

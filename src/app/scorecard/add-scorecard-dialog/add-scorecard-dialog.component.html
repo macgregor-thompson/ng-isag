@@ -17,7 +17,7 @@
 
 <mat-dialog-content class="no-overflow">
 
-  <isag-course-card [course]="data.course" *ngIf="data.teams.length">
+  <isag-course-card [course]="data.course" *ngIf="data.teams.length || card.team">
     <ng-container  *ngIf="card.team">
       <!-- ========= Player A Scores =========== -->
       <tr>
@@ -88,7 +88,7 @@
       <!-- ========= Team Scores =========== -->
     </ng-container>
   </isag-course-card>
-  <isag-alert *ngIf="!data.teams.length">
+  <isag-alert *ngIf="!data.teams.length && !data.card">
     All Teams have a Scorecard
   </isag-alert>
 </mat-dialog-content>
@@ -102,7 +102,7 @@
 
   <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.card">Delete</button>
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()" *ngIf="data.teams.length">
+  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()" *ngIf="data.teams.length || data.card">
     {{ data.card ? 'Save' : 'Add'}}
   </button>
 </mat-dialog-actions>
