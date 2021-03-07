@@ -27,8 +27,9 @@ const routes: Routes = [
 
 
 const routeConfig = {
-  preloadingStrategy: PreloadStrategyService,
-  enableTracing: false,
+    preloadingStrategy: PreloadStrategyService,
+    enableTracing: false,
+    relativeLinkResolution: 'legacy'
 } as ExtraOptions;
 
 @NgModule({
