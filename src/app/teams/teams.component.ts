@@ -18,7 +18,6 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent implements OnInit {
-  selectedYear: Year;
   teams: Team[];
   aPlayers: Player[];
   bPlayers: Player[];
@@ -35,7 +34,6 @@ export class TeamsComponent implements OnInit {
               private teamService: TeamService) { }
 
   ngOnInit(): void {
-    this.selectedYear = this.stateService.year;
     this.getTeamsAndPlayers();
 
     this.subscriptions.add(this.updateSub.pipe(debounceTime(400)).subscribe(x => this.saveOrUpdateTeam(...x)));
@@ -49,11 +47,11 @@ export class TeamsComponent implements OnInit {
   }
 
   getPlayers(): void {
-    [this.aPlayers, this.bPlayers] = this.playerService.aAndBPlayers(this.selectedYear);
+    [this.aPlayers, this.bPlayers] = this.playerService.aAndBPlayers(this.stateService.year);
   }
 
   getTeams(): void {
-    this.teamService.getByYear(this.selectedYear.year).subscribe({
+    this.teamService.getByYear(this.stateService.year.year).subscribe({
       next: teams => {
         this.teams = teams;
         teams.forEach(t => {
@@ -65,7 +63,7 @@ export class TeamsComponent implements OnInit {
   }
 
   addTeam(): void {
-    this.teams.push(new Team(this.selectedYear.year));
+    this.teams.push(new Team(this.stateService.year.year));
   }
 
   getPlayerName(player: Player) {
