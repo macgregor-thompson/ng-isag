@@ -141,9 +141,9 @@ export class ScorecardComponent implements OnInit {
     const last = this.setPlace(cards.length, cards.filter(s => !s.rank), true);
     const nonPLaceFinishers = this.rankScorecards(cards.filter(s => !s.rank), 3);
     this.scorecards = [first, second, third, ...(nonPLaceFinishers || []), last].filter(c => !!c);
-    this.firstPlaceTeam = first.team;
-    this.secondPlaceTeam = second.team;
-    this.thirdPlaceTeam = third.team;
+    this.firstPlaceTeam = first?.team;
+    this.secondPlaceTeam = second?.team;
+    this.thirdPlaceTeam = third?.team;
   }
 
   setPlace(place: number, cards: Scorecard[] = this.scorecards, reverse = false): Scorecard {
