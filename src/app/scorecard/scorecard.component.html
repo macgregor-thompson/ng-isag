@@ -3,13 +3,13 @@
   <mat-card class="isag-card courses-card">
     <mat-card-header>
       <mat-card-title>
-        <div>{{selectedYear.year}} Results</div>
+        <div>{{stateService.year.year}} Results</div>
       </mat-card-title>
       <div class="fill-remaining-space"></div>
       <div class="select-button-header">
         <mat-form-field class="year-select">
           <mat-label>Year</mat-label>
-          <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
+          <mat-select [(ngModel)]="stateService.year" [compareWith]="yearService.yearsAreSame"
                       (selectionChange)="getData()">
             <mat-option *ngFor="let year of yearService.years" [value]="year">
               {{ year.year }}
@@ -71,24 +71,24 @@
   <mat-card class="isag-card courses-card">
     <mat-card-header>
       <mat-card-title>
-        <div>{{selectedYear.year}} Calcutta Winnings</div>
+        <div>{{stateService.year.year}} Calcutta Winnings</div>
       </mat-card-title>
     </mat-card-header>
     <div class="winning-cards">
       <mat-card>
         <h3 class="place">1<sup>st</sup> Place</h3>
         <h1>{{firstPlaceTeam?.winningBidder}}</h1>
-        <h3>{{moneyForWinnings * selectedYear.firstPlacePercentage / 100 | currency}}</h3>
+        <h3>{{moneyForWinnings * stateService.year.firstPlacePercentage / 100 | currency}}</h3>
       </mat-card>
       <mat-card>
         <h3 class="place">2<sup>nd</sup> Place</h3>
         <h1>{{secondPlaceTeam?.winningBidder}}</h1>
-        <h3>{{moneyForWinnings * selectedYear.secondPlacePercentage / 100 | currency}}</h3>
+        <h3>{{moneyForWinnings * stateService.year.secondPlacePercentage / 100 | currency}}</h3>
       </mat-card>
       <mat-card>
         <h3 class="place">3<sup>rd</sup> Place</h3>
         <h1>{{thirdPlaceTeam?.winningBidder}}</h1>
-        <h3>{{moneyForWinnings * selectedYear.thirdPlacePercentage / 100 | currency}}</h3>
+        <h3>{{moneyForWinnings * stateService.year.thirdPlacePercentage / 100 | currency}}</h3>
       </mat-card>
     </div>
   </mat-card>
@@ -96,7 +96,7 @@
   <mat-card class="isag-card courses-card">
     <mat-card-header>
       <mat-card-title>
-        <div>{{selectedYear.year}} Team Scores</div>
+        <div>{{stateService.year.year}} Team Scores</div>
       </mat-card-title>
       <div class="fill-remaining-space"></div>
     </mat-card-header>
@@ -123,13 +123,13 @@
               </div>
 
             </th>
-            <td *ngFor="let hole of course.frontNine | keyvalue">
+            <td *ngFor="let hole of course.frontNine | keyValue">
               <div class="score" [ngClass]="scoreClass(card.teamNetScores[hole.key], hole.value.par)">
                 {{card.teamNetScores[hole.key]}}
               </div>
             </td>
             <th>{{card.frontNineNetScore}}</th>
-            <td *ngFor="let hole of course.backNine | keyvalue">
+            <td *ngFor="let hole of course.backNine | keyValue">
               <div class="score" [ngClass]="scoreClass(card.teamNetScores[hole.key], hole.value.par)">
                 {{card.teamNetScores[hole.key]}}
               </div>
@@ -143,13 +143,13 @@
               <th colspan="2" class="left-th">
                 <div class="name">{{card.team.playerA.firstName + ' ' + card.team.playerA.lastName}}</div>
               </th>
-              <td *ngFor="let hole of course.frontNine | keyvalue">
+              <td *ngFor="let hole of course.frontNine | keyValue">
                 <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
                   {{card.playerANetScores[hole.key]}}
                 </div>
               </td>
               <th>{{card.playerAFrontNineNetScore}}</th>
-              <td *ngFor="let hole of course.backNine | keyvalue">
+              <td *ngFor="let hole of course.backNine | keyValue">
                 <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
                   {{card.playerANetScores[hole.key]}}
                 </div>
@@ -161,13 +161,13 @@
               <th colspan="2" class="left-th">
                 <div class="name">{{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}</div>
               </th>
-              <td *ngFor="let hole of course.frontNine | keyvalue">
+              <td *ngFor="let hole of course.frontNine | keyValue">
                 <div class="score" [ngClass]="scoreClass(card.playerBNetScores[hole.key], hole.value.par)">
                   {{card.playerBNetScores[hole.key]}}
                 </div>
               </td>
               <th>{{card.playerBFrontNineNetScore}}</th>
-              <td *ngFor="let hole of course.backNine | keyvalue"
+              <td *ngFor="let hole of course.backNine | keyValue"
               >
                 <div class="score" [ngClass]="scoreClass(card.playerBNetScores[hole.key], hole.value.par)">
                   {{card.playerBNetScores[hole.key]}}
@@ -188,7 +188,7 @@
   <!--<mat-card class="isag-card courses-card">
     <mat-card-header>
       <mat-card-title>
-        <div>{{selectedYear.year}} Individual Scores</div>
+        <div>{{stateService.year.year}} Individual Scores</div>
       </mat-card-title>
     </mat-card-header>
 

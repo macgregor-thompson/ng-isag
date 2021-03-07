@@ -22,6 +22,7 @@ import { LogPipe } from './pipes/log.pipe';
 import { PlayerComponent } from './components/player/player.component';
 import { ValidateMinMaxDirective } from './directives/validate-min-max.directive';
 import { CourseCardComponent } from '../settings/courses/course-card/course-card.component';
+import { KeyValuePipe } from './pipes/key-value.pipe';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { CourseCardComponent } from '../settings/courses/course-card/course-card
     LogPipe,
     PlayerComponent,
     ValidateMinMaxDirective,
-    CourseCardComponent
+    CourseCardComponent,
+    KeyValuePipe
   ],
   imports: [
     CommonModule,
@@ -51,30 +53,31 @@ import { CourseCardComponent } from '../settings/courses/course-card/course-card
 
 
   ],
-  exports: [
-    AngularMaterialModule,
-    FlexLayoutModule,
-    FormsModule,
-    QuillModule,
+    exports: [
+        AngularMaterialModule,
+        FlexLayoutModule,
+        FormsModule,
+        QuillModule,
 
 
-    AlertComponent,
-    AbsoluteValuePipe,
-    ConfirmDialogComponent,
-    SafeHtmlPipe,
-    StopPropagationDirective,
-    StopRippleDirective,
-    OrderByPipe,
-    SortByNamePipe,
-    SearchPlayerPipe,
-    PlayerMultipleSelectComponent,
-    FilterOutSelectedPlayersPipe,
-    FilterPlayersByYearPipe,
-    LogPipe,
-    PlayerComponent,
-    ValidateMinMaxDirective,
-    CourseCardComponent
-  ],
+        AlertComponent,
+        AbsoluteValuePipe,
+        ConfirmDialogComponent,
+        SafeHtmlPipe,
+        StopPropagationDirective,
+        StopRippleDirective,
+        OrderByPipe,
+        SortByNamePipe,
+        SearchPlayerPipe,
+        PlayerMultipleSelectComponent,
+        FilterOutSelectedPlayersPipe,
+        FilterPlayersByYearPipe,
+        LogPipe,
+        PlayerComponent,
+        ValidateMinMaxDirective,
+        CourseCardComponent,
+        KeyValuePipe
+    ],
   providers: [
     FilterPlayersByYearPipe,
     OrderByPipe

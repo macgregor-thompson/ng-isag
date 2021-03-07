@@ -38,7 +38,6 @@ import { Expense } from '../_shared/models/years/expense';
   ]
 })
 export class ScorecardComponent implements OnInit {
-  selectedYear: Year;
   scorecards: Scorecard[];
   playerScorecards: PlayerScorecard[];
   teams: Team[];
@@ -56,9 +55,7 @@ export class ScorecardComponent implements OnInit {
               private teamService: TeamService,
               private courseService: CourseService,
               public dialog: MatDialog,
-              private scorecardService: ScorecardService) {
-    this.selectedYear = this.stateService.year;
-  }
+              private scorecardService: ScorecardService) {}
 
   ngOnInit(): void {
     this.getData();
@@ -71,13 +68,13 @@ export class ScorecardComponent implements OnInit {
   }
 
   getScorecards(): void {
-    this.scorecardService.getByYear(this.selectedYear.year).subscribe({
+    this.scorecardService.getByYear(this.stateService.year.year).subscribe({
       next: scorecards => this.rankAllCards(scorecards)
     });
   }
 
   getTeams(): void {
-    this.teamService.getByYear(this.selectedYear.year).subscribe({
+    this.teamService.getByYear(this.stateService.year.year).subscribe({
       next: t => {
         this.teams = t;
         this.setMoney();
@@ -86,10 +83,10 @@ export class ScorecardComponent implements OnInit {
   }
 
   getCourse(): void {
-    this.courseService.getByYear(this.selectedYear.year).subscribe({ next: c => this.course = c });
+    this.courseService.getByYear(this.stateService.year.year).subscribe({ next: c => this.course = c });
   }
 
-  setMoney(year: Year = this.selectedYear): void {
+  setMoney(year: Year = this.stateService.year): void {
     const totalPLayers = (year.aPlayerIds?.length || 0) + (year.bPlayerIds?.length || 0);
     const playerDues = year.playerDues * totalPLayers;
     const totalExpenses = year.expenses.reduce((a: number, b: Expense) => a + b.cost, 0);
@@ -105,7 +102,7 @@ export class ScorecardComponent implements OnInit {
       data: {
         course: this.course,
         teams: this.teams.filter(t => !currentCardTeamIds.includes(t._id)),
-        year: this.selectedYear.year,
+        year: this.stateService.year.year,
         card: card
       }
     });

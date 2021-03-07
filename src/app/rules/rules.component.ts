@@ -21,7 +21,6 @@ export class RulesComponent implements OnInit {
 
   ngOnInit(): void {
     this.rulesService.getByYear().subscribe(r => {
-
       this.rules = r;
       this.rulesHtmlCopy = r.html;
     });

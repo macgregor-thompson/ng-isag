@@ -7,7 +7,7 @@
       <div class="fill-remaining-space"></div>
       <mat-form-field class="year-select">
         <mat-label>Year</mat-label>
-        <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame"
+        <mat-select [(ngModel)]="stateService.year" [compareWith]="yearService.yearsAreSame"
                     (selectionChange)="getTeamsAndPlayers()">
           <mat-option *ngFor="let year of yearService.years" [value]="year">
             {{ year.year }}

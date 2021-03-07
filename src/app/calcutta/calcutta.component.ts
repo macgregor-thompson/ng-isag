@@ -18,7 +18,6 @@ import { Expense } from '../_shared/models/years/expense';
   styleUrls: ['./calcutta.component.scss']
 })
 export class CalcuttaComponent implements OnInit, OnDestroy {
-  selectedYear: Year;
   teams: Team[];
   playerDues: number;
   totalPLayers: number;
@@ -32,9 +31,7 @@ export class CalcuttaComponent implements OnInit, OnDestroy {
   constructor(public yearService: YearService,
               public stateService: StateService,
               public playerService: PlayerService,
-              private teamService: TeamService) {
-    this.selectedYear = this.stateService.year;
-  }
+              private teamService: TeamService) {}
 
   ngOnInit(): void {
     this.getTeams();
@@ -47,7 +44,7 @@ export class CalcuttaComponent implements OnInit, OnDestroy {
   }
 
   getTeams(): void {
-    this.teamService.getByYear(this.selectedYear.year).subscribe({
+    this.teamService.getByYear(this.stateService.year.year).subscribe({
       next: t => {
         this.teams = t;
         this.setMoney();
@@ -55,7 +52,7 @@ export class CalcuttaComponent implements OnInit, OnDestroy {
     });
   }
 
-  setMoney(year: Year = this.selectedYear): void {
+  setMoney(year: Year = this.stateService.year): void {
     this.totalPLayers = (year.aPlayerIds?.length || 0) + (year.bPlayerIds?.length || 0);
     this.playerDues = year.playerDues * this.totalPLayers;
     this.totalExpenses = year.expenses.reduce((a: number, b: Expense) => a + b.cost, 0);
