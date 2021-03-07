@@ -145,8 +145,8 @@
         <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"  cdkDrag *ngFor="let player of aPlayers
     | orderBy: 'handicap' : false; let i = index;">
           <div class="drag-handle" cdkDragHandle
-               [class.invisible]="!stateService.isAdmin || player.handicap !== bPlayers[0].handicap"
-               [cdkDragHandleDisabled]="player.handicap !== bPlayers[0].handicap">
+               [class.invisible]="!stateService.isAdmin || player.handicap !== bPlayers[0]?.handicap"
+               [cdkDragHandleDisabled]="player.handicap !== bPlayers[0]?.handicap">
             <mat-icon>drag_indicator</mat-icon>
           </div>
           <isag-player [index]="i + 1"

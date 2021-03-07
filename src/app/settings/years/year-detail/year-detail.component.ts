@@ -106,9 +106,10 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   splitPLayersByHandicap(players?: Player[]): void {
     const orderedByHandicap = this.orderByPipe.transform(players, 'handicap', false);
-    const [aPlayers, bPlayers, oddPlayer] = _chunk(players, (orderedByHandicap.length / 2));
+    const chunkSize = orderedByHandicap.length > 1 ? orderedByHandicap.length / 2 : 1;
+    const [aPlayers = [], bPlayers = [], oddPlayer = []] = _chunk(players, chunkSize);
     this.aPlayers = aPlayers;
-    this.bPlayers = [...bPlayers, ...(oddPlayer || [])];
+    this.bPlayers = [...bPlayers, ...oddPlayer];
     this.allPlayers = [...this.aPlayers, ...this.bPlayers];
   }
 
