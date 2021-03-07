@@ -3,16 +3,7 @@
     <mat-card-header>
       <mat-card-title class="PageHeader">Calcutta</mat-card-title>
       <div class="fill-remaining-space"></div>
-
-      <mat-form-field class="year-select">
-        <mat-label>Year</mat-label>
-        <mat-select [(ngModel)]="stateService.year" [compareWith]="yearService.yearsAreSame"
-                    (selectionChange)="getTeams()">
-          <mat-option *ngFor="let year of yearService.years" [value]="year">
-            {{ year.year }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <isag-year-select (yearChange)="getTeams()"></isag-year-select>
     </mat-card-header>
 
     <mat-toolbar class="header-btns" >

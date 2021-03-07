@@ -23,6 +23,8 @@ import { PlayerComponent } from './components/player/player.component';
 import { ValidateMinMaxDirective } from './directives/validate-min-max.directive';
 import { CourseCardComponent } from '../settings/courses/course-card/course-card.component';
 import { KeyValuePipe } from './pipes/key-value.pipe';
+import { YearSelectComponent } from './components/year-select/year-select.component';
+import { HidePrivateYearsPipe } from './pipes/hide-private-years.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { KeyValuePipe } from './pipes/key-value.pipe';
     PlayerComponent,
     ValidateMinMaxDirective,
     CourseCardComponent,
-    KeyValuePipe
+    KeyValuePipe,
+    YearSelectComponent,
+    HidePrivateYearsPipe
   ],
   imports: [
     CommonModule,
@@ -53,31 +57,33 @@ import { KeyValuePipe } from './pipes/key-value.pipe';
 
 
   ],
-    exports: [
-        AngularMaterialModule,
-        FlexLayoutModule,
-        FormsModule,
-        QuillModule,
+  exports: [
+    AngularMaterialModule,
+    FlexLayoutModule,
+    FormsModule,
+    QuillModule,
 
 
-        AlertComponent,
-        AbsoluteValuePipe,
-        ConfirmDialogComponent,
-        SafeHtmlPipe,
-        StopPropagationDirective,
-        StopRippleDirective,
-        OrderByPipe,
-        SortByNamePipe,
-        SearchPlayerPipe,
-        PlayerMultipleSelectComponent,
-        FilterOutSelectedPlayersPipe,
-        FilterPlayersByYearPipe,
-        LogPipe,
-        PlayerComponent,
-        ValidateMinMaxDirective,
-        CourseCardComponent,
-        KeyValuePipe
-    ],
+    AlertComponent,
+    AbsoluteValuePipe,
+    ConfirmDialogComponent,
+    SafeHtmlPipe,
+    StopPropagationDirective,
+    StopRippleDirective,
+    OrderByPipe,
+    SortByNamePipe,
+    SearchPlayerPipe,
+    PlayerMultipleSelectComponent,
+    FilterOutSelectedPlayersPipe,
+    FilterPlayersByYearPipe,
+    LogPipe,
+    PlayerComponent,
+    ValidateMinMaxDirective,
+    CourseCardComponent,
+    KeyValuePipe,
+    YearSelectComponent,
+    HidePrivateYearsPipe
+  ],
   providers: [
     FilterPlayersByYearPipe,
     OrderByPipe

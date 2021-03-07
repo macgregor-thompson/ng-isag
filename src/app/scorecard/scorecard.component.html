@@ -7,15 +7,9 @@
       </mat-card-title>
       <div class="fill-remaining-space"></div>
       <div class="select-button-header">
-        <mat-form-field class="year-select">
-          <mat-label>Year</mat-label>
-          <mat-select [(ngModel)]="stateService.year" [compareWith]="yearService.yearsAreSame"
-                      (selectionChange)="getData()">
-            <mat-option *ngFor="let year of yearService.years" [value]="year">
-              {{ year.year }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+
+        <isag-year-select (yearChange)="getData()"></isag-year-select>
+
         <button mat-raised-button color="primary" (click)="openAddEditScorecardDialog()" class="right-16"
                 *ngIf="stateService.isAdmin">
           <mat-icon>add</mat-icon>

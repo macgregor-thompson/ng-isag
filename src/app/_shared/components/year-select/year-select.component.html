@@ -1,0 +1,9 @@
+<mat-form-field class="year-select">
+  <mat-label>Year</mat-label>
+  <mat-select [(ngModel)]="stateService.year" [compareWith]="yearService.yearsAreSame"
+              (selectionChange)="yearChange.emit()">
+    <mat-option *ngFor="let year of yearService.years | hidePrivateYears : stateService.isAdmin" [value]="year">
+      {{ year.year }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

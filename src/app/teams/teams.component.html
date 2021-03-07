@@ -5,15 +5,7 @@
         <span>{{  stateService.year.year }}</span>&nbsp;Teams
       </mat-card-title>
       <div class="fill-remaining-space"></div>
-      <mat-form-field class="year-select">
-        <mat-label>Year</mat-label>
-        <mat-select [(ngModel)]="stateService.year" [compareWith]="yearService.yearsAreSame"
-                    (selectionChange)="getTeamsAndPlayers()">
-          <mat-option *ngFor="let year of yearService.years" [value]="year">
-            {{ year.year }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <isag-year-select (yearChange)="getTeamsAndPlayers()"></isag-year-select>
       <button mat-button color="primary" class="edit-btn" (click)="editing = !editing"
               *ngIf="stateService.isAdmin" matTooltipClass="isag-tooltip" matTooltipPosition="before"
               matTooltip="{{editing ? 'Save' : 'Edit' + ' Teams'}}">

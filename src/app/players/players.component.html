@@ -7,9 +7,9 @@
       <div class="fill-remaining-space"></div>
       <mat-form-field>
         <mat-label>Year</mat-label>
-        <mat-select [(ngModel)]="stateService.year" [compareWith]="yearService.yearsAreSame">
+        <mat-select [(value)]="selectedYear" [compareWith]="yearService.yearsAreSame">
           <mat-option [value]="yearAll">All</mat-option>
-          <mat-option *ngFor="let year of yearService.years" [value]="year">
+          <mat-option *ngFor="let year of yearService.years | hidePrivateYears : stateService.isAdmin" [value]="year">
             {{ year.year }}
           </mat-option>
         </mat-select>
