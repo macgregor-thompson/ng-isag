@@ -8,6 +8,7 @@ import { Year } from '../../_shared/models/years/year';
 import { StateService } from './state.service';
 import { AppInitializerService } from '../../app-initializer.service';
 import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
+import { SpinnerService } from './spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class YearService {
 
   constructor(private http: HttpClient,
               private appInitializerService: AppInitializerService,
-              private stateService: StateService) {
+              private stateService: StateService,
+              private spinnerService: SpinnerService) {
     this.years = this.appInitializerService.years;
 
     this.availableYears = (() => {
