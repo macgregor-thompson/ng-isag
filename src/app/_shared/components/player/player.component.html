@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" (click)="editingHandicap = false;">
   <div *ngIf="index">{{index}}.</div>
   <div class="user-avatar-container" *ngIf="showAvatars">
     <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
@@ -7,8 +7,19 @@
     <div>{{ player.firstName + " " + player.lastName }}</div>
     <mat-icon *ngIf="player.iSagWinner" svgIcon="jacket" class="isag-icon"></mat-icon>
   </div>
-  <div class="handicap">
-    <span *ngIf="player.handicap > 0">+</span>
-    {{ player.handicap | absoluteValue }}
+  <div class="handicap" isagStopPropagation>
+   <div class="pointer" *ngIf="!editingHandicap; else handicapInput" (click)="editingHandicap = true;">
+     <span *ngIf="player.handicap > 0">+</span>
+     {{ player.handicap | absoluteValue }}
+   </div>
+    <ng-template #handicapInput>
+      <mat-form-field class="handicap-form">
+        <span matPrefix *ngIf="player.handicap > 0">+</span>
+        <input matInput type="number" [(ngModel)]="player.handicap"
+               (blur)="handicapUpdate.emit(player.handicap)"
+               aria-label="handicap" name="handicap">
+      </mat-form-field>
+    </ng-template>
   </div>
+
 </div>

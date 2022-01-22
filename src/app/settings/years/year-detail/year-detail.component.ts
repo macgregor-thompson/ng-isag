@@ -147,6 +147,10 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.update(list);
   }
 
+  updateHandicap(playerId: string, handicap: number): void {
+    this.playerService.update(playerId, {handicap}).subscribe();
+    this.sortPlayersByHandicap();
+  }
 
   updatePrizesOrExpenses(i: number, list: 'prizes' | 'expenses'): void {
     if (this.year.expenses[i].name?.length && this.year.expenses[i].cost != null) {

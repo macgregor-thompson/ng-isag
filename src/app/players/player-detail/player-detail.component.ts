@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, Subscription } from 'rxjs';
+import { debounceTime, filter, switchMap } from 'rxjs/operators';
 
 import { Player } from '../../_shared/models/player';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { PlayerService } from '../../_core/services/player.service';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
 import { ConfirmDialogComponent } from '../../_shared/components/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 import { StateService } from '../../_core/services/state.service';
 
 @Component({

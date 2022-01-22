@@ -903,4 +903,10 @@ button {
   white-space: nowrap;
 }
 
+.pointer:hover {
+  cursor: pointer;
+}
 
+.no-pointer {
+  cursor: auto;
+}

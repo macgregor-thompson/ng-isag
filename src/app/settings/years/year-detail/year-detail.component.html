@@ -146,7 +146,7 @@
       </mat-toolbar>
       <mat-list id="aPlayers" class="isag-list" cdkDropList [cdkDropListData]="aPlayers"
                 (cdkDropListDropped)="dropPlayer($event)">
-        <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin" cdkDrag
+        <mat-list-item class="list-item no-pointer" [class.no-hover]="!stateService.isAdmin" cdkDrag
                        *ngFor="let player of aPlayers; let i = index;">
           <div class="drag-handle" cdkDragHandle
                [class.invisible]="!stateService.isAdmin || player.handicap !== bPlayers[0]?.handicap"
@@ -154,7 +154,8 @@
             <mat-icon>drag_indicator</mat-icon>
           </div>
           <isag-player [index]="i + 1"
-                       [player]="player"></isag-player>
+                       [player]="player"
+                       (handicapUpdate)="updateHandicap(player._id, $event)"></isag-player>
           <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
                   matTooltip="{{'Delete ' + player.firstName}}"
                   matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Player } from '../../models/player';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'isag-player',
@@ -11,9 +12,14 @@ export class PlayerComponent implements OnInit {
   @Input() index?: number;
   @Input() showAvatars?: false;
 
+  @Output() handicapUpdate = new EventEmitter<number>();
+
+  editingHandicap = false;
+
   constructor() { }
 
   ngOnInit(): void {
+    fromEvent(document, 'click').subscribe(() => this.editingHandicap = false);
   }
 
 }
