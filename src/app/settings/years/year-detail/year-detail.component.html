@@ -127,7 +127,11 @@
   <mat-divider class="section-divider"></mat-divider>
 
   <div class="players-wrapper">
-    <h4 class="checklist-header">{{year.year}} Players</h4>
+    <h4 class="checklist-header flex1">{{year.year}} Players</h4>
+
+   <!-- <button mat-button color="primary" (click)="sortPlayersByHandicap()">
+      Sort By Handicap
+    </button>-->
 
     <isag-player-multiple-select *ngIf="stateService.isAdmin"
                                  [playersToFilterOut]="allPlayers"
@@ -142,8 +146,8 @@
       </mat-toolbar>
       <mat-list id="aPlayers" class="isag-list" cdkDropList [cdkDropListData]="aPlayers"
                 (cdkDropListDropped)="dropPlayer($event)">
-        <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"  cdkDrag *ngFor="let player of aPlayers
-    | orderBy: 'handicap' : false; let i = index;">
+        <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin" cdkDrag
+                       *ngFor="let player of aPlayers; let i = index;">
           <div class="drag-handle" cdkDragHandle
                [class.invisible]="!stateService.isAdmin || player.handicap !== bPlayers[0]?.handicap"
                [cdkDragHandleDisabled]="player.handicap !== bPlayers[0]?.handicap">
@@ -167,8 +171,8 @@
       </mat-toolbar>
       <mat-list id="bPlayers" class="isag-list" cdkDropList [cdkDropListData]="bPlayers"
                 (cdkDropListDropped)="dropPlayer($event)">
-        <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"  cdkDrag *ngFor="let player of bPlayers
-    | orderBy: 'handicap' : false; let i = index;">
+        <mat-list-item class="list-item" [class.no-hover]="!stateService.isAdmin"  cdkDrag
+                       *ngFor="let player of bPlayers; let i = index;">
           <div class="drag-handle" cdkDragHandle
                [class.invisible]="!stateService.isAdmin || player.handicap !== aPlayers[aPlayers.length - 1].handicap"
                [cdkDragHandleDisabled]="player.handicap !== aPlayers[aPlayers.length - 1].handicap">

@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, filter, switchMap } from 'rxjs/operators';
-import { chunk as _chunk } from 'lodash-es';
+import { chunk as _chunk, partition as _partition } from 'lodash-es';
 
 import { Year } from '../../../_shared/models/years/year';
 import { StateService } from '../../../_core/services/state.service';
@@ -50,7 +50,6 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriptions.add(this.updatePrizeOrExpenseSub.pipe(debounceTime(400))
       .subscribe(x => this.updatePrizesOrExpenses(...x)));
 
-
     this.router.navigate([], { fragment: 'player-detail' });
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
@@ -88,26 +87,33 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.aPlayers = this.aPlayers.filter(p => p._id !== player._id);
     this.bPlayers = this.bPlayers.filter(p => p._id !== player._id);
     this.splitPLayersByHandicap([...this.aPlayers, ...this.bPlayers]);
-    this.updatePlayers();
+    this.updateAAndBPlayers();
   }
 
   addPlayers(players: Player[]): void {
     const allPlayers = [...this.aPlayers, ...this.bPlayers, ...players];
     this.splitPLayersByHandicap(allPlayers);
-    this.updatePlayers();
+    this.updateAAndBPlayers();
   }
 
-  updatePlayers(): void {
+  sortPlayersByHandicap(): void {
+    this.splitPLayersByHandicap();
+    this.updateAAndBPlayers();
+  }
+
+  updateAAndBPlayers(): void {
     this.year.aPlayerIds = this.aPlayers.map(p => p._id);
     this.year.bPlayerIds = this.bPlayers.map(p => p._id);
     this.yearService.update(this.year._id,
       { aPlayerIds: this.year.aPlayerIds, bPlayerIds: this.year.bPlayerIds }).subscribe();
   }
 
-  splitPLayersByHandicap(players?: Player[]): void {
-    const orderedByHandicap = this.orderByPipe.transform(players, 'handicap', false);
-    const chunkSize = orderedByHandicap.length > 1 ? orderedByHandicap.length / 2 : 1;
-    const [aPlayers = [], bPlayers = [], oddPlayer = []] = _chunk(players, chunkSize);
+  splitPLayersByHandicap(players: Player[] = [...this.bPlayers, ...this.aPlayers, ]): void {
+    const [playersWithHandicaps, playersWithoutHandicaps] = _partition(players, p => p.handicap != null);
+    const orderedByHandicap = this.orderByPipe.transform(playersWithHandicaps, 'handicap', false);
+    const allPlayers = [...orderedByHandicap, ...playersWithoutHandicaps];
+    const chunkSize = allPlayers.length > 1 ? allPlayers.length / 2 : 1;
+    const [aPlayers = [], bPlayers = [], oddPlayer = []] = _chunk(allPlayers, chunkSize);
     this.aPlayers = aPlayers;
     this.bPlayers = [...bPlayers, ...oddPlayer];
     this.allPlayers = [...this.aPlayers, ...this.bPlayers];

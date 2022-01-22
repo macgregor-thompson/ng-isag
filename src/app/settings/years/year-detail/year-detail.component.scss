@@ -112,6 +112,11 @@ mat-toolbar {
 .players-wrapper {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  h4 {
+    margin: 0;
+  }
+  margin-bottom: 15px;
 }
 
 h4 {
