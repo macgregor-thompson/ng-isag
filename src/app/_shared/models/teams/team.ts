@@ -1,10 +1,10 @@
-import { Player } from '../player';
+import { TeamPlayer } from './team-player';
 
 export class Team {
   _id: string;
   year: number;
-  playerA: Player;
-  playerB: Player;
+  playerA: TeamPlayer;
+  playerB: TeamPlayer;
 
   deleted: boolean;
   winningBid: number;
@@ -12,7 +12,7 @@ export class Team {
 
   constructor(year: number) {
     this.year = year;
-    this.playerA = new Player('A', 'Player');
-    this.playerB = new Player('B',  'Player');
+    this.playerA = new TeamPlayer('A');
+    this.playerB = new TeamPlayer('B');
   }
 }

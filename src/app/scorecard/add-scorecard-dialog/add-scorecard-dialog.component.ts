@@ -78,4 +78,9 @@ export class AddScorecardDialogComponent implements OnInit {
     });
   }
 
+  setNetScore(hole: number): void {
+    if (!this.card.playerANetScores[hole] || !this.card.playerBNetScores[hole]) return;
+    this.card.teamNetScores[hole] = Math.min(this.card.playerANetScores[hole], this.card.playerBNetScores[hole]);
+  }
+
 }

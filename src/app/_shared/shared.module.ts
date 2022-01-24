@@ -25,6 +25,7 @@ import { CourseCardComponent } from '../settings/courses/course-card/course-card
 import { KeyValuePipe } from './pipes/key-value.pipe';
 import { YearSelectComponent } from './components/year-select/year-select.component';
 import { HidePrivateYearsPipe } from './pipes/hide-private-years.pipe';
+import { CourseHandicapPipe } from './pipes/course-handicap.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { HidePrivateYearsPipe } from './pipes/hide-private-years.pipe';
     CourseCardComponent,
     KeyValuePipe,
     YearSelectComponent,
-    HidePrivateYearsPipe
+    HidePrivateYearsPipe,
+    CourseHandicapPipe
   ],
   imports: [
     CommonModule,

@@ -27,14 +27,14 @@
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field>
             <input matInput type="number" [(ngModel)]="card.playerANetScores[hole]"
-                   aria-label="handicap" name="handicap">
+                   aria-label="handicap" name="handicap" (ngModelChange)="setNetScore(hole)">
           </mat-form-field>
         </td>
         <th>{{sumHoles(card.playerANetScores, 1, 9)}}</th>
         <td *ngFor="let hole of [10,11,12,13,14,15,16,17,18]">
           <mat-form-field>
             <input matInput type="number" [(ngModel)]="card.playerANetScores[hole]"
-                   aria-label="handicap" name="handicap">
+                   aria-label="handicap" name="handicap" (ngModelChange)="setNetScore(hole)">
           </mat-form-field>
         </td>
         <th class="back-nine">{{sumHoles(card.playerANetScores, 10, 9)}}</th>
@@ -50,14 +50,14 @@
         <td *ngFor="let hole of [1,2,3,4,5,6,7,8,9]">
           <mat-form-field>
             <input matInput type="number" [(ngModel)]="card.playerBNetScores[hole]"
-                   aria-label="handicap" name="handicap">
+                   aria-label="handicap" name="handicap" (ngModelChange)="setNetScore(hole)">
           </mat-form-field>
         </td>
         <th>{{sumHoles(card.playerBNetScores, 1, 9)}}</th>
         <td *ngFor="let hole of [10,11,12,13,14,15,16,17,18]">
           <mat-form-field>
             <input matInput type="number" [(ngModel)]="card.playerBNetScores[hole]"
-                   aria-label="handicap" name="handicap">
+                   aria-label="handicap" name="handicap" (ngModelChange)="setNetScore(hole)">
           </mat-form-field>
         </td>
         <th class="back-nine">{{sumHoles(card.playerBNetScores, 10, 9)}}</th>
