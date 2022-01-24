@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { flatMap as _flatMap, merge as _merge } from 'lodash-es';
-import { Subject, Subscription } from 'rxjs';
+import { forkJoin, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { StateService } from '../_core/services/state.service';
@@ -118,6 +118,18 @@ export class TeamsComponent implements OnInit {
         delete this.usedBPLayerIds[team.playerB._id];
       }
     });
+  }
+
+  toggleEdit(): void {
+    this.editing = !this.editing;
+    if (!this.editing) {
+      this.updateCourseHandicapsAndNumShots();
+      const observables = this.teams.map(t => {
+        const update: Partial<Team> = { playerA: t.playerA, playerB: t.playerB };
+        return this.teamService.update(t._id, update);
+      });
+      forkJoin(observables).subscribe();
+    }
   }
 
 }

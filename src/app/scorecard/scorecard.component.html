@@ -50,7 +50,7 @@
         </div>
 
         <div class="list-total">
-          {{getTotalScore(card.totalNetScore - (course.frontNinePar + course.backNinePar))}}
+          {{card && course && getTotalScore(card.totalNetScore - (course.frontNinePar + course.backNinePar))}}
         </div>
 
       <!--  <div class="bidder">

@@ -1,10 +1,13 @@
 import { TeamPlayer } from './team-player';
+import { Player } from '../player';
 
 export class Team {
   _id: string;
   year: number;
   playerA: TeamPlayer;
+  playerADetails: Player;
   playerB: TeamPlayer;
+  playerBDetails: Player;
 
   deleted: boolean;
   winningBid: number;
