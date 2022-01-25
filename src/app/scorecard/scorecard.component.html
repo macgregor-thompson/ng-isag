@@ -31,7 +31,8 @@
       <mat-list-item class="list-item no-hover"
                      *ngFor="let card of scorecards | orderBy: 'rank';
                        let odd = odd; let first = first; let last = last; let index = index"
-                     [disableRipple]="true" [class.odd-item]="odd">
+                     [disableRipple]="true" [class.odd-item]="odd" [class.first-place]="first"
+                     [class.last-place]="last">
 
         <div class="list-ranking">{{(card.tied ? 'T' : '') + card.rank}}</div>
 
