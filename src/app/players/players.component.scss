@@ -51,3 +51,9 @@ mat-card-header {
 .odd-item, .odd-item.no-hover.list-item:hover {
   background: #dedede;
 }
+
+.mat-list-item:nth-child(2n) {
+  &, &.no-hover {
+    background-color: #dedede !important;
+  }
+}
