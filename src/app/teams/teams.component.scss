@@ -52,8 +52,8 @@
 .team-number {
   font-weight: 900;
   font-size: 1.2em;
-  margin-left: 1em;
-  width: 40px;
+  margin-left: 5px;
+  width: 25px;
 }
 
 .edit-btn {
@@ -116,10 +116,14 @@ mat-card-footer {
 }
 
 .header-btns {
-  padding-left: 63px;
+  padding: 0 10px 0 35px;
 }
 
 
 .list-item .list-title {
   margin: 0;
+}
+
+.header-divider {
+  width: 20px;
 }
