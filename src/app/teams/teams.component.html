@@ -9,12 +9,8 @@
       <button mat-button color="primary" class="edit-btn" (click)="toggleEdit()"
               *ngIf="stateService.isAdmin" matTooltipClass="isag-tooltip" matTooltipPosition="before"
               matTooltip="{{editing ? 'Save' : 'Edit' + ' Teams'}}">
-        <span *ngIf="!editing">
-          <mat-icon>edit</mat-icon>
-          EDIT</span>
-        <span *ngIf="editing">
-          <mat-icon>save</mat-icon>
-          SAVE</span>
+        <span *ngIf="!editing"><mat-icon>edit</mat-icon> EDIT</span>
+        <span *ngIf="editing"><mat-icon>save</mat-icon> SAVE</span>
       </button>
     </mat-card-header>
 
@@ -31,8 +27,8 @@
       <h4 class="flex1 b-player-header hide-xs">B Players</h4>
       <h4 class="handicap">Handicap</h4>
       <ng-container *ngIf="!editing">
-        <h4 class="handicap hide-xs">C. H.</h4>
-        <h4 class="handicap hide-xs">Shots</h4>
+        <h4 class="handicap">C. H.</h4>
+        <h4 class="handicap">Shots</h4>
       </ng-container>
     </mat-toolbar>
 
@@ -43,8 +39,7 @@
         <div class="team-row">
           <div class="team-player">
             <div class="user-avatar-container">
-              <img *ngIf="team.playerA?.avatarUrl" class="avatar-image" [src]="team.playerA.avatarUrl"
-                   alt="user image"/>
+              <img *ngIf="team.playerA?.avatarUrl" class="avatar-image" [src]="team.playerA.avatarUrl" alt="user image"/>
             </div>
             <div *ngIf="editing" class="player-div">
               <div class="list-title">
@@ -53,8 +48,8 @@
                          [matAutocomplete]="playerA" aria-label="A Player"
                          (ngModelChange)="updateSub.next([team, 'playerA'])">
                   <mat-autocomplete #playerA="matAutocomplete" [displayWith]="getPlayerName">
-                    <mat-option class="player-option" *ngFor="let player of aPlayers; let i = index;"
-                                [value]="player" [class.hidden]="usedAPLayerIds[player._id]">
+                    <mat-option  class="player-option" *ngFor="let player of aPlayers; let i = index;"
+                                [value]="player"  [class.hidden]="usedAPLayerIds[player._id]">
                       <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
                       <div>
                         <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
@@ -79,12 +74,12 @@
               <div class="handicap">
                 <span *ngIf="team.playerA?.handicap > 0">+</span>{{ team.playerA?.handicap | absoluteValue }}
               </div>
-              <div class="handicap  hide-xs">
+              <div class="handicap">
                 <span matPrefix *ngIf="team.playerA?.courseHandicap > 0">+</span>
                 {{ team.playerA?.courseHandicap | absoluteValue  }}
               </div>
 
-              <div class="handicap hide-xs">
+              <div class="handicap">
                 {{ team.playerA?.numShots }}
               </div>
             </div>
@@ -94,8 +89,7 @@
 
           <div class="team-player">
             <div class="user-avatar-container">
-              <img *ngIf="team.playerB?.avatarUrl" class="avatar-image" [src]="team.playerB.avatarUrl"
-                   alt="user image"/>
+              <img *ngIf="team.playerB?.avatarUrl" class="avatar-image" [src]="team.playerB.avatarUrl" alt="user image"/>
             </div>
             <div *ngIf="editing" class="player-div">
               <div class="list-title">
@@ -129,12 +123,12 @@
               <div class="handicap">
                 <span *ngIf="team.playerB?.handicap > 0">+</span>{{ team.playerB?.handicap | absoluteValue }}
               </div>
-              <div class="handicap hide-xs">
+              <div class="handicap">
                 <span matPrefix *ngIf="team.playerB?.courseHandicap > 0">+</span>
                 {{ team.playerB?.courseHandicap | absoluteValue  }}
               </div>
 
-              <div class="handicap hide-xs">
+              <div class="handicap">
                 {{ team.playerB?.numShots }}
               </div>
             </div>
