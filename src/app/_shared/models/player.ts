@@ -11,7 +11,7 @@ export class Player {
   nickname: string;
   city: string;
   state: string;
-  iSagWinner: boolean;
+  yearsWon: number[];
   dateOfBirth: Date;
   favoriteActivities: Activity[];
   constructor(firstName = '', lastName = '', handicap?: number) {

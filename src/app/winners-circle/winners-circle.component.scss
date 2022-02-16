@@ -1,0 +1,40 @@
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.winners-list {
+  font-size: 2em;
+}
+
+
+.mat-list-item {
+  padding: 0 10px 0 5px !important;
+  @media print {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    height: auto !important;
+    border-bottom-color: #ddd;
+  }
+}
+
+
+.list-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 5px;
+  //width: 200px;
+}
+
+.w-list-item {
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  box-sizing: border-box;
+  background: white;
+
+  &:last-child {
+    border: none;
+  }
+}

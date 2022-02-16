@@ -44,16 +44,16 @@ mat-card-header {
   background-color: #dedede;
 }*/
 
-.no-hover:hover {
+/*.no-hover {
    background-color: inherit !important;
-}
+}*/
 
-.odd-item, .odd-item.no-hover.list-item:hover {
+/*.odd-item, .odd-item.no-hover.list-item:hover,  {
   background: #dedede;
-}
+}*/
 
-.mat-list-item:nth-child(2n) {
+/*.mat-list-item:nth-child(2n) {
   &, &.no-hover {
     background-color: #dedede !important;
   }
-}
+}*/

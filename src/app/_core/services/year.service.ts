@@ -75,7 +75,13 @@ export class YearService {
     return this.update(yearId, { deleted: true });
   }
 
-  yearsAreSame(option, value): boolean {
+  yearsAreSameById(option, value): boolean {
     return option._id === value._id;
   }
+
+  yearsAreSame(option, value): boolean {
+    return option.year === value.year;
+  }
+
+
 }

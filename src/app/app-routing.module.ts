@@ -18,6 +18,8 @@ const routes: Routes = [
       { path: 'calcutta', loadChildren: () => import('./calcutta/calcutta.module').then(m => m.CalcuttaModule)  },
       { path: 'rules', loadChildren: () => import('./rules/rules.module').then(m => m.RulesModule)  },
       { path: 'settings', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule), },
+      { path: 'winners-circle', loadChildren: () => import('./winners-circle/winners-circle.module').then(m => m.WinnersCircleModule), },
+
       /*data: { checkMinRole: Role.ADMIN}, canLoad: [AuthGuard] },*/
     ]
   },

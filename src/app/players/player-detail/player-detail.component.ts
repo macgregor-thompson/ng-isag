@@ -9,6 +9,7 @@ import { Player } from '../../_shared/models/player';
 import { PlayerService } from '../../_core/services/player.service';
 import { ConfirmDialogComponent } from '../../_shared/components/confirm-dialog/confirm-dialog.component';
 import { StateService } from '../../_core/services/state.service';
+import { YearService } from '../../_core/services/year.service';
 
 @Component({
   selector: 'isag-player-detail',
@@ -30,7 +31,8 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
                private activatedRoute: ActivatedRoute,
                public stateService: StateService,
                private playerService: PlayerService,
-               private dialog: MatDialog) { }
+               private dialog: MatDialog,
+               public yearService: YearService) { }
 
   ngOnInit(): void {
     this.subscriptions.add(this.updateSub.pipe(debounceTime(400)).subscribe(prop => this.update(prop)));

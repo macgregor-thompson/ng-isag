@@ -15,10 +15,17 @@
 
   <mat-divider></mat-divider>
 
+
   <div fxLayout="row" fxLayoutAlign="end center" class="top-space-15" *ngIf="stateService.isAdmin">
-    <mat-slide-toggle color="primary" [(ngModel)]="player.iSagWinner" (ngModelChange)="update('iSagWinner')">
-      iSag Winner
-    </mat-slide-toggle>
+    <mat-form-field>
+      <mat-label>Years Won</mat-label>
+      <mat-select [(ngModel)]="player.yearsWon"  (ngModelChange)="update('yearsWon')" multiple>
+        <mat-option *ngFor="let year of yearService.years | hidePrivateYears : stateService.isAdmin"
+                    [value]="year.year">
+          {{ year.year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <div class="column-lt-sm" [class.top-space-15]="!stateService.isAdmin">
