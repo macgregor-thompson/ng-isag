@@ -13,7 +13,7 @@ import { StateService } from '../../services/state.service';
 export class TopNavbarComponent implements OnInit {
 
   pageTitle$: Observable<string>;
-  logo = 'assets/img/logo.png';
+  logo = 'assets/img/farmlinks_logo.png';
   navLinks = [
     { path: '', label: 'RESULTS', icon: 'emoji_events' },
     { path: '/players', label: 'PLAYERS', icon: 'people' }
