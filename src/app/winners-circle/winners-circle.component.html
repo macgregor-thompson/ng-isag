@@ -10,13 +10,7 @@
       <mat-list-item class="w-list-item no-hover no-pointer" *ngFor="let winner of winners" disableRipple>
         <div>{{ winner.firstName + " " + winner.lastName }}</div>
         <div class="fill-remaining-space"></div>
-        <mat-chip-list>
-          <mat-chip selected *ngFor="let year of winner.yearsWon">
-            {{ year }}
-            <mat-icon svgIcon="jacket" class="isag-icon"></mat-icon>
-          </mat-chip>
-        </mat-chip-list>
-
+        <isag-winner [player]="winner"></isag-winner>
       </mat-list-item>
     </mat-list>
   </mat-card>

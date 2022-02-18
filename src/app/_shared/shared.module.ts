@@ -26,6 +26,7 @@ import { KeyValuePipe } from './pipes/key-value.pipe';
 import { YearSelectComponent } from './components/year-select/year-select.component';
 import { HidePrivateYearsPipe } from './pipes/hide-private-years.pipe';
 import { CourseHandicapPipe } from './pipes/course-handicap.pipe';
+import { WinnerComponent } from './components/winner/winner.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { CourseHandicapPipe } from './pipes/course-handicap.pipe';
     KeyValuePipe,
     YearSelectComponent,
     HidePrivateYearsPipe,
-    CourseHandicapPipe
+    CourseHandicapPipe,
+    WinnerComponent
   ],
   imports: [
     CommonModule,
@@ -80,6 +82,7 @@ import { CourseHandicapPipe } from './pipes/course-handicap.pipe';
     FilterPlayersByYearPipe,
     LogPipe,
     PlayerComponent,
+    WinnerComponent,
     ValidateMinMaxDirective,
     CourseCardComponent,
     KeyValuePipe,

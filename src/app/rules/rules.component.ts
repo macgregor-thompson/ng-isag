@@ -20,7 +20,7 @@ export class RulesComponent implements OnInit {
               public stateService: StateService) { }
 
   ngOnInit(): void {
-    this.rulesService.getByYear().subscribe(r => {
+    this.rulesService.get().subscribe(r => {
       this.rules = r;
       this.rulesHtmlCopy = r.html;
     });

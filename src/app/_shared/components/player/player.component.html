@@ -4,13 +4,8 @@
     <img *ngIf="player.avatarUrl" class="avatar-image" [src]="player.avatarUrl" alt="user image"/>
   </div>
   <div class="list-title">
-    <div class="right-space-10">{{ player.firstName + " " + player.lastName }}</div>
-    <mat-chip-list *ngIf="player.yearsWon?.length">
-      <mat-chip selected *ngFor="let year of player.yearsWon">
-        {{ year }}
-        <mat-icon svgIcon="jacket" class="isag-icon"></mat-icon>
-      </mat-chip>
-    </mat-chip-list>
+    <div>{{ player.firstName + " " + player.lastName }}</div>
+    <isag-winner [player]="player"></isag-winner>
   </div>
   <div class="handicap" isagStopPropagation>
    <div class="pointer" *ngIf="!editingHandicap; else handicapInput" (click)="editingHandicap = true;">

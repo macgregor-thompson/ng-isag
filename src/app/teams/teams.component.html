@@ -71,6 +71,7 @@
             <div *ngIf="!editing" class="player-div">
               <div class="list-title">
                 {{team.playerA.firstName}} {{team.playerA.lastName}}
+                <isag-winner [player]="team.playerA"></isag-winner>
               </div>
               <div class="handicap">
                 <span *ngIf="team.playerA?.handicap > 0">+</span>{{ team.playerA?.handicap | absoluteValue }}
@@ -120,6 +121,7 @@
             <div *ngIf="!editing" class="player-div">
               <div class="list-title">
                 {{team.playerB.firstName}} {{team.playerB.lastName}}
+                <isag-winner [player]="team.playerB"></isag-winner>
               </div>
               <div class="handicap">
                 <span *ngIf="team.playerB?.handicap > 0">+</span>{{ team.playerB?.handicap | absoluteValue }}
