@@ -50,7 +50,7 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.subscriptions.add(this.updatePrizeOrExpenseSub.pipe(debounceTime(400))
       .subscribe(x => this.updatePrizesOrExpenses(...x)));
 
-    this.router.navigate([], { fragment: 'player-detail' });
+    this.router.navigate([], { fragment: 'year-detail' });
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       switchMap(() => this.activatedRoute.fragment),

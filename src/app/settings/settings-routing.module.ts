@@ -5,8 +5,8 @@ import { SettingsComponent } from './settings.component';
 
 export const routes: Routes = [
   { path: ':tab', component: SettingsComponent },
-  { path: '', redirectTo: 'teams', pathMatch: 'full' },
-  { path: '**', redirectTo: 'teams', pathMatch: 'full' }
+  { path: '', redirectTo: 'years', pathMatch: 'full' },
+  { path: '**', redirectTo: 'years', pathMatch: 'full' }
 
 ];
 
