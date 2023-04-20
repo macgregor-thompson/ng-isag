@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, ValidatorFn, FormBuilder, ValidationErrors, AbstractControl } from '@angular/forms';
+import { UntypedFormGroup, Validators, ValidatorFn, UntypedFormBuilder, ValidationErrors, AbstractControl } from '@angular/forms';
 
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -16,11 +16,11 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  registerForm: FormGroup;
+  registerForm: UntypedFormGroup;
   submitted = false;
 
   constructor(private spinnerService: SpinnerService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private userService: UserService,
               private authService: AuthService) { }
 
@@ -47,7 +47,7 @@ export class SignupComponent implements OnInit {
   }
 
 
-  passwordsMatch: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  passwordsMatch: ValidatorFn = (control: UntypedFormGroup): ValidationErrors | null => {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
     const error = password && confirmPassword && password.value !== confirmPassword.value ? { passwordsMatch: true } : null;
@@ -55,7 +55,7 @@ export class SignupComponent implements OnInit {
     return error;
   }
 
-  validateUsername: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  validateUsername: ValidatorFn = (control: UntypedFormGroup): ValidationErrors | null => {
     return this.userService.isUserNameTaken(control.value)
       .pipe(
         map(isTaken => (isTaken ? { usernameTaken: true } : null)),
