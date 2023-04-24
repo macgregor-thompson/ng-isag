@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, sequence, style, transition, trigger } from '@angular/animations';
 
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import {
   sortBy as _sortBy, merge as _merge, flow as _flow,
   groupBy as _groupBy, toPairs as _toPairs, reverse as _reverse, map as _map

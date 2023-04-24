@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SpinnerService } from '../_core/services/spinner.service';
 import { StateService } from '../_core/services/state.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatLegacyTabChangeEvent as MatTabChangeEvent } from '@angular/material/legacy-tabs';
 
 @Component({
   selector: 'isag-settings',
