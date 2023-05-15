@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { QuillModule } from 'ngx-quill';
 
 import { AngularMaterialModule } from '../_angular-material/angular-material.module';
@@ -55,7 +54,6 @@ import { WinnerComponent } from './components/winner/winner.component';
   imports: [
     CommonModule,
     AngularMaterialModule,
-    FlexLayoutModule,
     FormsModule,
     QuillModule.forRoot(),
 
@@ -63,7 +61,6 @@ import { WinnerComponent } from './components/winner/winner.component';
   ],
   exports: [
     AngularMaterialModule,
-    FlexLayoutModule,
     FormsModule,
     QuillModule,
 
