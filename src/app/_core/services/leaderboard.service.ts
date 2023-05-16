@@ -9,9 +9,9 @@ export class LeaderboardService {
   scores = [];
 
   constructor(private socket: Socket) {
-    this.socket.on('scores', (data) => {
+    this.socket.on('scorecardUpdated', (data) => {
       // update leaderboard
-      this.scores.push(data);
+      console.log('fetch scorecard');
     });
 
     // on connect, re-fetch entire scorecard
@@ -23,6 +23,16 @@ export class LeaderboardService {
     this.socket.on('disconnect', (data) => {
       console.log('disconnect', data);
     });
+
+    this.socket.on('events', (data) => {
+      this.scores.push(data);
+      console.log('events', data);
+    });
+
+  }
+
+  sendEvent(foo: string) {
+    this.socket.emit('events', foo);
   }
 
   addScore(score: string) {

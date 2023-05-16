@@ -6,6 +6,16 @@
       Enter Scores
     </ng-template>
     <h1>Enter some damn scores...</h1>
+    <mat-form-field>
+      <input #foo matInput>
+      <button mat-icon-button matSuffix (click)="leaderboardService.sendEvent(foo.value)">
+        <mat-icon>check</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <ul>
+      <li *ngFor="let foo of leaderboardService.scores">{{foo}}</li>
+    </ul>
   </mat-tab>
 
   <mat-tab label="Leaderboard">
