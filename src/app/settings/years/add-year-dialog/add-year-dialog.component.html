@@ -1,7 +1,7 @@
 <mat-spinner color="accent" *ngIf="spinner"></mat-spinner>
 <h2 mat-dialog-title>Add New Year</h2>
 <mat-dialog-content>
-  <div fxFlex fxFlex.gt-xs="column" fxLayout="column" fxLayout.gt-xs="row">
+  <div>
     <mat-form-field class="left-input">
       <mat-select [(ngModel)]="year.year" (ngModelChange)="setDate()">
         <mat-option *ngFor="let year of yearService.availableYears" [value]="year"
@@ -20,7 +20,7 @@
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+<mat-dialog-actions>
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="addYear()" [disabled]="!year.year || !year.date">Add</button>
 </mat-dialog-actions>

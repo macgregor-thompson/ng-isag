@@ -33,7 +33,7 @@
  </div>
 </mat-dialog-content>
 
-<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+<mat-dialog-actions>
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
   <button mat-raised-button color="primary" (click)="addPlayer()"
           [disabled]="!player.firstName.length || !player.lastName.length">Add</button>

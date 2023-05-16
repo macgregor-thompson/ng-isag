@@ -5,7 +5,7 @@ export class Player {
   avatarUrl?: string;
   email: string;
   phoneNumber: string;
-  handicap;
+  handicap: number;
   deleted: boolean;
   bio: string;
   nickname: string;

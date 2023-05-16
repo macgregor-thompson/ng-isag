@@ -132,4 +132,12 @@ export class TeamsComponent implements OnInit {
     }
   }
 
+  transformIndexAndSave(team: Team, player: 'playerA' | 'playerB', foo): void {
+console.log('foo:', foo);
+team.playerA.handicap = 100;
+    //this.updateSub.next([team, player]);
+
+    console.log('result', team.playerA.handicap);
+  }
+
 }

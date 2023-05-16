@@ -14,13 +14,15 @@
       </button>
     </mat-card-header>
 
+    <
+
     <mat-toolbar class="header-btns">
       <h4 class="flex1 a-player-header hide-xs">A Players</h4>
       <h4 class="flex1 a-player-header show-xs">Players</h4>
       <ng-container *ngIf="!editing">
         <h4 class="handicap hide-xs">Handicap</h4>
         <h4 class="handicap hide-xs">C. H.</h4>
-        <!--<h4 class="handicap hide-xs">Shots</h4>-->
+        <h4 class="handicap hide-xs">Shots</h4>
       </ng-container>
 
       <div class="divider no-border hide-xs"></div>
@@ -29,7 +31,7 @@
       <ng-container *ngIf="!editing">
         <h4 class="handicap">Handicap</h4>
         <h4 class="handicap">C. H.</h4>
-        <!--<h4 class="handicap">Shots</h4>-->
+        <h4 class="handicap">Shots</h4>
       </ng-container>
     </mat-toolbar>
 
@@ -81,9 +83,9 @@
                 {{ team.playerA?.courseHandicap | absoluteValue  }}
               </div>
 
-             <!-- <div class="handicap">
+             <div class="handicap">
                 {{ team.playerA?.numShots }}
-              </div>-->
+              </div>
             </div>
           </div>
 
@@ -131,9 +133,9 @@
                 {{ team.playerB?.courseHandicap | absoluteValue  }}
               </div>
 
-              <!--<div class="handicap">
+              <div class="handicap">
                 {{ team.playerB?.numShots }}
-              </div>-->
+              </div>
             </div>
           </div>
         </div>
@@ -146,7 +148,7 @@
     </mat-list>
 
     <mat-card-footer *ngIf="stateService.isAdmin && editing">
-      <mat-card-actions fxLayout="row" fxLayoutAlign="end end" class="actions">
+      <mat-card-actions class="actions">
         <button mat-raised-button color="primary" class="right-space-15" (click)="addTeam()"
                 matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Team">
           <mat-icon>add</mat-icon>

@@ -16,7 +16,7 @@
   <mat-divider></mat-divider>
 
 
-  <div fxLayout="row" fxLayoutAlign="end center" class="top-space-15" *ngIf="stateService.isAdmin">
+  <div class="top-space-15" *ngIf="stateService.isAdmin">
     <mat-form-field>
       <mat-label>Years Won</mat-label>
       <mat-select [(ngModel)]="player.yearsWon"  (ngModelChange)="update('yearsWon')" multiple>

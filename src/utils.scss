@@ -194,6 +194,25 @@
   }
 }
 
+.hide-lt-sm {
+  @include lt-sm() {
+    display: none;
+  }
+}
+
+
+.hide-gt-xs {
+  @include gt-xs() {
+    display: none;
+  }
+}
+
+.hide-gt-sm {
+  @include gt-sm() {
+    display: none;
+  }
+}
+
 .uppercase {
   text-transform: uppercase;
   font-variant-caps: titling-caps;

@@ -10,10 +10,14 @@ import { CoreModule } from './_core/core.module';
 import { AppInitializerService } from './app-initializer.service';
 import { JwtInterceptor } from './_core/interceptor/jwt.interceptor';
 import { ErrorInterceptor } from './_core/interceptor/error.interceptor';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 export function initialize(appInitializerService: AppInitializerService) {
   return () => appInitializerService.initialize();
 }
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +27,8 @@ export function initialize(appInitializerService: AppInitializerService) {
     CoreModule,
     HttpClientModule,
     SharedModule,
+
+    SocketIoModule.forRoot(config),
 
     AppRoutingModule
   ],

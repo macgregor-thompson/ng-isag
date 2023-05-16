@@ -93,7 +93,7 @@
   </isag-alert>
 </mat-dialog-content>
 
-<mat-dialog-actions fxLayout="row">
+<mat-dialog-actions>
   <h3 *ngIf="canSave()">
     Team Net Score to Par:
     <strong>{{sumHoles(card.teamNetScores, 1, 18) - (data.course.frontNinePar + data.course.backNinePar)}}</strong>

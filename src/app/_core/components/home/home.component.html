@@ -1,9 +1,9 @@
 <isag-top-navbar>
-  <button mat-icon-button (click)="snav.toggle()" fxHide.gt-sm>
+  <button mat-icon-button (click)="snav.toggle()" class="hide-gt-sm">
     <mat-icon>menu</mat-icon>
   </button>
 </isag-top-navbar>
-<mat-sidenav-container class="example-sidenav-container">
+<mat-sidenav-container class="example-sidenav-container" autosize>
 
   <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches"
                [fixedInViewport]="mobileQuery.matches" [fixedTopGap]="mobileQuery.matches ? 0 : 56">
@@ -14,6 +14,11 @@
                  [fixedInViewport]="mobileQuery.matches" [fixedTopGap]="mobileQuery.matches ? 0 : 56">-->
     <mat-nav-list [class.closed]="!opened">
       <a mat-list-item routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+         (click)="closeSideNav()">
+        <mat-icon>emoji_events</mat-icon>
+        <span class="lint-title">leaderboard</span>
+      </a>
+      <a mat-list-item routerLink="/results" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
          (click)="closeSideNav()">
         <mat-icon>emoji_events</mat-icon>
         <span class="lint-title">Results</span>
@@ -54,21 +59,22 @@
         <span class="lint-title">Settings</span>
       </a>
 
-      <mat-divider fxHide.gt-sm></mat-divider>
-      <a mat-list-item (click)="authService.loginOrSignUp('/login'); closeSideNav()" *ngIf="!stateService.currentUser"
-              fxHide.gt-sm>
-        <mat-icon>login</mat-icon>
-        <span>Login</span>
-      </a>
-      <a mat-list-item (click)="authService.loginOrSignUp('/signup'); closeSideNav()" *ngIf="!stateService.currentUser"
-              fxHide.gt-sm>
-        <mat-icon>person_add</mat-icon>
-        <span>Sign Up</span>
-      </a>
-      <a mat-list-item (click)="authService.logout(); closeSideNav()" *ngIf="stateService.currentUser" fxHide.gt-sm>
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Logout</span>
-      </a>
+      <ng-container class="hide-gt-sm">
+        <mat-divider class="hide-gt-sm"></mat-divider>
+        <a mat-list-item (click)="authService.loginOrSignUp('/login'); closeSideNav()" *ngIf="!stateService.currentUser">
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </a>
+        <a mat-list-item (click)="authService.loginOrSignUp('/signup'); closeSideNav()" *ngIf="!stateService.currentUser">
+          <mat-icon>person_add</mat-icon>
+          <span>Sign Up</span>
+        </a>
+        <a mat-list-item (click)="authService.logout(); closeSideNav()" *ngIf="stateService.currentUser">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </a>
+      </ng-container>
+
     </mat-nav-list>
   </mat-sidenav>
 
