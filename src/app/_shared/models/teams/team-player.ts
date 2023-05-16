@@ -4,7 +4,8 @@ export class TeamPlayer extends Player {
   playerId: string;
   handicap: number;
   courseHandicap: number;
-  numShots: number;
+  playingHandicap: number;
+  isPlusHandicap?: boolean;
 
   constructor(letter: 'A' | 'B') {
     super(letter, 'Player');

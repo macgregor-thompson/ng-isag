@@ -108,7 +108,7 @@ export class ScorecardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: Scorecard) => {
-      if (result) {
+      if (result && result.confirmed) {
         card ? _merge(card, result) : this.scorecards = [...(this.scorecards || []), result];
         if (card?.deleted) {
           this.scorecards = this.scorecards.filter(s => s._id !== result._id);

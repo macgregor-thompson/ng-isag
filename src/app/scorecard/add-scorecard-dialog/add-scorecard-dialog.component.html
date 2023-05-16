@@ -102,7 +102,7 @@
 
   <button mat-raised-button color="warn" (click)="delete()" *ngIf="data.card">Delete</button>
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="addScorecard()" [disabled]="!canSave()" *ngIf="data.teams.length || data.card">
+  <button mat-raised-button color="primary" (click)="addScorecard()" *ngIf="data.teams.length || data.card">
     {{ data.card ? 'Save' : 'Add'}}
   </button>
 </mat-dialog-actions>

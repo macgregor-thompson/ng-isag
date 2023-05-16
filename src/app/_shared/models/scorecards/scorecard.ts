@@ -1,9 +1,12 @@
 import { Course } from '../course/course';
 import { Team } from '../teams/team';
 import { Scores } from './scores';
+import { PlayerScores } from './player-scores';
 
 export class Scorecard {
   _id: string;
+  scoringId: string;
+
   year: number;
   courseId: string;
   teamId: string;
@@ -13,34 +16,31 @@ export class Scorecard {
   rank: number;
   tied: boolean;
 
+  playerAScores: PlayerScores;
+  playerBScores: PlayerScores;
+
   // team scores
   teamNetScores: Scores;
   frontNineNetScore: number;
   backNineNetScore: number;
   totalNetScore: number;
 
-  // player A
-  playerANetScores: Scores;
-  playerAFrontNineNetScore: number;
-  playerABackNineNetScore: number;
-  playerATotalNetScore: number;
+  confirmed: boolean;
 
-  // player B
-  playerBNetScores: Scores;
-  playerBFrontNineNetScore: number;
-  playerBBackNineNetScore: number;
-  playerBTotalNetScore: number;
+  // for active leaderboard
+  currentNetToPar: number;
+  thru: number;
 
   // aggregation
-  course: Course;
-  team: Team;
+  course?: Course;
+  team?: Team;
 
   constructor(year: number, courseId: string) {
     this.year = year;
     this.courseId = courseId;
-    this.playerANetScores = new Scores();
-    this.playerBNetScores = new Scores();
     this.teamNetScores = new Scores();
-    this.team = null;
+    this.playerAScores = new PlayerScores();
+    this.playerBScores = new PlayerScores();
+
   }
 }

@@ -1,0 +1,12 @@
+<mat-card class="scoring-id-input">
+    <mat-form-field class="full-width">
+      <input matInput [(ngModel)]="scoringId" placeholder="Scoring ID" required (keydown.enter)="getScorecardByScoringId()">
+    </mat-form-field>
+    <isag-alert *ngIf="noScoringIdFound" alertClass="danger">
+      <div>The scoring ID you entered is incorrect</div>
+    </isag-alert>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="getScorecardByScoringId()"
+            [disabled]="!scoringId?.length">Login</button>
+  </mat-card-actions>
+</mat-card>

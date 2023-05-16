@@ -5,8 +5,21 @@
         <span>{{  stateService.year.year }}</span>&nbsp;Teams
       </mat-card-title>
       <div class="fill-remaining-space"></div>
+
       <isag-year-select (yearChange)="getTeamsAndPlayers()"></isag-year-select>
-      <button mat-button color="primary" class="edit-btn" (click)="toggleEdit()"
+
+
+      <mat-form-field class="handicap-allowance-field">
+        <mat-label>Handicap Allowance</mat-label>
+        <input matInput type="number" [(ngModel)]="handicapAllowance"
+               (ngModelChange)="updatePlayingHandicaps()" [disabled]="!stateService.isAdmin || !editing" min="0">
+        <span matSuffix>%</span>
+        <mat-hint  class="learn-more-link"  (click)="moreAboutHandicapAllowances()">
+          Learn More <mat-icon>open_in_new</mat-icon>
+        </mat-hint>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="edit-btn" (click)="toggleEdit()"
               *ngIf="stateService.isAdmin" matTooltipClass="isag-tooltip" matTooltipPosition="before"
               matTooltip="{{editing ? 'Save' : 'Edit' + ' Teams'}}">
         <span *ngIf="!editing"><mat-icon>edit</mat-icon> EDIT</span>
@@ -14,15 +27,13 @@
       </button>
     </mat-card-header>
 
-    <
-
     <mat-toolbar class="header-btns">
       <h4 class="flex1 a-player-header hide-xs">A Players</h4>
       <h4 class="flex1 a-player-header show-xs">Players</h4>
       <ng-container *ngIf="!editing">
         <h4 class="handicap hide-xs">Handicap</h4>
         <h4 class="handicap hide-xs">C. H.</h4>
-        <h4 class="handicap hide-xs">Shots</h4>
+        <h4 class="handicap hide-xs">Playing H.</h4>
       </ng-container>
 
       <div class="divider no-border hide-xs"></div>
@@ -31,7 +42,7 @@
       <ng-container *ngIf="!editing">
         <h4 class="handicap">Handicap</h4>
         <h4 class="handicap">C. H.</h4>
-        <h4 class="handicap">Shots</h4>
+        <h4 class="handicap">Playing H.</h4>
       </ng-container>
     </mat-toolbar>
 
@@ -65,7 +76,7 @@
               <mat-form-field class="handicap-form">
                 <span matPrefix *ngIf="team.playerA?.handicap > 0">+</span>
                 <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerA.handicap"
-                       (ngModelChange)="updateSub.next([team, 'playerA'])"
+                       (ngModelChange)="updateSub.next([team, 'playerA'])" min="0"
                        aria-label="handicap" name="handicap">
               </mat-form-field>
 
@@ -82,9 +93,9 @@
                 <span matPrefix *ngIf="team.playerA?.courseHandicap > 0">+</span>
                 {{ team.playerA?.courseHandicap | absoluteValue  }}
               </div>
-
-             <div class="handicap">
-                {{ team.playerA?.numShots }}
+              <div class="handicap">
+                <span matPrefix *ngIf="team.playerA?.playingHandicap > 0">+</span>
+                {{ team.playerA?.playingHandicap | absoluteValue  }}
               </div>
             </div>
           </div>
@@ -134,7 +145,8 @@
               </div>
 
               <div class="handicap">
-                {{ team.playerB?.numShots }}
+                <span matPrefix *ngIf="team.playerB?.playingHandicap > 0">+</span>
+                {{ team.playerB?.playingHandicap | absoluteValue  }}
               </div>
             </div>
           </div>

@@ -28,6 +28,7 @@ export class TeamsComponent implements OnInit {
   editing = false;
   updateSub = new Subject<[Team, keyof Team]>();
   subscriptions = new Subscription();
+  handicapAllowance = 85;
 
   constructor(public courseService: CourseService,
               public stateService: StateService,
@@ -79,7 +80,7 @@ export class TeamsComponent implements OnInit {
     if (team.playerA._id && team.playerA.handicap != null && team.playerB._id && team.playerB.handicap != null) {
       this.updateCourseHandicapsAndNumShots();
       if (team._id) {
-        this.teamService.update(team._id, {[prop]: team[prop]}).subscribe();
+        this.teamService.update(team._id, { [prop]: team[prop] }).subscribe();
       } else {
         this.usedAPLayerIds[team.playerA._id] = true;
         this.usedBPLayerIds[team.playerB._id] = true;
@@ -97,18 +98,19 @@ export class TeamsComponent implements OnInit {
 
     this.teams.forEach(t => {
       t.playerA.courseHandicap = -Math.round(-t.playerA.handicap * slope + rating);
+      t.playerA.playingHandicap = -Math.round(-t.playerA.courseHandicap * this.handicapAllowance / 100);
+
       t.playerB.courseHandicap = -Math.round(-t.playerB.handicap * slope + rating);
-    });
-    const highestCourseHandicap = Math.max(..._flatMap(this.teams.map(t => [t.playerA.courseHandicap, t.playerB.courseHandicap])));
-    this.teams.forEach(t => {
-      t.playerA.numShots = -(t.playerA.courseHandicap - highestCourseHandicap);
-      t.playerB.numShots = -(t.playerB.courseHandicap - highestCourseHandicap);
+      t.playerB.playingHandicap = -Math.round(-t.playerB.handicap * this.handicapAllowance / 100);
     });
   }
 
-
- // calculateCourseHandicap(handicap, course):
-
+  updatePlayingHandicaps(): void {
+    this.teams.forEach(t => {
+      t.playerA.playingHandicap = -Math.round(-t.playerA.courseHandicap * this.handicapAllowance / 100);
+      t.playerB.playingHandicap = -Math.round(-t.playerB.handicap * this.handicapAllowance / 100);
+    });
+  }
 
   deleteTeam(team: Team, i: number): void {
     this.teamService.delete(team._id).subscribe({
@@ -132,9 +134,13 @@ export class TeamsComponent implements OnInit {
     }
   }
 
+  moreAboutHandicapAllowances(): void {
+    window.open('https://www.usga.org/content/usga/home-page/handicapping/roh/Content/rules/Appendix%20C%20Handicap%20Allowances.htm', '_blank');
+  }
+
   transformIndexAndSave(team: Team, player: 'playerA' | 'playerB', foo): void {
-console.log('foo:', foo);
-team.playerA.handicap = 100;
+    console.log('foo:', foo);
+    team.playerA.handicap = 100;
     //this.updateSub.next([team, player]);
 
     console.log('result', team.playerA.handicap);

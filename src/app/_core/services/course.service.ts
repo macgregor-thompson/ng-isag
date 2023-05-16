@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { StateService } from './state.service';
 import { SpinnerService } from './spinner.service';
 import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { Course } from '../../_shared/models/course/course';
-import { CatchError } from '../decorators/catch-error';
-import { Player } from '../../_shared/models/player';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
+
+  currentCourse$ = new BehaviorSubject<Course>(null);
 
   courseApi = 'api/courses';
   holeHeaders = ['Hole', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Out',
@@ -31,6 +30,8 @@ export class CourseService {
 
   @SpinnerAndCatchError
   getByYear(year: number = this.stateService.year.year): Observable<Course> {
+    const currentCourse = this.currentCourse$.getValue();
+    if (year === currentCourse?.year) return of(currentCourse);
     return this.http.get<Course>(`${this.courseApi}/${year}`);
   }
 

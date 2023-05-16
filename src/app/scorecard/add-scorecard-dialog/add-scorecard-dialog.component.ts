@@ -50,12 +50,13 @@ export class AddScorecardDialogComponent implements OnInit {
     this.card.frontNineNetScore = this.sumHoles(this.card.teamNetScores, 1, 9);
     this.card.backNineNetScore = this.sumHoles(this.card.teamNetScores, 10, 9);
     this.card.totalNetScore = this.card.frontNineNetScore + this.card.backNineNetScore;
-    this.card.playerAFrontNineNetScore = this.sumHoles(this.card.playerANetScores, 1, 9);
-    this.card.playerABackNineNetScore = this.sumHoles(this.card.playerANetScores, 10, 9);
-    this.card.playerATotalNetScore = this.sumHoles(this.card.playerANetScores, 1, 18);
-    this.card.playerBFrontNineNetScore = this.sumHoles(this.card.playerBNetScores, 1, 9);
-    this.card.playerBBackNineNetScore = this.sumHoles(this.card.playerBNetScores, 1, 9);
-    this.card.playerBTotalNetScore = this.sumHoles(this.card.playerBNetScores, 1, 9);
+    this.card.playerAScores.frontNineGrossScore = this.sumHoles(this.card.playerAScores.grossScores, 1, 9);
+    this.card.playerAScores.backNineGrossScore = this.sumHoles(this.card.playerAScores.grossScores, 10, 9);
+    this.card.playerAScores.totalGrossScore = this.sumHoles(this.card.playerAScores.grossScores, 1, 18);
+    // playerBScores.totalNetScore
+    this.card.playerBScores.frontNineGrossScore = this.sumHoles(this.card.playerBScores.grossScores, 1, 9);
+    this.card.playerBScores.backNineGrossScore = this.sumHoles(this.card.playerBScores.grossScores, 1, 9);
+    this.card.playerBScores.totalGrossScore = this.sumHoles(this.card.playerBScores.grossScores, 1, 9);
   }
 
   addScorecard(): void {
@@ -79,8 +80,8 @@ export class AddScorecardDialogComponent implements OnInit {
   }
 
   setNetScore(hole: number): void {
-    if (!this.card.playerANetScores[hole] || !this.card.playerBNetScores[hole]) return;
-    this.card.teamNetScores[hole] = Math.min(this.card.playerANetScores[hole], this.card.playerBNetScores[hole]);
+    if (!this.card.playerAScores.netScores[hole] || !this.card.playerBScores.netScores[hole]) return;
+    this.card.teamNetScores[hole] = Math.min(this.card.playerAScores.netScores[hole], this.card.playerBScores.netScores[hole]);
   }
 
 }

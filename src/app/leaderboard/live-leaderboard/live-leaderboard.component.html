@@ -1,0 +1,10 @@
+
+<mat-card class="isag-card">
+  <button mat-raised-button color="primary"  *ngIf="stateService.isAdmin && leaderboard && !leaderboard.length"
+          (click)="scorecardService.createTeamScorecards(course._id).subscribe()">
+    Create Team Scorecards
+  </button>
+</mat-card>
+<div>
+  {{ leaderboard | json }}
+</div>

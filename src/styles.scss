@@ -87,6 +87,7 @@ body {
 .container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   padding: 5px;
   justify-content: center;
   margin-bottom: 15px;
@@ -176,14 +177,13 @@ mat-list-item.active, [mat-list-item].active {
 }
 
 .isag-card {
-  flex: 1;
+  flex: 1 1 1300px;
   /* used to make the ellipsis stuff work */
   min-width: 0;
   /* Used to make the flexbox items grow to their own height instead of their parent's
    ***Needs to be 0% not just 0***  */
   height: 0%;
   padding: 0 !important;
-  max-width: 1300px;
 }
 
 .login-card, .signup-card {

@@ -1,0 +1,47 @@
+
+
+
+  <isag-scorecard-id-login *ngIf="!card; else enterScores"></isag-scorecard-id-login>
+
+  <ng-template #enterScores>
+
+    <mat-card class="enter-scores-card">
+      <mat-toolbar>
+        <button mat-button color="accent">< Hole 18</button>
+        <div class="fill-remaining-space ">
+          Hole 1
+        </div>
+        <button mat-button color="accent">Hole 2 ></button>
+
+      </mat-toolbar>
+
+        <mat-card>
+          <div class="player-score-div">
+            <h3 class="name">{{playerAName }}</h3>
+            <mat-form-field>
+
+              <input matInput type="number" [(ngModel)]="card.playerAScores.grossScores[this.currentHole]" required
+                     aria-label="handicap" name="Score">
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+        <mat-card>
+          <div class="player-score-div">
+            <h3 class="name">{{playerBName }}</h3>
+            <mat-form-field>
+              <input matInput type="number" [(ngModel)]="card.playerBScores.grossScores[this.currentHole]" required
+                     aria-label="handicap" name="Score">
+            </mat-form-field>
+          </div>
+        </mat-card>
+
+
+
+        <div>
+          numbers and buttons
+        </div>
+    </mat-card>
+  </ng-template>
+
+
