@@ -1,2 +1,2 @@
-[context.dev]
+[context.dev1]
 command = "ng build -c development"
