@@ -16,7 +16,7 @@ export function initialize(appInitializerService: AppInitializerService) {
   return () => appInitializerService.initialize();
 }
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://isag-api-dev.herokuapp.com/', options: {} };
 
 
 @NgModule({
