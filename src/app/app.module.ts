@@ -11,12 +11,13 @@ import { AppInitializerService } from './app-initializer.service';
 import { JwtInterceptor } from './_core/interceptor/jwt.interceptor';
 import { ErrorInterceptor } from './_core/interceptor/error.interceptor';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
 
 export function initialize(appInitializerService: AppInitializerService) {
   return () => appInitializerService.initialize();
 }
 
-const config: SocketIoConfig = { url: 'https://isag-api-dev.herokuapp.com/', options: {} };
+const config: SocketIoConfig = { url: environment.websocketUrl, options: {} };
 
 
 @NgModule({
