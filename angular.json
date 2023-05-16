@@ -66,30 +66,29 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "fonts": {
+                  "inline": true
+                },
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": true
+                }
+              },
               "outputHashing": "all",
-              "sourceMap": false,
               "namedChunks": false,
-              "assets": [
-                "src/favicon.ico",
-                "src/assets",
-                "src/_redirects"
-              ],
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
+              "sourceMap": false
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": ""

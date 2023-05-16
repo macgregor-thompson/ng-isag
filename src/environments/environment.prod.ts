@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  websocketUrl: 'https://isag-api-dev.herokuapp.com'
+
 };
