@@ -1,3 +1,5 @@
+@import '../../../utils';
+
 .header-btns > h4, .year-list-item  div {
   flex: 1;
   display: flex;
@@ -19,4 +21,40 @@
 
 .isag-list .mat-list-item {
   padding: 0 !important;
+}
+
+.years-card {
+  flex: 1;
+  /* used to make the ellipsis stuff work */
+  min-width: 0;
+  /* Used to make the flexbox items grow to their own height instead of their parent's
+   ***Needs to be 0% not just 0***  */
+  height: 0%;
+  padding: 0 !important;
+}
+
+
+.hide-lt-md {
+  @include lt-md() {
+    display: none !important;
+  }
+}
+
+.hide-lt-sm {
+  @include lt-sm() {
+    display: none !important;
+  }
+}
+
+
+.hide-gt-xs {
+  @include gt-xs() {
+    display: none !important;
+  }
+}
+
+.hide-gt-sm {
+  @include gt-sm() {
+    display: none !important;
+  }
 }

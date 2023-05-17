@@ -142,7 +142,8 @@
     <div class="player-list">
       <mat-toolbar class="header-btns">
         <h4 class="flex1 name-header">A Players</h4>
-        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">Handicap</h4>
+        <h4 class="handicap-header">Handicap</h4>
+        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">C. H.</h4>
       </mat-toolbar>
       <mat-list id="aPlayers" class="isag-list" cdkDropList [cdkDropListData]="aPlayers"
                 (cdkDropListDropped)="dropPlayer($event)">
@@ -155,7 +156,7 @@
           </div>
           <isag-player [index]="i + 1"
                        [player]="player"
-                       (handicapUpdate)="updateHandicap(player._id, $event)"></isag-player>
+                       (handicapUpdate)="updateHandicap(player, $event)"></isag-player>
           <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
                   matTooltip="{{'Delete ' + player.firstName}}"
                   matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
@@ -168,7 +169,8 @@
     <div class="player-list">
       <mat-toolbar class="header-btns">
         <h4 class="flex1 name-header">B Players</h4>
-        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">Handicap</h4>
+        <h4 class="handicap-header">Handicap</h4>
+        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">C. H.</h4>
       </mat-toolbar>
       <mat-list id="bPlayers" class="isag-list" cdkDropList [cdkDropListData]="bPlayers"
                 (cdkDropListDropped)="dropPlayer($event)">
@@ -180,7 +182,8 @@
             <mat-icon>drag_indicator</mat-icon>
           </div>
           <isag-player [index]="i + 1"
-                       [player]="player"></isag-player>
+                       [player]="player"
+                       (handicapUpdate)="updateHandicap(player, $event)"></isag-player>
           <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
                   matTooltip="{{'Delete ' + player.firstName}}"
                   matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">

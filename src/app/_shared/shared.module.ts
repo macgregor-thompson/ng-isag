@@ -26,6 +26,7 @@ import { YearSelectComponent } from './components/year-select/year-select.compon
 import { HidePrivateYearsPipe } from './pipes/hide-private-years.pipe';
 import { CourseHandicapPipe } from './pipes/course-handicap.pipe';
 import { WinnerComponent } from './components/winner/winner.component';
+import { PlayerTableComponent } from './components/player-table/player-table.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { WinnerComponent } from './components/winner/winner.component';
     YearSelectComponent,
     HidePrivateYearsPipe,
     CourseHandicapPipe,
-    WinnerComponent
+    WinnerComponent,
+    PlayerTableComponent
   ],
   imports: [
     CommonModule,

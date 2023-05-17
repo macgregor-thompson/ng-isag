@@ -22,4 +22,9 @@
     </ng-template>
   </div>
 
+  <div class="handicap">
+    <span *ngIf="player.courseHandicap > 0">+</span>
+    {{ player.courseHandicap | absoluteValue }}
+  </div>
+
 </div>

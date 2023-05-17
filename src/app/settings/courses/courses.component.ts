@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { merge as _merge, cloneDeep as _cloneDeep } from 'lodash-es';
 
 import { Course } from '../../_shared/models/course/course';
 import { CourseService } from '../../_core/services/course.service';
@@ -28,17 +29,19 @@ export class CoursesComponent implements OnInit {
     this.selectedCourse = course;
   }
 
-  openAddCourseDialog(): void {
+  openAddCourseDialog(course?: Course): void {
     const unavailableYears = {};
     this.courses.forEach(c => { if (c.year) unavailableYears[c.year] = true; });
 
     const dialogRef = this.dialog.open(NewCourseDialogComponent, {
       panelClass: 'scorecard-modal',
-      data: { unavailableYears }
+      data: { unavailableYears, course }
     });
 
-    dialogRef.afterClosed().subscribe((newCourse: Course) => {
+    dialogRef.afterClosed().subscribe(({newCourse, updated}: {newCourse: Course, updated: Course}) => {
       if (newCourse) this.courses = [...this.courses, newCourse];
+      const index = this.courses.findIndex(c => c._id === updated._id);
+      this.courses[index] = _merge(this.courses[index], _cloneDeep(updated));
     });
   }
 

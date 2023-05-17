@@ -463,7 +463,7 @@ isag-issue {
 .detail-view {
   @include gt-sm() {
     position: fixed;
-    width: calc(50vw - 85px);
+    width: calc(50vw - 105px);
     overflow-y: auto;
     height: calc(100vh - 140px);
   }
@@ -480,7 +480,7 @@ isag-issue {
 .detail-view-gt-md {
   @include gt-md() {
     position: fixed;
-    width: calc(50vw - 85px);
+    width: calc(50vw - 105px);
     overflow-y: auto;
     height: calc(100vh - 140px);
   }
@@ -931,4 +931,12 @@ button {
   cursor: auto;
 }
 
+.course-panel-header {
+  .mat-chip-list-wrapper {
+    margin: 0;
+  }
+}
 
+.mat-dialog-actions {
+  justify-content: end;
+}

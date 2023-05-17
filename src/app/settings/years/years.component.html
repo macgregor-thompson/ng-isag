@@ -1,5 +1,5 @@
 <div class="container years-page">
-  <mat-card class="isag-card years-card" [class.hide-lt-md]="selectedYear">
+  <mat-card class="years-card" [class.hide-lt-lg]="selectedYear">
     <mat-card-header>
       <mat-card-title>Years</mat-card-title>
       <div class="fill-remaining-space"></div>
@@ -10,7 +10,6 @@
         ADD YEAR
       </button>
     </mat-card-header>
-    <mat-card-content>
       <mat-toolbar class="header-btns">
         <h4 class="year">Year</h4>
         <h4 class="date">Date</h4>
@@ -37,7 +36,6 @@
 
         </mat-list-item>
       </mat-list>
-    </mat-card-content>
   </mat-card>
 
   <div class="flex1" *ngIf="selectedYear">

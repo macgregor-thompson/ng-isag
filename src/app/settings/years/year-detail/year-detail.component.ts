@@ -17,6 +17,8 @@ import { ConfirmDialogData } from '../../../_shared/models/confirm-dialog-data';
 import { OrderByPipe } from '../../../_shared/pipes/order-by.pipe';
 import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Expense } from '../../../_shared/models/years/expense';
+import { CourseService } from '../../../_core/services/course.service';
+import { Course } from '../../../_shared/models/course/course';
 
 @Component({
   selector: 'isag-year-detail',
@@ -25,7 +27,7 @@ import { Expense } from '../../../_shared/models/years/expense';
 })
 export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Input() year: Year;
-
+  @Input() course: Course;
   @Output() close = new EventEmitter();
 
   spinner = false;
@@ -40,6 +42,7 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
               private activatedRoute: ActivatedRoute,
               public stateService: StateService,
               public yearService: YearService,
+              private courseService: CourseService,
               public playerService: PlayerService,
               private dialog: MatDialog,
               private filterPlayersByYear: FilterPlayersByYearPipe,
@@ -59,7 +62,8 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    [this.aPlayers, this.bPlayers] = this.playerService.aAndBPlayers(this.year);
+    const aAndBPlayers = this.playerService.aAndBPlayers(this.year);
+    [this.aPlayers, this.bPlayers] = this.courseService.setAAndBPlayersCourseHandicaps(aAndBPlayers);
     this.allPlayers = [...this.aPlayers, ...this.bPlayers];
   }
 
@@ -91,6 +95,9 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addPlayers(players: Player[]): void {
+    players.forEach(p => {
+      p.courseHandicap = this.courseService.getCourseHandicap(p.handicap);
+    });
     const allPlayers = [...this.aPlayers, ...this.bPlayers, ...players];
     this.splitPLayersByHandicap(allPlayers);
     this.updateAAndBPlayers();
@@ -147,8 +154,9 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.update(list);
   }
 
-  updateHandicap(playerId: string, handicap: number): void {
-    this.playerService.update(playerId, {handicap}).subscribe();
+  updateHandicap(player: Player, handicap: number): void {
+    player.courseHandicap = this.courseService.getCourseHandicap(player.handicap);
+    this.playerService.update(player._id, {handicap}).subscribe();
     this.sortPlayersByHandicap();
   }
 

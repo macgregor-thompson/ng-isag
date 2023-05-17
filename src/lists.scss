@@ -13,7 +13,7 @@ mat-card {
   }
 }
 
-.isag-card, isag-conversation-detail {
+isag-conversation-detail {
   flex: 1;
   /* used to make the ellipsis stuff work */
   min-width: 0;

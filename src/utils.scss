@@ -188,28 +188,34 @@
   width: 100% !important;
 }
 
+.hide-lt-lg {
+  @include lt-lg() {
+    display: none !important;
+  }
+}
+
 .hide-lt-md {
   @include lt-md() {
-    display: none;
+    display: none !important;
   }
 }
 
 .hide-lt-sm {
   @include lt-sm() {
-    display: none;
+    display: none !important;
   }
 }
 
 
 .hide-gt-xs {
   @include gt-xs() {
-    display: none;
+    display: none !important;
   }
 }
 
 .hide-gt-sm {
   @include gt-sm() {
-    display: none;
+    display: none !important;
   }
 }
 

@@ -106,7 +106,10 @@
   </div>
 </mat-dialog-content>
 
-<mat-dialog-actions>
+<mat-dialog-actions class="dialog-actions">
   <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
-  <button mat-raised-button color="primary" (click)="addCourse()" [disabled]="!canSave()">Add</button>
+  <button mat-raised-button color="primary" *ngIf="!course._id; else editBtn" (click)="addCourse()" [disabled]="!canSave()">Add</button>
+  <ng-template #editBtn>
+    <button mat-raised-button color="primary" (click)="updateCourse()" [disabled]="!canSave()">Update</button>
+  </ng-template>
 </mat-dialog-actions>

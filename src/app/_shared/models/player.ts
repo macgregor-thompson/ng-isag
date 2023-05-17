@@ -14,6 +14,9 @@ export class Player {
   yearsWon: number[];
   dateOfBirth: Date;
   favoriteActivities: Activity[];
+
+  // only for year detail view;
+  courseHandicap: number;
   constructor(firstName = '', lastName = '', handicap?: number) {
     this.firstName = firstName;
     this.lastName = lastName;
