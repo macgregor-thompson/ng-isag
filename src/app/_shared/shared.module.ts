@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { QuillModule } from 'ngx-quill';
 
@@ -27,6 +27,9 @@ import { HidePrivateYearsPipe } from './pipes/hide-private-years.pipe';
 import { CourseHandicapPipe } from './pipes/course-handicap.pipe';
 import { WinnerComponent } from './components/winner/winner.component';
 import { PlayerTableComponent } from './components/player-table/player-table.component';
+import { PairingsComponent } from './components/pairings/pairings.component';
+import { TwelveHourPipe } from './pipes/twelve-hour.pipe';
+import { HandicapAllowanceComponent } from './components/handicap-allowance/handicap-allowance.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
     HidePrivateYearsPipe,
     CourseHandicapPipe,
     WinnerComponent,
-    PlayerTableComponent
+    PlayerTableComponent,
+    PairingsComponent,
+    TwelveHourPipe,
+    HandicapAllowanceComponent
   ],
   imports: [
     CommonModule,
@@ -86,11 +92,14 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
     CourseCardComponent,
     KeyValuePipe,
     YearSelectComponent,
-    HidePrivateYearsPipe
+    HidePrivateYearsPipe,
+    PairingsComponent,
+    HandicapAllowanceComponent
   ],
   providers: [
     FilterPlayersByYearPipe,
-    OrderByPipe
+    OrderByPipe,
+    DatePipe
   ]
 })
 export class SharedModule {}

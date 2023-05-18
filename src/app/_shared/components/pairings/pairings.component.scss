@@ -1,0 +1,31 @@
+.pairings-table {
+  width: 100%;
+  td.mat-cell:first-of-type, th.mat-header-cell:first-of-type {
+    padding-left: 0;
+  }
+  th.mat-header-cell, td.mat-cell {
+    border-bottom-width: 5px;
+  }
+  td.mat-cell {
+    //padding: 20px 0;
+  }
+}
+.pairing-cell {
+  div {
+    margin: 10px 0;
+    height: 20px;
+  }
+}
+
+.player-div {
+  display: flex;
+  align-items: center;
+}
+
+.mat-row:nth-child(even){
+ // background-color: #dedede !important;
+}
+
+.center-align {
+  text-align: center;
+}

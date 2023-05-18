@@ -1,0 +1,9 @@
+<mat-form-field class="handicap-allowance-field">
+  <mat-label>Handicap Allowance</mat-label>
+  <input matInput type="number" [(ngModel)]="this.stateService.year.handicapAllowance"
+         (ngModelChange)="updateHandicapAllowance()" [disabled]="!stateService.isAdmin" min="0">
+  <span matSuffix>%</span>
+  <mat-hint  class="learn-more-link"  (click)="moreAboutHandicapAllowances()">
+    Learn More <mat-icon>open_in_new</mat-icon>
+  </mat-hint>
+</mat-form-field>

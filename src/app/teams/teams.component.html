@@ -8,16 +8,7 @@
 
       <isag-year-select (yearChange)="getTeamsAndPlayers()"></isag-year-select>
 
-
-      <mat-form-field class="handicap-allowance-field">
-        <mat-label>Handicap Allowance</mat-label>
-        <input matInput type="number" [(ngModel)]="handicapAllowance"
-               (ngModelChange)="updatePlayingHandicaps()" [disabled]="!stateService.isAdmin || !editing" min="0">
-        <span matSuffix>%</span>
-        <mat-hint  class="learn-more-link"  (click)="moreAboutHandicapAllowances()">
-          Learn More <mat-icon>open_in_new</mat-icon>
-        </mat-hint>
-      </mat-form-field>
+      <isag-handicap-allowance (allowanceUpdate)="updatePlayingHandicaps()"></isag-handicap-allowance>
 
       <button mat-raised-button color="primary" class="edit-btn" (click)="toggleEdit()"
               *ngIf="stateService.isAdmin" matTooltipClass="isag-tooltip" matTooltipPosition="before"
@@ -27,137 +18,144 @@
       </button>
     </mat-card-header>
 
-    <mat-toolbar class="header-btns">
-      <h4 class="flex1 a-player-header hide-xs">A Players</h4>
-      <h4 class="flex1 a-player-header show-xs">Players</h4>
-      <ng-container *ngIf="!editing">
-        <h4 class="handicap hide-xs">Handicap</h4>
-        <h4 class="handicap hide-xs">C. H.</h4>
-        <h4 class="handicap hide-xs">Playing H.</h4>
-      </ng-container>
+    <isag-pairings *ngIf="pairings" [pairings]="pairings"></isag-pairings>
 
-      <div class="divider no-border hide-xs"></div>
+    <ng-container *ngIf="editing || !pairings?.length">
+      <mat-toolbar class="header-btns">
+        <h4 class="flex1 a-player-header hide-xs">A Players</h4>
+        <h4 class="flex1 a-player-header show-xs">Players</h4>
+        <ng-container *ngIf="!editing">
+          <h4 class="handicap hide-xs">Handicap</h4>
+          <h4 class="handicap hide-xs">C. H.</h4>
+          <h4 class="handicap hide-xs">Playing H.</h4>
+        </ng-container>
 
-      <h4 class="flex1 b-player-header hide-xs">B Players</h4>
-      <ng-container *ngIf="!editing">
-        <h4 class="handicap">Handicap</h4>
-        <h4 class="handicap">C. H.</h4>
-        <h4 class="handicap">Playing H.</h4>
-      </ng-container>
-    </mat-toolbar>
+        <div class="divider no-border hide-xs"></div>
 
-    <mat-list class="isag-list" *ngIf="teams?.length">
-      <mat-list-item class="list-item no-hover" *ngFor="let team of teams; let i = index;"
-                     [disableRipple]="true" [class.auto-height]="editing" [class.no-pointer]="!editing">
-        <div class="team-number">{{i + 1}}.</div>
-        <div class="team-row">
-          <div class="team-player">
-            <div class="user-avatar-container">
-              <img *ngIf="team.playerA?.avatarUrl" class="avatar-image" [src]="team.playerA.avatarUrl" alt="user image"/>
+        <h4 class="flex1 b-player-header hide-xs">B Players</h4>
+        <ng-container *ngIf="!editing">
+          <h4 class="handicap">Handicap</h4>
+          <h4 class="handicap">C. H.</h4>
+          <h4 class="handicap">Playing H.</h4>
+        </ng-container>
+      </mat-toolbar>
+
+
+      <mat-list class="isag-list" *ngIf="teams?.length">
+        <mat-list-item class="list-item no-hover" *ngFor="let team of teams; let i = index;"
+                       [disableRipple]="true" [class.auto-height]="editing" [class.no-pointer]="!editing">
+          <div class="team-number">{{i + 1}}.</div>
+          <div class="team-row">
+            <div class="team-player">
+              <div class="user-avatar-container">
+                <img *ngIf="team.playerA?.avatarUrl" class="avatar-image" [src]="team.playerA.avatarUrl" alt="user image"/>
+              </div>
+              <div *ngIf="editing" class="player-div">
+                <div class="list-title">
+                  <mat-form-field class="player-input">
+                    <input matInput placeholder="A Player" value="" [(ngModel)]="team.playerA"
+                           [matAutocomplete]="playerA" aria-label="A Player"
+                           (ngModelChange)="updateSub.next([team, 'playerA'])">
+                    <mat-autocomplete #playerA="matAutocomplete" [displayWith]="getPlayerName">
+                      <mat-option  class="player-option" *ngFor="let player of aPlayers; let i = index;"
+                                   [value]="player"  [class.hidden]="usedAPLayerIds[player._id]">
+                        <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
+                        <div>
+                          <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
+                          {{player.handicap | absoluteValue}}
+                        </div>
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+                <mat-form-field class="handicap-form">
+                  <span matPrefix *ngIf="team.playerA?.handicap > 0">+</span>
+                  <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerA.handicap"
+                         (ngModelChange)="updateSub.next([team, 'playerA'])" min="0"
+                         aria-label="handicap" name="handicap">
+                </mat-form-field>
+
+              </div>
+              <div *ngIf="!editing" class="player-div">
+                <div class="list-title">
+                  {{team.playerA.firstName}} {{team.playerA.lastName}}
+                  <isag-winner [player]="team.playerA"></isag-winner>
+                </div>
+                <div class="handicap">
+                  <span *ngIf="team.playerA?.handicap > 0">+</span>{{ team.playerA?.handicap | absoluteValue }}
+                </div>
+                <div class="handicap">
+                  <span matPrefix *ngIf="team.playerA?.courseHandicap > 0">+</span>
+                  {{ team.playerA?.courseHandicap | absoluteValue  }}
+                </div>
+                <div class="handicap">
+                  <span matPrefix *ngIf="team.playerA?.playingHandicap > 0">+</span>
+                  {{ team.playerA?.playingHandicap | absoluteValue  }}
+                </div>
+              </div>
             </div>
-            <div *ngIf="editing" class="player-div">
-              <div class="list-title">
-                <mat-form-field class="player-input">
-                  <input matInput placeholder="A Player" value="" [(ngModel)]="team.playerA"
-                         [matAutocomplete]="playerA" aria-label="A Player"
-                         (ngModelChange)="updateSub.next([team, 'playerA'])">
-                  <mat-autocomplete #playerA="matAutocomplete" [displayWith]="getPlayerName">
-                    <mat-option  class="player-option" *ngFor="let player of aPlayers; let i = index;"
-                                [value]="player"  [class.hidden]="usedAPLayerIds[player._id]">
-                      <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
-                      <div>
-                        <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
-                        {{player.handicap | absoluteValue}}
-                      </div>
-                    </mat-option>
-                  </mat-autocomplete>
+
+            <div class="divider"></div>
+
+            <div class="team-player">
+              <div class="user-avatar-container">
+                <img *ngIf="team.playerB?.avatarUrl" class="avatar-image" [src]="team.playerB.avatarUrl" alt="user image"/>
+              </div>
+              <div *ngIf="editing" class="player-div">
+                <div class="list-title">
+                  <mat-form-field class="player-input">
+                    <input matInput placeholder="B Player" value="" [(ngModel)]="team.playerB"
+                           [matAutocomplete]="playerB" aria-label="B Player"
+                           (ngModelChange)="updateSub.next([team, 'playerB'])">
+                    <mat-autocomplete #playerB="matAutocomplete" [displayWith]="getPlayerName">
+                      <mat-option class="player-option" *ngFor="let player of bPlayers; let i = index;" [value]="player"
+                                  [class.hidden]="usedBPLayerIds[player._id]">
+                        <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
+                        <div>
+                          <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
+                          {{player.handicap | absoluteValue}}
+                        </div>
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+                <mat-form-field class="handicap-form">
+                  <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
+                  <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerB.handicap"
+                         (ngModelChange)="updateSub.next([team, 'playerB'])"
+                         aria-label="handicap" name="handicap">
                 </mat-form-field>
               </div>
-              <mat-form-field class="handicap-form">
-                <span matPrefix *ngIf="team.playerA?.handicap > 0">+</span>
-                <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerA.handicap"
-                       (ngModelChange)="updateSub.next([team, 'playerA'])" min="0"
-                       aria-label="handicap" name="handicap">
-              </mat-form-field>
+              <div *ngIf="!editing" class="player-div">
+                <div class="list-title">
+                  {{team.playerB.firstName}} {{team.playerB.lastName}}
+                  <isag-winner [player]="team.playerB"></isag-winner>
+                </div>
+                <div class="handicap">
+                  <span *ngIf="team.playerB?.handicap > 0">+</span>{{ team.playerB?.handicap | absoluteValue }}
+                </div>
+                <div class="handicap">
+                  <span matPrefix *ngIf="team.playerB?.courseHandicap > 0">+</span>
+                  {{ team.playerB?.courseHandicap | absoluteValue  }}
+                </div>
 
-            </div>
-            <div *ngIf="!editing" class="player-div">
-              <div class="list-title">
-                {{team.playerA.firstName}} {{team.playerA.lastName}}
-                <isag-winner [player]="team.playerA"></isag-winner>
-              </div>
-              <div class="handicap">
-                <span *ngIf="team.playerA?.handicap > 0">+</span>{{ team.playerA?.handicap | absoluteValue }}
-              </div>
-              <div class="handicap">
-                <span matPrefix *ngIf="team.playerA?.courseHandicap > 0">+</span>
-                {{ team.playerA?.courseHandicap | absoluteValue  }}
-              </div>
-              <div class="handicap">
-                <span matPrefix *ngIf="team.playerA?.playingHandicap > 0">+</span>
-                {{ team.playerA?.playingHandicap | absoluteValue  }}
+                <div class="handicap">
+                  <span matPrefix *ngIf="team.playerB?.playingHandicap > 0">+</span>
+                  {{ team.playerB?.playingHandicap | absoluteValue  }}
+                </div>
               </div>
             </div>
           </div>
+          <button mat-icon-button (click)="deleteTeam(team, i)" *ngIf="editing"
+                  matTooltip="Delete Team"
+                  matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
 
-          <div class="divider"></div>
+    </ng-container>
 
-          <div class="team-player">
-            <div class="user-avatar-container">
-              <img *ngIf="team.playerB?.avatarUrl" class="avatar-image" [src]="team.playerB.avatarUrl" alt="user image"/>
-            </div>
-            <div *ngIf="editing" class="player-div">
-              <div class="list-title">
-                <mat-form-field class="player-input">
-                  <input matInput placeholder="B Player" value="" [(ngModel)]="team.playerB"
-                         [matAutocomplete]="playerB" aria-label="B Player"
-                         (ngModelChange)="updateSub.next([team, 'playerB'])">
-                  <mat-autocomplete #playerB="matAutocomplete" [displayWith]="getPlayerName">
-                    <mat-option class="player-option" *ngFor="let player of bPlayers; let i = index;" [value]="player"
-                                [class.hidden]="usedBPLayerIds[player._id]">
-                      <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
-                      <div>
-                        <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
-                        {{player.handicap | absoluteValue}}
-                      </div>
-                    </mat-option>
-                  </mat-autocomplete>
-                </mat-form-field>
-              </div>
-              <mat-form-field class="handicap-form">
-                <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
-                <input matInput type="number" placeholder="Handicap" [(ngModel)]="team.playerB.handicap"
-                       (ngModelChange)="updateSub.next([team, 'playerB'])"
-                       aria-label="handicap" name="handicap">
-              </mat-form-field>
-            </div>
-            <div *ngIf="!editing" class="player-div">
-              <div class="list-title">
-                {{team.playerB.firstName}} {{team.playerB.lastName}}
-                <isag-winner [player]="team.playerB"></isag-winner>
-              </div>
-              <div class="handicap">
-                <span *ngIf="team.playerB?.handicap > 0">+</span>{{ team.playerB?.handicap | absoluteValue }}
-              </div>
-              <div class="handicap">
-                <span matPrefix *ngIf="team.playerB?.courseHandicap > 0">+</span>
-                {{ team.playerB?.courseHandicap | absoluteValue  }}
-              </div>
-
-              <div class="handicap">
-                <span matPrefix *ngIf="team.playerB?.playingHandicap > 0">+</span>
-                {{ team.playerB?.playingHandicap | absoluteValue  }}
-              </div>
-            </div>
-          </div>
-        </div>
-        <button mat-icon-button (click)="deleteTeam(team, i)" *ngIf="editing"
-                matTooltip="Delete Team"
-                matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
 
     <mat-card-footer *ngIf="stateService.isAdmin && editing">
       <mat-card-actions class="actions">
@@ -165,6 +163,10 @@
                 matTooltipClass="isag-tooltip" matTooltipPosition="before" matTooltip="Add Team">
           <mat-icon>add</mat-icon>
           ADD TEAM
+        </button>
+        <button mat-raised-button color="primary"  class="edit-btn right-space-15" (click)="createPairings()"
+                *ngIf="stateService.isAdmin">
+          <span> {{pairings?.length ? 'Recreate' : 'Create'}} Pairings </span>
         </button>
       </mat-card-actions>
     </mat-card-footer>

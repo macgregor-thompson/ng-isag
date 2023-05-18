@@ -1,0 +1,18 @@
+  <th class="sticky-header">
+    Team
+  </th>
+  <td *ngFor="let hole of frontNine | keyValue">
+    <div class="score" [ngClass]="scoreClass[hole?.key]">
+      {{netScores[hole?.key]}}
+    </div>
+  </td>
+  <th>{{frontNineNetScore}}</th>
+  <td *ngFor="let hole of backNine | keyValue">
+    <div class="score" [ngClass]="scoreClass[hole?.key]">
+      {{netScores[hole?.key]}}
+    </div>
+  </td>
+  <th>{{backNineNetScore}}</th>
+  <th>{{totalNetScore}}</th>
+  <th></th>
+

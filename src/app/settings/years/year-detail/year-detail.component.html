@@ -128,6 +128,10 @@
 
   <div class="players-wrapper">
     <h4 class="checklist-header flex1">{{year.year}} Players</h4>
+
+    <isag-handicap-allowance class="right-space-15"
+                             (allowanceUpdate)="updatePlayingHandicaps()"></isag-handicap-allowance>
+
     <isag-player-multiple-select *ngIf="stateService.isAdmin"
                                  [playersToFilterOut]="allPlayers"
                                  (selectPlayers)="addPlayers($event)"></isag-player-multiple-select>
@@ -138,7 +142,8 @@
       <mat-toolbar class="header-btns">
         <h4 class="flex1 name-header">A Players</h4>
         <h4 class="handicap-header">Handicap</h4>
-        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">C. H.</h4>
+        <h4 class="handicap-header">C. H.</h4>
+        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">P. H.</h4>
       </mat-toolbar>
       <mat-list id="aPlayers" class="isag-list" cdkDropList [cdkDropListData]="aPlayers"
                 (cdkDropListDropped)="dropPlayer($event)">

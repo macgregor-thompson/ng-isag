@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { flatMap as _flatMap, merge as _merge } from 'lodash-es';
-import { forkJoin, Subject, Subscription } from 'rxjs';
+import { flatMap as _flatMap, merge as _merge, cloneDeep as _cloneDeep } from 'lodash-es';
+import { filter, forkJoin, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { StateService } from '../_core/services/state.service';
@@ -11,6 +11,8 @@ import { Player } from '../_shared/models/player';
 import { PlayerService } from '../_core/services/player.service';
 import { CourseService } from '../_core/services/course.service';
 import { Course } from '../_shared/models/course/course';
+import { Pairing } from '../_shared/models/pairing';
+import { PairingService } from '../_core/services/pairing.service';
 
 
 @Component({
@@ -28,20 +30,25 @@ export class TeamsComponent implements OnInit {
   editing = false;
   updateSub = new Subject<[Team, keyof Team]>();
   subscriptions = new Subscription();
-  handicapAllowance = 85;
+  pairings: Pairing[];
 
   constructor(public courseService: CourseService,
               public stateService: StateService,
               private playerService: PlayerService,
-              private teamService: TeamService) { }
+              private teamService: TeamService,
+              private pairingService: PairingService) { }
 
   ngOnInit(): void {
     this.getTeamsAndPlayers();
     this.courseService.getByYear().subscribe(c => {
       this.course = c;
-      this.updateCourseHandicapsAndNumShots();
+      this.updateHandicaps();
     });
     this.subscriptions.add(this.updateSub.pipe(debounceTime(400)).subscribe(x => this.saveOrUpdateTeam(...x)));
+
+    this.pairingService.getByYear().pipe(filter(p => !!p && !!p.length)).subscribe({
+      next: pairings => this.pairings = pairings
+    });
   }
 
   getTeamsAndPlayers(): void {
@@ -63,7 +70,7 @@ export class TeamsComponent implements OnInit {
           this.usedAPLayerIds[t.playerA._id] = true;
           this.usedBPLayerIds[t.playerB._id] = true;
         });
-        this.updateCourseHandicapsAndNumShots();
+        this.updateHandicaps();
       }
     });
   }
@@ -78,7 +85,7 @@ export class TeamsComponent implements OnInit {
 
   saveOrUpdateTeam(team: Team, prop: keyof Team): void {
     if (team.playerA._id && team.playerA.handicap != null && team.playerB._id && team.playerB.handicap != null) {
-      this.updateCourseHandicapsAndNumShots();
+      this.updateHandicaps();
       if (team._id) {
         this.teamService.update(team._id, { [prop]: team[prop] }).subscribe();
       } else {
@@ -91,24 +98,24 @@ export class TeamsComponent implements OnInit {
     }
   }
 
-  updateCourseHandicapsAndNumShots(): void {
+  updateHandicaps(): void {
     if (!this.course || !this.teams) return;
     const slope = this.course.slope / 113;
     const rating = this.course.courseRating - this.course.frontNinePar - this.course.backNinePar;
 
     this.teams.forEach(t => {
       t.playerA.courseHandicap = -Math.round(-t.playerA.handicap * slope + rating);
-      t.playerA.playingHandicap = -Math.round(-t.playerA.courseHandicap * this.handicapAllowance / 100);
+      t.playerA.playingHandicap = -Math.round(-t.playerA.courseHandicap * this.stateService.year.handicapAllowance / 100);
 
       t.playerB.courseHandicap = -Math.round(-t.playerB.handicap * slope + rating);
-      t.playerB.playingHandicap = -Math.round(-t.playerB.handicap * this.handicapAllowance / 100);
+      t.playerB.playingHandicap = -Math.round(-t.playerB.handicap * this.stateService.year.handicapAllowance / 100);
     });
   }
 
   updatePlayingHandicaps(): void {
     this.teams.forEach(t => {
-      t.playerA.playingHandicap = -Math.round(-t.playerA.courseHandicap * this.handicapAllowance / 100);
-      t.playerB.playingHandicap = -Math.round(-t.playerB.handicap * this.handicapAllowance / 100);
+      t.playerA.playingHandicap = -Math.round(-t.playerA.courseHandicap * this.stateService.year.handicapAllowance / 100);
+      t.playerB.playingHandicap = -Math.round(-t.playerB.handicap * this.stateService.year.handicapAllowance / 100);
     });
   }
 
@@ -125,7 +132,7 @@ export class TeamsComponent implements OnInit {
   toggleEdit(): void {
     this.editing = !this.editing;
     if (!this.editing) {
-      this.updateCourseHandicapsAndNumShots();
+      this.updateHandicaps();
       const observables = this.teams.map(t => {
         const update: Partial<Team> = { playerA: t.playerA, playerB: t.playerB };
         return this.teamService.update(t._id, update);
@@ -134,16 +141,21 @@ export class TeamsComponent implements OnInit {
     }
   }
 
-  moreAboutHandicapAllowances(): void {
-    window.open('https://www.usga.org/content/usga/home-page/handicapping/roh/Content/rules/Appendix%20C%20Handicap%20Allowances.htm', '_blank');
-  }
 
-  transformIndexAndSave(team: Team, player: 'playerA' | 'playerB', foo): void {
-    console.log('foo:', foo);
-    team.playerA.handicap = 100;
-    //this.updateSub.next([team, player]);
 
-    console.log('result', team.playerA.handicap);
+  createPairings(): void {
+    const pairings = [];
+    const startTime = 0;
+    const teams = _cloneDeep(this.teams);
+    let ordinal = 0;
+     while (teams.length) {
+       const couple: [Team, Team] = teams.splice(0, 2) as [Team, Team];
+       pairings.push(new Pairing(couple, this.stateService.year.year, ordinal));
+       ordinal++;
+     }
+     this.pairingService.createAll(pairings).subscribe({
+       next: p => this.pairings = p
+     });
   }
 
 }

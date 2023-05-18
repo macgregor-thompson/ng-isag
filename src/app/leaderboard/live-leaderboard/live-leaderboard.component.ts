@@ -21,18 +21,18 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class LiveLeaderboardComponent implements OnChanges {
   @Input() teamScorecards: Scorecard[];
-  @Input() course: Course;
 
+  course: Course;
   leaderboard: MatTableDataSource<Scorecard>;
 
   showScorecards: { [teamId: string]: boolean } = {};
   leaderboardColumns = ['position', 'team', 'totalNet',  'thru'];
-  expandedColumns = [...this.leaderboardColumns, 'expand'];
   expandedScorecard: PlayerScorecard;
 
   constructor(public stateService: StateService, public scorecardService: ScorecardService) {}
 
   ngOnChanges(changes: SimpleChanges) {
+    this.course = this.stateService.course;
     if (this.teamScorecards && !this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(this.teamScorecards);
 
   }
@@ -52,5 +52,6 @@ export class LiveLeaderboardComponent implements OnChanges {
   togglePlayerViews(teamId: string): void {
     this.showScorecards[teamId] = !this.showScorecards[teamId];
   }
+
 
 }

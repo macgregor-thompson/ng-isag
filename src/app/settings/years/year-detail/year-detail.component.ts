@@ -64,6 +64,7 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     const aAndBPlayers = this.playerService.aAndBPlayers(this.year);
     [this.aPlayers, this.bPlayers] = this.courseService.setAAndBPlayersCourseHandicaps(aAndBPlayers);
+    this.updatePlayingHandicaps();
     this.allPlayers = [...this.aPlayers, ...this.bPlayers];
   }
 
@@ -96,7 +97,8 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   addPlayers(players: Player[]): void {
     players.forEach(p => {
-      p.courseHandicap = this.courseService.getCourseHandicap(p.handicap);
+      p.courseHandicap = this.stateService.getCourseHandicap(p.handicap);
+      p.playingHandicap = p.courseHandicap * this.year.handicapAllowance / 100;
     });
     const allPlayers = [...this.aPlayers, ...this.bPlayers, ...players];
     this.splitPLayersByHandicap(allPlayers);
@@ -115,7 +117,7 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
       { aPlayerIds: this.year.aPlayerIds, bPlayerIds: this.year.bPlayerIds }).subscribe();
   }
 
-  splitPLayersByHandicap(players: Player[] = [...this.bPlayers, ...this.aPlayers, ]): void {
+  splitPLayersByHandicap(players: Player[] = [...this.bPlayers, ...this.aPlayers]): void {
     const [playersWithHandicaps, playersWithoutHandicaps] = _partition(players, p => p.handicap != null);
     const orderedByHandicap = this.orderByPipe.transform(playersWithHandicaps, 'handicap', false);
     const allPlayers = [...orderedByHandicap, ...playersWithoutHandicaps];
@@ -155,10 +157,15 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateHandicap(player: Player, handicap: number): void {
-    console.log('wtf?');
-    player.courseHandicap = this.courseService.getCourseHandicap(player.handicap);
-    this.playerService.update(player._id, {handicap}).subscribe();
+    player.courseHandicap = this.stateService.getCourseHandicap(player.handicap);
+    player.playingHandicap = this.stateService.getPlayingHandicapFromCourseHandicap(player.courseHandicap);
+    this.playerService.update(player._id, { handicap }).subscribe();
     this.sortPlayersByHandicap();
+  }
+
+  updatePlayingHandicaps(): void {
+    [...this.aPlayers, ...this.bPlayers]
+      .forEach(p => p.playingHandicap = this.stateService.getPlayingHandicapFromCourseHandicap(p.courseHandicap));
   }
 
   updatePrizesOrExpenses(i: number, list: 'prizes' | 'expenses'): void {

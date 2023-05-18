@@ -17,6 +17,8 @@ export class Player {
 
   // only for year detail view;
   courseHandicap: number;
+  playingHandicap: number;
+
   constructor(firstName = '', lastName = '', handicap?: number) {
     this.firstName = firstName;
     this.lastName = lastName;

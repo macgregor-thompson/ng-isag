@@ -22,9 +22,9 @@ import { PlayerScorecard } from '../_shared/models/scorecards/player-scorecard';
 import { Expense } from '../_shared/models/years/expense';
 
 @Component({
-  selector: 'isag-scorecard',
-  templateUrl: './scorecard.component.html',
-  styleUrls: ['./scorecard.component.scss'],
+  selector: 'isag-results',
+  templateUrl: './results.component.html',
+  styleUrls: ['./results.component.scss'],
   animations: [
     trigger('rowsAnimation', [
       transition('void => *', [
@@ -37,7 +37,7 @@ import { Expense } from '../_shared/models/years/expense';
     ])
   ]
 })
-export class ScorecardComponent implements OnInit {
+export class ResultsComponent implements OnInit {
   scorecards: Scorecard[];
   playerScorecards: PlayerScorecard[];
   teams: Team[];

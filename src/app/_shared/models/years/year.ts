@@ -19,6 +19,8 @@ export class Year {
   secondPlacePercentage = 30;
   thirdPlacePercentage = 10;
 
+  handicapAllowance: number;
+
   constructor(year) {
     this.year = year;
 

@@ -19,7 +19,6 @@
 @include mat.legacy-core();
 
 
-
 // this is for the rich text editor
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.bubble.css';
@@ -803,6 +802,18 @@ button {
   }
 }
 
+// sticky headers
+.hole-headers, .second-row, .third-row, .fourth-row, .sticky-header {
+  th:first-of-type {
+    position: sticky;
+    z-index: 2;
+
+    &.left-th {
+      z-index: 3;
+    }
+  }
+}
+
 
 .scorecard-table {
   width: 100%;
@@ -824,17 +835,6 @@ button {
     background-color: $white;
   }
 
-  // sticky headers
-  .hole-headers, .second-row, .third-row, .fourth-row {
-    th {
-      position: sticky;
-      z-index: 2;
-
-      &.left-th {
-        z-index: 3;
-      }
-    }
-  }
 
   .hole-headers th {
     top: 0;

@@ -1,0 +1,23 @@
+  <th class="sticky-header">
+    <div class="player-names">
+      <div class="name">{{ name }}</div>
+    </div>
+  </th>
+
+  <td *ngFor="let hole of frontNine | keyValue">
+    <div class="score" [ngClass]="scoreClass[hole?.key]">
+      {{scores.grossScores[hole?.key]}}
+    </div>
+  </td>
+
+  <th>{{scores.frontNineGrossScore}}</th>
+
+  <td *ngFor="let hole of backNine | keyValue">
+    <div class="score" [ngClass]="scoreClass[hole?.key]">
+      {{scores.grossScores[hole?.key]}}
+    </div>
+  </td>
+
+  <th>{{scores.backNineGrossScore}}</th>
+  <th>{{scores.totalGrossScore}}</th>
+  <th>{{scores.totalNetScore}}</th>

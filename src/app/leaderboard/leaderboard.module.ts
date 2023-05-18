@@ -6,6 +6,8 @@ import { SharedModule } from '../_shared/shared.module';
 import { EnterScoresComponent } from './enter-scores/enter-scores.component';
 import { ScorecardIdLoginComponent } from './enter-scores/scorecard-id-login/scorecard-id-login.component';
 import { LiveLeaderboardComponent } from './live-leaderboard/live-leaderboard.component';
+import { PlayerScoresComponent } from './player-scores/player-scores.component';
+import { TeamScoresComponent } from './team-scores/team-scores.component';
 
 
 
@@ -14,7 +16,9 @@ import { LiveLeaderboardComponent } from './live-leaderboard/live-leaderboard.co
     LeaderboardComponent,
     EnterScoresComponent,
     ScorecardIdLoginComponent,
-    LiveLeaderboardComponent
+    LiveLeaderboardComponent,
+    PlayerScoresComponent,
+    TeamScoresComponent
   ],
   imports: [
     CommonModule,

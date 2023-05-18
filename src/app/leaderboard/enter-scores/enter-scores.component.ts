@@ -11,7 +11,6 @@ import { Scorecard } from '../../_shared/models/scorecards/scorecard';
   styleUrls: ['./enter-scores.component.scss']
 })
 export class EnterScoresComponent implements OnInit, OnDestroy {
-  @Input() course: Course;
 
   subscriptions = new Subscription();
   card: Scorecard;

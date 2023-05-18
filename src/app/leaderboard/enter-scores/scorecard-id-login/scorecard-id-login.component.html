@@ -1,9 +1,9 @@
 <mat-card class="scoring-id-input">
     <mat-form-field class="full-width">
-      <input matInput [(ngModel)]="scoringId" placeholder="Scoring ID" required (keydown.enter)="getScorecardByScoringId()">
+      <input matInput [(ngModel)]="scoringId" placeholder="Enter Pairing ID" required (keydown.enter)="getScorecardByScoringId()">
     </mat-form-field>
     <isag-alert *ngIf="noScoringIdFound" alertClass="danger">
-      <div>The scoring ID you entered is incorrect</div>
+      <div>The pairing ID you entered is incorrect</div>
     </isag-alert>
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="getScorecardByScoringId()"

@@ -1,0 +1,45 @@
+.isag-card, .scorecard-detail {
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.team-row {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+tr.detail-row {
+  height: 0;
+}
+
+tr.team-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.team-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.team-row td {
+  border-bottom-width: 0;
+}
+
+.scorecard-detail {
+  overflow: hidden;
+  display: flex;
+
+}
+
+.detail-td {
+  padding: 0 !important;
+}
+
+
+.team-names-th {
+  position: sticky;
+  left: 68px;
+}

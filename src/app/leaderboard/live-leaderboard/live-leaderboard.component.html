@@ -1,76 +1,81 @@
+<div class="container">
 
-<mat-card class="isag-card">
-  <button mat-raised-button color="primary"  *ngIf="stateService.isAdmin && teamScorecards && !teamScorecards.length"
-          (click)="scorecardService.createTeamScorecards(course._id).subscribe()">
-    Create Team Scorecards
-  </button>
-
-
-
-  <table mat-table [dataSource]="leaderboard" multiTemplateDataRows class="mat-elevation-z8">
-
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef>Pos.</th>
-      <td mat-cell *matCellDef="let scorecard">{{ 1 }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="team">
-      <th mat-header-cell *matHeaderCellDef>Team</th>
-      <td mat-cell *matCellDef="let scorecard">
-        <div class="player-names">
-          <div class="name">{{scorecard.team.playerA.firstName + ' ' + scorecard.team.playerA.lastName}}</div>
-          <div class="name">{{scorecard.team.playerB.firstName + ' ' + scorecard.team.playerB.lastName}}</div>
-        </div>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="totalNet">
-      <th mat-header-cell *matHeaderCellDef>Total Net</th>
-      <td mat-cell *matCellDef="let scorecard">{{ scorecard.currentNetToPar }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="thru">
-      <th mat-header-cell *matHeaderCellDef>Thru</th>
-      <td mat-cell *matCellDef="let scorecard">{{ scorecard.thru }}</td>
-    </ng-container>
+  <mat-card class="isag-card">
+    <button mat-raised-button color="primary" *ngIf="stateService.isAdmin && teamScorecards && !teamScorecards.length"
+            (click)="scorecardService.createTeamScorecards(course._id).subscribe()">
+      Create Team Scorecards
+    </button>
 
 
-    <ng-container matColumnDef="expand">
-      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-      <td mat-cell *matCellDef="let scorecard">
-        <button mat-icon-button aria-label="expand row" (click)="(expandedScorecard = expandedScorecard === scorecard ? null : scorecard); $event.stopPropagation()">
-          <mat-icon *ngIf="expandedScorecard !== scorecard">keyboard_arrow_down</mat-icon>
-          <mat-icon *ngIf="expandedScorecard === scorecard">keyboard_arrow_up</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+    <table mat-table [dataSource]="leaderboard" multiTemplateDataRows class="mat-elevation-z8">
 
-    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-    <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let scorecard" [attr.colspan]="expandedColumns.length">
-        <div class="example-scorecard-detail"
-             [@detailExpand]="scorecard == expandedScorecard ? 'expanded' : 'collapsed'">
-          <!--<div class="example-scorecard-diagram">
-            <div class="example-scorecard-position"> {{scorecard.position}} </div>
-            <div class="example-scorecard-symbol"> {{scorecard.team}} </div>
-            <div class="example-scorecard-name"> {{scorecard.name}} </div>
-            <div class="example-scorecard-weight"> {{scorecard.weight}} </div>
-          </div>-->
-          <div class="example-scorecard-description">
-            {{scorecard.description}}
-            <span class="example-scorecard-description-attribution"> -- Wikipedia </span>
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef>Pos.</th>
+        <td mat-cell *matCellDef="let scorecard">{{ 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="team">
+        <th mat-header-cell *matHeaderCellDef>Team</th>
+        <td mat-cell *matCellDef="let scorecard">
+          <div class="player-names">
+            <div class="name">{{scorecard.team.playerA.firstName + ' ' + scorecard.team.playerA.lastName}}</div>
+            <div class="name">{{scorecard.team.playerB.firstName + ' ' + scorecard.team.playerB.lastName}}</div>
           </div>
-        </div>
-      </td>
-    </ng-container>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="expandedColumns"></tr>
-    <tr mat-row *matRowDef="let scorecard; columns: expandedColumns;"
-        class="example-scorecard-row"
-        [class.example-expanded-row]="expandedScorecard === scorecard"
-        (click)="expandedScorecard = expandedScorecard === scorecard ? null : scorecard">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-  </table>
+      <ng-container matColumnDef="totalNet">
+        <th mat-header-cell *matHeaderCellDef>Total Net</th>
+        <td mat-cell *matCellDef="let scorecard">{{ scorecard.currentNetToPar }}</td>
+      </ng-container>
 
-</mat-card>
+      <ng-container matColumnDef="thru">
+        <th mat-header-cell *matHeaderCellDef>Thru</th>
+        <td mat-cell *matCellDef="let scorecard">{{ scorecard.thru }}</td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let scorecard" [attr.colspan]="leaderboardColumns.length" class="detail-td">
+          <div class="scorecard-detail"
+               [@detailExpand]="scorecard == expandedScorecard ? 'expanded' : 'collapsed'">
+            <isag-course-card [course]="course" [showNet]="true">
+
+              <tr isag-team-scores
+                  [netScores]="scorecard.teamNetScores"
+                  [frontNineNetScore]="scorecard.frontNineNetScore"
+                  [backNineNetScore]="scorecard.backNineNetScore"
+                  [totalNetScore]="scorecard.totalNetScore"
+                  [frontNine]="course.frontNine"
+                  [backNine]="course.backNine"></tr>
+
+
+              <tr isag-player-scores
+                  name="{{scorecard.team.playerA.firstName + ' ' + scorecard.team.playerA.lastName}}"
+                  [scores]="scorecard.playerAScores"
+                  [frontNine]="course.frontNine"
+                  [backNine]="course.backNine"></tr>
+
+              <tr isag-player-scores
+                  name="{{scorecard.team.playerB.firstName + ' ' + scorecard.team.playerB.lastName}}"
+                  [scores]="scorecard.playerBScores"
+                  [frontNine]="course.frontNine"
+                  [backNine]="course.backNine"></tr>
+
+            </isag-course-card>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="leaderboardColumns;  sticky: true"></tr>
+      <tr mat-row *matRowDef="let scorecard; columns: leaderboardColumns;"
+          class="team-row"
+          [class.example-expanded-row]="expandedScorecard === scorecard"
+          (click)="expandedScorecard = expandedScorecard === scorecard ? null : scorecard">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    </table>
+
+  </mat-card>
+
+</div>

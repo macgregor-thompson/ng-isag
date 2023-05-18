@@ -1,3 +1,4 @@
+<div class="container">
 
 
 
@@ -15,33 +16,35 @@
 
       </mat-toolbar>
 
-        <mat-card>
-          <div class="player-score-div">
-            <h3 class="name">{{playerAName }}</h3>
-            <mat-form-field>
+      <mat-card>
+        <div class="player-score-div">
+          <h3 class="name">{{playerAName }}</h3>
+          <mat-form-field>
 
-              <input matInput type="number" [(ngModel)]="card.playerAScores.grossScores[this.currentHole]" required
-                     aria-label="handicap" name="Score">
-            </mat-form-field>
-          </div>
-        </mat-card>
-
-        <mat-card>
-          <div class="player-score-div">
-            <h3 class="name">{{playerBName }}</h3>
-            <mat-form-field>
-              <input matInput type="number" [(ngModel)]="card.playerBScores.grossScores[this.currentHole]" required
-                     aria-label="handicap" name="Score">
-            </mat-form-field>
-          </div>
-        </mat-card>
-
-
-
-        <div>
-          numbers and buttons
+            <input matInput type="number" [(ngModel)]="card.playerAScores.grossScores[this.currentHole]" required
+                   aria-label="handicap" name="Score">
+          </mat-form-field>
         </div>
+      </mat-card>
+
+      <mat-card>
+        <div class="player-score-div">
+          <h3 class="name">{{playerBName }}</h3>
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="card.playerBScores.grossScores[this.currentHole]" required
+                   aria-label="handicap" name="Score">
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+
+
+      <div>
+        numbers and buttons
+      </div>
     </mat-card>
   </ng-template>
 
 
+
+</div>
