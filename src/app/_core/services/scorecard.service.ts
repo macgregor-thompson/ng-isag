@@ -20,12 +20,14 @@ export class ScorecardService {
   myTeamScorecard$ = new BehaviorSubject<Scorecard>(null);
   scoringId = localStorage.getItem('scoringId');
 
-  leaderboard$ = new BehaviorSubject<Scorecard[]>(null);
+  teamScorecards$ = new BehaviorSubject<Scorecard[]>(null);
 
   constructor(private http: HttpClient,
               private stateService: StateService,
               private spinnerService: SpinnerService,
               private socket: Socket) {
+
+    this.getLeaderboard().subscribe();
 
     setTimeout(() => {
       if (this.scoringId) this.getMyTeamScorecard().subscribe();
@@ -80,7 +82,7 @@ export class ScorecardService {
     return this.http.get<Scorecard[]>(`${this.scorecardApi}/${year}/Leaderboard`).pipe(
       tap(cards => {
         // should be hopefully ordered and normalized by now.
-        this.leaderboard$.next(cards);
+        this.teamScorecards$.next(cards);
         // PlayerScorecard class
       })
     );

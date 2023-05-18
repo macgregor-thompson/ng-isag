@@ -128,11 +128,6 @@
 
   <div class="players-wrapper">
     <h4 class="checklist-header flex1">{{year.year}} Players</h4>
-
-   <!-- <button mat-button color="primary" (click)="sortPlayersByHandicap()">
-      Sort By Handicap
-    </button>-->
-
     <isag-player-multiple-select *ngIf="stateService.isAdmin"
                                  [playersToFilterOut]="allPlayers"
                                  (selectPlayers)="addPlayers($event)"></isag-player-multiple-select>
@@ -156,7 +151,8 @@
           </div>
           <isag-player [index]="i + 1"
                        [player]="player"
-                       (handicapUpdate)="updateHandicap(player, $event)"></isag-player>
+                       (handicapUpdate)="updateHandicap(player, $event)"
+                       [showCourseHandicap]="true"></isag-player>
           <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
                   matTooltip="{{'Delete ' + player.firstName}}"
                   matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">
@@ -183,7 +179,8 @@
           </div>
           <isag-player [index]="i + 1"
                        [player]="player"
-                       (handicapUpdate)="updateHandicap(player, $event)"></isag-player>
+                       (handicapUpdate)="updateHandicap(player, $event)"
+                       [showCourseHandicap]="true"></isag-player>
           <button mat-icon-button (click)="deletePlayer(player)" *ngIf="stateService.isAdmin"
                   matTooltip="{{'Delete ' + player.firstName}}"
                   matTooltipPosition="before" matTooltipClass="isag-tooltip" aria-label="Delete Player">

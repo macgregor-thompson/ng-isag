@@ -155,6 +155,7 @@ export class YearDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateHandicap(player: Player, handicap: number): void {
+    console.log('wtf?');
     player.courseHandicap = this.courseService.getCourseHandicap(player.handicap);
     this.playerService.update(player._id, {handicap}).subscribe();
     this.sortPlayersByHandicap();

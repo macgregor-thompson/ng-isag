@@ -15,3 +15,12 @@ mat-card mat-card-header {
   font-weight: 700;
 
 }
+
+.course-info {
+  font-weight: unset;
+  display: flex;
+  align-items: center;
+  div {
+    margin: 0 15px;
+  }
+}

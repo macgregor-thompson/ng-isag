@@ -2,8 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Course } from '../../_shared/models/course/course';
 import { StateService } from '../../_core/services/state.service';
 import { ScorecardService } from '../../_core/services/scorecard.service';
-import { Observable, Subscription } from 'rxjs';
-import { Scores } from '../../_shared/models/scorecards/scores';
+import { filter, Subscription } from 'rxjs';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 
 @Component({
@@ -25,7 +24,7 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscriptions.add(
-      this.scorecardService.myTeamScorecard$.subscribe({
+      this.scorecardService.myTeamScorecard$.pipe(filter(c => !!c)).subscribe({
         next: c => {
           this.card = c;
           // set this appropriately

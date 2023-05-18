@@ -1,7 +1,7 @@
 <mat-tab-group  class="settings-tab-group"
                 *ngIf="{
                 course: courseService.currentCourse$ | async,
-                leaderboard: scorecardService.leaderboard$ | async
+                teamScorecards: scorecardService.teamScorecards$ | async
                 } as data">
 
   <mat-tab label="Enter Scores">
@@ -17,7 +17,7 @@
       <mat-icon>scoreboard</mat-icon>
       Leaderboard
     </ng-template>
-    <isag-live-leaderboard [leaderboard]="data.leaderboard" [course]="data.course"></isag-live-leaderboard>
+    <isag-live-leaderboard [teamScorecards]="data.teamScorecards" [course]="data.course"></isag-live-leaderboard>
   </mat-tab>
 
 </mat-tab-group>

@@ -19,6 +19,13 @@
           <mat-panel-title class="course-name">
             {{ course.name }}
           </mat-panel-title>
+
+          <div class="course-info">
+            <div><strong>Tees:</strong> {{course.tees}}</div>
+            <div><strong>Slope:</strong> {{course.slope}}</div>
+            <div><strong>Rating:</strong> {{course.courseRating}}</div>
+          </div>
+
           <div class="fill-remaining-space"></div>
           <mat-chip-list *ngIf="course.year" class="year-chip">
             <mat-chip selected color="accent">{{course.year}}</mat-chip>

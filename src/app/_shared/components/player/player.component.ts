@@ -11,6 +11,7 @@ export class PlayerComponent implements OnInit {
   @Input() player: Player;
   @Input() index?: number;
   @Input() showAvatars?: false;
+  @Input() showCourseHandicap = false;
 
   @Output() handicapUpdate = new EventEmitter<number>();
 
