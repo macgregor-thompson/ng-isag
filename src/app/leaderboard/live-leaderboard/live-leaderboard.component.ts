@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
-import { Course } from '../../_shared/models/course/course';
 import { StateService } from '../../_core/services/state.service';
 import { ScorecardService } from '../../_core/services/scorecard.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,7 +22,6 @@ import { switchMap, tap } from 'rxjs/operators';
   ],
 })
 export class LiveLeaderboardComponent implements OnInit, OnDestroy {
-  course: Course;
   leaderboard: MatTableDataSource<Scorecard>;
 
   leaderboardColumns = ['position', 'team', 'playerA', 'playerB', 'totalNet', 'thru'];

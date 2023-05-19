@@ -56,17 +56,17 @@ export class ScorecardService {
 
   @SpinnerAndCatchError
   getAll(): Observable<Scorecard[]> {
-    return this.http.get<Scorecard[]>(`${this.scorecardApi}`);
+    return this.http.get<Scorecard[]>(`${ this.scorecardApi }`);
   }
 
   @SpinnerAndCatchError
   getByYear(year: number = this.stateService.year.year): Observable<Scorecard[]> {
-    return this.http.get<Scorecard[]>(`${this.scorecardApi}/${year}`);
+    return this.http.get<Scorecard[]>(`${ this.scorecardApi }/${ year }`);
   }
 
   @SpinnerAndCatchError
   getMyTeamScorecard(scoringId = this.scoringId, year: number = this.stateService.year.year): Observable<[Scorecard, Scorecard]> {
-    return this.http.get<[Scorecard, Scorecard]>(`${this.scorecardApi}/${year}/MyPairingScorecards/${scoringId}`).pipe(
+    return this.http.get<[Scorecard, Scorecard]>(`${ this.scorecardApi }/${ year }/MyPairingScorecards/${ scoringId }`).pipe(
       tap(cards => {
         if (!cards) throw new Error('Can\'t find scorecard with that scoring ID');
         this.myPairingScorecards$.next(cards);
@@ -79,18 +79,18 @@ export class ScorecardService {
 
   @SpinnerAndCatchError
   updateScores(scorecardId: string, update: Partial<Scorecard>): Observable<Scorecard> {
-    return this.http.patch<Scorecard>(`${this.scorecardApi}/${scorecardId}/MyPairingScorecards`, update);
+    return this.http.patch<Scorecard>(`${ this.scorecardApi }/${ scorecardId }/MyPairingScorecards`, update);
   }
 
   @SpinnerAndCatchError
   updateTeeTimes(update: { teamIds: string[]; teeTime: string }, year: number = this.stateService.year.year): Observable<Scorecard> {
-    return this.http.patch<Scorecard>(`${this.scorecardApi}/${year}/UpdateTeeTimes`, update);
+    return this.http.patch<Scorecard>(`${ this.scorecardApi }/${ year }/UpdateTeeTimes`, update);
   }
 
 
   @SpinnerAndCatchError
   getLeaderboard(year: number = this.stateService.year.year): Observable<Scorecard[]> {
-    return this.http.get<Scorecard[]>(`${this.scorecardApi}/${year}/Leaderboard`).pipe(
+    return this.http.get<Scorecard[]>(`${ this.scorecardApi }/${ year }/Leaderboard`).pipe(
       tap(cards => {
         // should be hopefully ordered and normalized by now.
         this.teamScorecards$.next(cards);
@@ -105,34 +105,34 @@ export class ScorecardService {
   }
 
   @SpinnerAndCatchError
-  createTeamScorecards( courseId: string, year: number = this.stateService.year.year): Observable<Scorecard[]> {
-    return this.http.post<Scorecard[]>(`${this.scorecardApi}/${year}/CreateTeamScorecards`, { courseId });
+  createTeamScorecards(courseId: string = this.stateService.course._id,
+                       year: number = this.stateService.year.year): Observable<Scorecard[]> {
+    return this.http.post<Scorecard[]>(`${ this.scorecardApi }/${ year }/CreateTeamScorecards`, { courseId });
   }
 
   @SpinnerAndCatchError
   update(scorecardId: string, update: Partial<Scorecard>): Observable<Scorecard> {
-    return this.http.patch<Scorecard>(`${this.scorecardApi}/${scorecardId}`, update);
+    return this.http.patch<Scorecard>(`${ this.scorecardApi }/${ scorecardId }`, update);
   }
-
 
 
   @SpinnerAndCatchError
   delete(scorecardId: string): Observable<Scorecard> {
-    return this.update(scorecardId, {deleted: true});
+    return this.update(scorecardId, { deleted: true });
   }
 
   @SpinnerAndCatchError
   updateShotsByHole(year: number = this.stateService.year.year): Observable<void> {
-    return this.http.post<void>(`${this.scorecardApi}/${year}/UpdateShotsByHole`, {});
+    return this.http.post<void>(`${ this.scorecardApi }/${ year }/UpdateShotsByHole`, {});
   }
 
 
-/*  sendEvent(foo: string) {
-    this.socket.emit('events', foo);
-  }
+  /*  sendEvent(foo: string) {
+      this.socket.emit('events', foo);
+    }
 
-  addScore(score: string) {
-    this.socket.emit('scores', score);
-  }*/
+    addScore(score: string) {
+      this.socket.emit('scores', score);
+    }*/
 
 }
