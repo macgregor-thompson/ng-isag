@@ -9,7 +9,7 @@
                [fixedInViewport]="mobileQuery.matches" [fixedTopGap]="mobileQuery.matches ? 0 : 56">
 
     <mat-nav-list [class.closed]="!opened">
-      <a mat-list-item routerLink="leaderboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+      <a mat-list-item routerLink="leaderboard" routerLinkActive="active"
          (click)="closeSideNav()" *ngIf="!stateService.year.scoresConfirmed">
         <mat-icon>scoreboard</mat-icon>
         <span class="lint-title">leaderboard</span>

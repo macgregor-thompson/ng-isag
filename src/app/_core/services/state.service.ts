@@ -39,7 +39,7 @@ export class StateService {
 
   setTitle(title): void {
     this.pageTitle$.next(title || '');
-   // document.title = `${title} | iSag`;
+    //document.title = `${title} | iSag`;
   }
 
   initCurrentUser(user: User): void {

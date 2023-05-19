@@ -1,10 +1,24 @@
 <div class="container" [class.not-mobile]="!isMobile">
 
-  <mat-card class="isag-card">
-    <button mat-raised-button color="primary" *ngIf="stateService.isAdmin && teamScorecards && !teamScorecards.length"
+  <ng-container  *ngIf="stateService.isAdmin && leaderboard">
+    <button mat-raised-button color="primary" *ngIf="pairingsHaveBeenCreated; else createParings"
             (click)="scorecardService.createTeamScorecards(course._id).subscribe()">
       Create Team Scorecards
     </button>
+    <ng-template #createParings>
+      <mat-card class="isag-card">
+        <isag-alert>
+          <div class="no-results">
+            <p>Pairings have not been created yet.  Scorecards are tied to pairings.</p>
+            <p>Visit the <strong><a routerLink="/teams">Teams</a></strong> to create pairings first.</p>
+          </div>
+        </isag-alert>
+      </mat-card>
+    </ng-template>
+  </ng-container>
+
+
+  <mat-card class="isag-card" *ngIf="leaderboard?.data?.length">
 
     <table mat-table [dataSource]="leaderboard" multiTemplateDataRows class="mat-elevation-z8">
 

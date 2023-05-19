@@ -9,8 +9,6 @@ import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 import { tap } from 'rxjs/operators';
 import { Socket } from 'ngx-socket-io';
-import { subtract } from 'lodash-es';
-import { Score } from '../../_shared/models/scorecards/score';
 
 @Injectable({
   providedIn: 'root'

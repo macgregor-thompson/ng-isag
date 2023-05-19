@@ -1,14 +1,11 @@
-<mat-tab-group  class="settings-tab-group"
-                *ngIf="{
-                teamScorecards: scorecardService.teamScorecards$ | async
-                } as data">
+<mat-tab-group class="tab-group" [selectedIndex]="selectedIndex" (selectedTabChange)="updateQueryParam($event)">
 
   <mat-tab label="Leaderboard">
     <ng-template mat-tab-label>
       <mat-icon>scoreboard</mat-icon>
       Leaderboard
     </ng-template>
-    <isag-live-leaderboard [teamScorecards]="data.teamScorecards"></isag-live-leaderboard>
+    <isag-live-leaderboard></isag-live-leaderboard>
   </mat-tab>
 
   <mat-tab label="Enter Scores">

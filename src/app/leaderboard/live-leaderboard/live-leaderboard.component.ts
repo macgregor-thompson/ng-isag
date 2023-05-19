@@ -1,14 +1,14 @@
-import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 import { Course } from '../../_shared/models/course/course';
 import { StateService } from '../../_core/services/state.service';
 import { ScorecardService } from '../../_core/services/scorecard.service';
-import { PlayerScorecard } from '../../_shared/models/scorecards/player-scorecard';
 import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { partition as _partition } from 'lodash-es';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { PairingService } from '../../_core/services/pairing.service';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'isag-live-leaderboard',
@@ -22,9 +22,7 @@ import { PairingService } from '../../_core/services/pairing.service';
     ]),
   ],
 })
-export class LiveLeaderboardComponent implements OnInit, OnChanges {
-  @Input() teamScorecards: Scorecard[];
-
+export class LiveLeaderboardComponent implements OnInit, OnDestroy {
   course: Course;
   leaderboard: MatTableDataSource<Scorecard>;
 
@@ -32,8 +30,11 @@ export class LiveLeaderboardComponent implements OnInit, OnChanges {
   isMobile: boolean;
   isLargeScreen: boolean;
   expandedRows = {};
+  leaderboardSub$: Subscription;
+  pairingsHaveBeenCreated: boolean;
 
-  constructor(public stateService: StateService, public scorecardService: ScorecardService,
+  constructor(public stateService: StateService,
+              public scorecardService: ScorecardService,
               private pairingsService: PairingService) {
     this.isMobile = (window.innerWidth || document.body.clientWidth) < 600;
     this.isLargeScreen = (window.innerWidth || document.body.clientWidth) > 960;
@@ -44,15 +45,31 @@ export class LiveLeaderboardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.pairingsService.getByYear().subscribe();
+    this.leaderboardSub$ = this.scorecardService.teamScorecards$.pipe(
+      tap(cards => {
+        if (!cards) {
+          this.scorecardService.getLeaderboard().pipe(
+            switchMap(c => {
+              if (!c?.length) return this.pairingsService.getByYear().pipe(
+                filter(p => !!p && !!p.length),
+                tap(() => this.pairingsHaveBeenCreated = true)
+              );
+            })
+          ).subscribe();
+        }
+      }),
+      filter(c => !!c)
+    ).subscribe({
+      next: cards => {
+        const rankedCards = this.rankScorecards(cards);
+        if (!this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(rankedCards);
+        else this.leaderboard.connect().next(rankedCards);
+      }
+    });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    this.course = this.stateService.course;
-    if (this.teamScorecards) {
-      const rankedCards = this.rankScorecards(this.teamScorecards);
-      if (!this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(rankedCards);
-      else this.leaderboard.connect().next(rankedCards);
-    }
+  ngOnDestroy() {
+    this.leaderboardSub$.unsubscribe();
   }
 
   rankScorecards<T extends { rank: number, tied: boolean, totalNetScore: number }>(scorecards: Scorecard[], numPLaces = 0): Scorecard[] {
