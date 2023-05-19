@@ -2,46 +2,66 @@
 
 
 
-  <isag-scorecard-id-login *ngIf="!card; else enterScores"></isag-scorecard-id-login>
+  <isag-scorecard-id-login *ngIf="(!cardA && !cardB) || !currentHole; else enterScores"></isag-scorecard-id-login>
 
   <ng-template #enterScores>
 
     <mat-card class="enter-scores-card">
       <mat-toolbar>
-        <button mat-button color="accent">< Hole 18</button>
-        <div class="fill-remaining-space ">
-          Hole 1
+        <button mat-button color="accent" (click)="prevHole()">
+          <mat-icon>arrow_back_ios</mat-icon>
+          Hole {{currentHole != 1 ? currentHole - 1 : 18 }}
+        </button>
+        <div class="hole-header">
+          <div class="hole-number">Hole {{ currentHole }}</div>
+          <div class="hole-info">
+            <div>Par {{holes[currentHole].par}}</div>
+            <div>{{holes[currentHole].yardage}} yards</div>
+          </div>
         </div>
-        <button mat-button color="accent">Hole 2 ></button>
+        <button mat-button color="accent" (click)="nextHole()">
+          Hole {{currentHole != 18 ? currentHole + 1 : 1 }}
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
 
       </mat-toolbar>
 
-      <mat-card>
-        <div class="player-score-div">
-          <h3 class="name">{{playerAName }}</h3>
-          <mat-form-field>
 
-            <input matInput type="number" [(ngModel)]="card.playerAScores.grossScores[this.currentHole]" required
-                   aria-label="handicap" name="Score">
-          </mat-form-field>
-        </div>
-      </mat-card>
+      <mat-list>
+        <ng-container *ngFor="let card of [cardA, cardB]">
+          <mat-list-item>
+              <h3 class="name">{{card.team.playerA.name }}</h3>
+              <mat-form-field class="number-field" appearance="outline">
+                <input matInput type="number" [(ngModel)]="card.playerAScores.grossScores[this.currentHole]" required
+                       aria-label="handicap" name="Score" (ngModelChange)="checkIfCanSave()" step="1">
+              </mat-form-field>
+          </mat-list-item>
+          <mat-list-item>
+            <h3 class="name">{{ card.team.playerB.name }}</h3>
+            <mat-form-field class="number-field"  appearance="outline">
+              <input matInput type="number" [(ngModel)]="card.playerBScores.grossScores[this.currentHole]" required
+                     aria-label="handicap" name="Score" (ngModelChange)="checkIfCanSave()" step="1">
+            </mat-form-field>
+          </mat-list-item>
+        </ng-container>
 
-      <mat-card>
-        <div class="player-score-div">
-          <h3 class="name">{{playerBName }}</h3>
-          <mat-form-field>
-            <input matInput type="number" [(ngModel)]="card.playerBScores.grossScores[this.currentHole]" required
-                   aria-label="handicap" name="Score">
-          </mat-form-field>
-        </div>
-      </mat-card>
+      </mat-list>
 
+     <div class="alert-div">
+         <p>Enter <strong>GROSS</strong> scores!</p>
+     </div>
 
-
-      <div>
-        numbers and buttons
+      <div class="enter-score-buttons">
+        <button mat-raised-button (click)="clearScores()" class="right-space-15">
+          <mat-icon>clear</mat-icon>
+          Clear
+        </button>
+        <button mat-raised-button color="primary" (click)="saveScores()" [disabled]="!canSave" class="left-space-15">
+          <mat-icon>check</mat-icon>
+          Save Scores
+        </button>
       </div>
+
     </mat-card>
   </ng-template>
 

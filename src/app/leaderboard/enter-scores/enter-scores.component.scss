@@ -1,15 +1,82 @@
+@import '../../../media-queries';
+
 .enter-scores-card {
-  min-width: 200px;
+  padding: 5px;
+
+  min-width: 400px;
+
+  @include lt-md() {
+    min-width: unset;
+    width: 100%;
+  }
+
+  mat-toolbar {
+    padding: 0;
+    .hole-header {
+      flex: 1;
+      text-align: center;
+    }
+  }
+
   .player-score-div {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
   mat-form-field {
-    width: 75px;
+    width: 60px;
+    text-align: center;
   }
 }
 
 h3 {
   margin-bottom: 0;
+}
+
+
+
+mat-list-item {
+  border-bottom: solid 1px #ccc;
+  box-sizing: border-box;
+  align-items: center;
+  .name {
+    flex: 1;
+  }
+}
+
+
+.enter-score-buttons {
+  margin-top: 15px;
+  display: flex;
+  button {
+    flex: 1;
+  }
+}
+
+.hole-header {
+  line-height: unset;
+}
+.hole-number {
+  font-size: 18px;
+  line-height: 1em;
+}
+.hole-info {
+  margin-top: 10px;
+  line-height: 1em;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-around;
+  font-weight: 400;
+}
+
+.alert-div {
+  margin: 15px -5px;
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+  position: relative;
+  padding: .75rem 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

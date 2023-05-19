@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CalcuttaComponent } from './calcutta.component';
 
 const routes: Routes = [
-  { path: '', component: CalcuttaComponent, data: { title: 'Calcutta' } },
+  { path: '', component: CalcuttaComponent, title: 'Calcutta' },
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { NineHoles } from './nine-holes';
+import { Hole } from './hole';
 
 export class Course {
   _id: string;

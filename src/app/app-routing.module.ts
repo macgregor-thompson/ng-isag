@@ -10,8 +10,8 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent,
     children: [
-      { path: 'login', component: LoginComponent, data: { title: 'Login' } },
-      { path: 'signup', component: SignupComponent, data: { title: 'Signup' } },
+      { path: 'login', component: LoginComponent, title: 'Login' },
+      { path: 'signup', component: SignupComponent, title: 'Signup' },
       { path: '', loadChildren: () => import('./results/results.module').then(m => m.ResultsModule) },
       { path: 'leaderboard', loadChildren: () => import('./leaderboard/leaderboard.module').then(m => m.LeaderboardModule) },
       { path: 'teams', loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)  },

@@ -9,6 +9,8 @@ import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 import { tap } from 'rxjs/operators';
 import { Socket } from 'ngx-socket-io';
+import { subtract } from 'lodash-es';
+import { Score } from '../../_shared/models/scorecards/score';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class ScorecardService {
 
   scorecardApi = 'api/scorecards';
 
-  myTeamScorecard$ = new BehaviorSubject<Scorecard>(null);
+  myPairingScorecards$ = new BehaviorSubject<[Scorecard, Scorecard]>(null);
   scoringId = localStorage.getItem('scoringId');
 
   teamScorecards$ = new BehaviorSubject<Scorecard[]>(null);
@@ -33,9 +35,9 @@ export class ScorecardService {
       if (this.scoringId) this.getMyTeamScorecard().subscribe();
     });
 
-    this.socket.on('scorecardUpdated', (data) => {
+    this.socket.on('scoreCardUpdated', (data) => {
       // update leaderboard
-      console.log('fetch scorecard');
+      this.getLeaderboard().subscribe();
     });
 
     // on connect, re-fetch entire scorecard
@@ -65,17 +67,23 @@ export class ScorecardService {
   }
 
   @SpinnerAndCatchError
-  getMyTeamScorecard(scoringId = this.scoringId, year: number = this.stateService.year.year): Observable<Scorecard> {
-    return this.http.get<Scorecard>(`${this.scorecardApi}/${year}/MyTeamScorecard/${scoringId}`).pipe(
-      tap(card => {
-        if (!card) throw new Error('Can\'t find scorecard with that scoring ID');
-        this.myTeamScorecard$.next(card);
+  getMyTeamScorecard(scoringId = this.scoringId, year: number = this.stateService.year.year): Observable<[Scorecard, Scorecard]> {
+    return this.http.get<[Scorecard, Scorecard]>(`${this.scorecardApi}/${year}/MyPairingScorecards/${scoringId}`).pipe(
+      tap(cards => {
+        if (!cards) throw new Error('Can\'t find scorecard with that scoring ID');
+        this.myPairingScorecards$.next(cards);
         if (scoringId !== this.scoringId) {
           localStorage.setItem('scoringId', scoringId);
         }
       })
     );
   }
+
+  @SpinnerAndCatchError
+  updateScores(scorecardId: string, update: Partial<Scorecard>): Observable<Scorecard> {
+    return this.http.patch<Scorecard>(`${this.scorecardApi}/${scorecardId}/MyPairingScorecards`, update);
+  }
+
 
   @SpinnerAndCatchError
   getLeaderboard(year: number = this.stateService.year.year): Observable<Scorecard[]> {
@@ -103,9 +111,16 @@ export class ScorecardService {
     return this.http.patch<Scorecard>(`${this.scorecardApi}/${scorecardId}`, update);
   }
 
+
+
   @SpinnerAndCatchError
   delete(scorecardId: string): Observable<Scorecard> {
     return this.update(scorecardId, {deleted: true});
+  }
+
+  @SpinnerAndCatchError
+  updateShotsByHole(year: number = this.stateService.year.year): Observable<void> {
+    return this.http.post<void>(`${this.scorecardApi}/${year}/UpdateShotsByHole`, {});
   }
 
 

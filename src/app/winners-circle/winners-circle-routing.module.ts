@@ -4,8 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { WinnersCircleComponent } from './winners-circle.component';
 
 const routes: Routes = [
-  { path: '', component: WinnersCircleComponent, data: { title: 'Winners Circle' } },
-
+  { path: '', component: WinnersCircleComponent, title: 'Winners Circle' },
 ];
 
 @NgModule({

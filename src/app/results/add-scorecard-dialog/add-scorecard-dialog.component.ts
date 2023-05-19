@@ -23,7 +23,7 @@ export class AddScorecardDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddScorecardDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { course: Course, year: number, teams: Team[], card?: Scorecard },
               private scorecardService: ScorecardService) {
-    this.card = data.card ? data.card : new Scorecard(data.year, data.course._id);
+    this.card = data.card ? data.card : new Scorecard(data.year, data.course);
   }
 
   ngOnInit(): void {
@@ -79,9 +79,6 @@ export class AddScorecardDialogComponent implements OnInit {
     });
   }
 
-  setNetScore(hole: number): void {
-    if (!this.card.playerAScores.netScores[hole] || !this.card.playerBScores.netScores[hole]) return;
-    this.card.teamNetScores[hole] = Math.min(this.card.playerAScores.netScores[hole], this.card.playerBScores.netScores[hole]);
-  }
+
 
 }

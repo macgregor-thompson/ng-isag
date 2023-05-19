@@ -10,7 +10,7 @@
 
     <mat-nav-list [class.closed]="!opened">
       <a mat-list-item routerLink="leaderboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
-         (click)="closeSideNav()" *ngIf="!stateService.year.completed">
+         (click)="closeSideNav()" *ngIf="!stateService.year.scoresConfirmed">
         <mat-icon>scoreboard</mat-icon>
         <span class="lint-title">leaderboard</span>
       </a>

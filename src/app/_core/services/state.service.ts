@@ -18,6 +18,7 @@ export class StateService {
   isGod: boolean;
   isAdmin: boolean;
   year: Year;
+  year$: BehaviorSubject<Year>;
   pageTitle$: BehaviorSubject<string> = new BehaviorSubject('Results');
 
   course: Course;
@@ -27,6 +28,7 @@ export class StateService {
   constructor(private tokenService: TokenService,
               private appInitializerService: AppInitializerService) {
     this.year = this.appInitializerService.year;
+    this.year$ = new BehaviorSubject<Year>(this.year);
     if (this.tokenService.tokenHasNotExpired()) {
       this.initCurrentUser(JSON.parse(localStorage.getItem('user')));
     }
@@ -35,13 +37,9 @@ export class StateService {
     this.formulaRating = this.course.courseRating - this.course.frontNinePar - this.course.backNinePar;
   }
 
-  onRouteChange(data) {
-    if (data.hasOwnProperty('title')) this.setTitle(data.title);
-  }
-
   setTitle(title): void {
     this.pageTitle$.next(title || '');
-    document.title = `${title} | iSag`;
+   // document.title = `${title} | iSag`;
   }
 
   initCurrentUser(user: User): void {

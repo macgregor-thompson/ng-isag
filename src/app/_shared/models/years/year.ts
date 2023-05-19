@@ -6,7 +6,6 @@ export class Year {
   date: Date;
   current: boolean;
   public: boolean;
-  completed: boolean;
   aPlayerIds: string[];
   bPlayerIds: string[];
   deleted: true;
@@ -20,6 +19,7 @@ export class Year {
   thirdPlacePercentage = 10;
 
   handicapAllowance: number;
+  scoresConfirmed?: boolean;
 
   constructor(year) {
     this.year = year;

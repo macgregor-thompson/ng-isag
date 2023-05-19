@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RulesComponent } from './rules.component';
 
 const routes: Routes = [
-  { path: '', component: RulesComponent, data: { title: 'Rules' } },
+  { path: '', component: RulesComponent, title: 'Rules' },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],

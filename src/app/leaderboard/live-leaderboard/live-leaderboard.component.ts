@@ -19,7 +19,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]),
   ],
 })
-export class LiveLeaderboardComponent implements OnChanges {
+export class LiveLeaderboardComponent implements OnChanges{
   @Input() teamScorecards: Scorecard[];
 
   course: Course;
@@ -29,12 +29,18 @@ export class LiveLeaderboardComponent implements OnChanges {
   leaderboardColumns = ['position', 'team', 'totalNet',  'thru'];
   expandedScorecard: PlayerScorecard;
 
+  expandedRows = {};
+
   constructor(public stateService: StateService, public scorecardService: ScorecardService) {}
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log('changes', changes);
     this.course = this.stateService.course;
-    if (this.teamScorecards && !this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(this.teamScorecards);
-
+    if (this.teamScorecards) {
+      if (!this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(this.teamScorecards);
+      else this.leaderboard.connect().next(this.teamScorecards);
+    }
+   // if (this.teamScorecards) this.leaderboard = new MatTableDataSource<Scorecard>(this.teamScorecards);
   }
 
  /* addData() {

@@ -6,25 +6,27 @@
 }
 
 .container {
+ // flex-direction: row-reverse;
   @include lt-md() {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 }
 
 @include gt-sm() {
   .detail-view {
     position: fixed;
-    width: calc(40vw - 70px);
+    width: calc(30vw - 30px);
     overflow-y: auto;
     height: calc(100vh - 90px);
   }
 }
 
 .isag-card {
-  flex: 6;
+  flex: 2;
 }
 
 .detail-card {
+  //height: 0%;
   h3, h4 {
     margin: 25px 0 0;
     font-weight: 500;
@@ -327,4 +329,8 @@
 .large-text {
   font-weight: 700;
   font-size: 16px;
+}
+
+.isag-list {
+  min-height: 1px;
 }

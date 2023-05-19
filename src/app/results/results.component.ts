@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { animate, sequence, style, transition, trigger } from '@angular/animations';
 
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
@@ -20,6 +20,7 @@ import { AddScorecardDialogComponent } from './add-scorecard-dialog/add-scorecar
 import { ScorecardService } from '../_core/services/scorecard.service';
 import { PlayerScorecard } from '../_shared/models/scorecards/player-scorecard';
 import { Expense } from '../_shared/models/years/expense';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'isag-results',
@@ -37,7 +38,7 @@ import { Expense } from '../_shared/models/years/expense';
     ])
   ]
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent implements OnInit, OnDestroy {
   scorecards: Scorecard[];
   playerScorecards: PlayerScorecard[];
   teams: Team[];
@@ -47,6 +48,7 @@ export class ResultsComponent implements OnInit {
   secondPlaceTeam: Team;
   thirdPlaceTeam: Team;
   moneyForWinnings: number;
+  subscriptions = new Subscription();
 
 
   constructor(public yearService: YearService,
@@ -58,7 +60,11 @@ export class ResultsComponent implements OnInit {
               private scorecardService: ScorecardService) {}
 
   ngOnInit(): void {
-    this.getData();
+    this.subscriptions.add(this.stateService.year$.subscribe({ next: () => this.getData() }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   getData(year = this.stateService.year.year): void {
@@ -84,6 +90,10 @@ export class ResultsComponent implements OnInit {
 
   getCourse(year = this.stateService.year.year): void {
     this.courseService.getByYear(this.stateService.year.year).subscribe({ next: c => this.course = c });
+  }
+
+  updateScoresConfirmed(scoresConfirmed: boolean): void {
+    this.yearService.update(this.stateService.year._id, { scoresConfirmed }).subscribe();
   }
 
   setMoney(year: Year = this.stateService.year): void {

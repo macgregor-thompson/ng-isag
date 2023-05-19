@@ -7,6 +7,9 @@ export class TeamPlayer extends Player {
   playingHandicap: number;
   isPlusHandicap?: boolean;
 
+  // aggregation only
+  name: string;
+
   constructor(letter: 'A' | 'B') {
     super(letter, 'Player');
   }

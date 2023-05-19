@@ -35,12 +35,12 @@ export class Scorecard {
   course?: Course;
   team?: Team;
 
-  constructor(year: number, courseId: string) {
+  constructor(year: number, course: Course) {
     this.year = year;
-    this.courseId = courseId;
+    this.courseId = course._id;
     this.teamNetScores = new Scores();
-    this.playerAScores = new PlayerScores();
-    this.playerBScores = new PlayerScores();
+    this.playerAScores = new PlayerScores(course);
+    this.playerBScores = new PlayerScores(course);
 
   }
 }

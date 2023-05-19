@@ -346,3 +346,21 @@ mat-card-content {
 .last-place {
   background-color: pink!important;
 }
+
+.no-results {
+  p {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  p:first-of-type {
+    margin-bottom: 15px;
+  }
+
+}
+
+.confirm-scores {
+  margin-right: 16px;
+  font-size: 16px;
+  font-weight: 500;
+}

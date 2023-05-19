@@ -42,9 +42,10 @@ export class AppComponent {
         return route;
       }),
       filter(route => route.outlet === 'primary'),
-      mergeMap(route => route.data)
+      mergeMap(route => route.title),
+      filter(title => !!title)
     )
-      .subscribe(data => this.stateService.onRouteChange(data));
+      .subscribe(title => this.stateService.setTitle(title));
   }
 
 
