@@ -2,7 +2,7 @@
 
   <ng-container  *ngIf="stateService.isAdmin && leaderboard">
     <button mat-raised-button color="primary" *ngIf="pairingsHaveBeenCreated; else createParings"
-            (click)="scorecardService.createTeamScorecards(course._id).subscribe()">
+            (click)="scorecardService.createTeamScorecards().subscribe()">
       Create Team Scorecards
     </button>
     <ng-template #createParings>
