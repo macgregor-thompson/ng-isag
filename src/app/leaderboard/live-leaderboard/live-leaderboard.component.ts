@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 import { Course } from '../../_shared/models/course/course';
 import { StateService } from '../../_core/services/state.service';
@@ -6,6 +6,9 @@ import { ScorecardService } from '../../_core/services/scorecard.service';
 import { PlayerScorecard } from '../../_shared/models/scorecards/player-scorecard';
 import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { partition as _partition } from 'lodash-es';
+import { filter } from 'rxjs';
+import { PairingService } from '../../_core/services/pairing.service';
 
 @Component({
   selector: 'isag-live-leaderboard',
@@ -13,51 +16,69 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styleUrls: ['./live-leaderboard.component.scss'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
-export class LiveLeaderboardComponent implements OnChanges{
+export class LiveLeaderboardComponent implements OnInit, OnChanges {
   @Input() teamScorecards: Scorecard[];
 
   course: Course;
   leaderboard: MatTableDataSource<Scorecard>;
 
-  showScorecards: { [teamId: string]: boolean } = {};
-  leaderboardColumns = ['position', 'team', 'totalNet',  'thru'];
-  expandedScorecard: PlayerScorecard;
-
+  leaderboardColumns = ['position', 'team', 'playerA', 'playerB', 'totalNet', 'thru'];
+  isMobile: boolean;
+  isLargeScreen: boolean;
   expandedRows = {};
 
-  constructor(public stateService: StateService, public scorecardService: ScorecardService) {}
+  constructor(public stateService: StateService, public scorecardService: ScorecardService,
+              private pairingsService: PairingService) {
+    this.isMobile = (window.innerWidth || document.body.clientWidth) < 600;
+    this.isLargeScreen = (window.innerWidth || document.body.clientWidth) > 960;
+    if (this.isMobile) {
+      this.leaderboardColumns = ['position', 'team', 'totalNet', 'thru'];
+    } else this.leaderboardColumns = ['position', 'playerA', 'playerB', 'totalNet', 'thru'];
+  }
+
+  ngOnInit() {
+    this.pairingsService.getByYear().subscribe();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
     this.course = this.stateService.course;
     if (this.teamScorecards) {
-      if (!this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(this.teamScorecards);
-      else this.leaderboard.connect().next(this.teamScorecards);
+      const rankedCards = this.rankScorecards(this.teamScorecards);
+      if (!this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(rankedCards);
+      else this.leaderboard.connect().next(rankedCards);
     }
-   // if (this.teamScorecards) this.leaderboard = new MatTableDataSource<Scorecard>(this.teamScorecards);
   }
 
- /* addData() {
-    const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
-    this.dataSource.setData(this.dataToDisplay);
+  rankScorecards<T extends { rank: number, tied: boolean, totalNetScore: number }>(scorecards: Scorecard[], numPLaces = 0): Scorecard[] {
+    const [cards, noScoresYet] = _partition(scorecards, c => c.currentNetToPar);
+    if (!cards?.length) return cards;
+    for (let i = 0; i < cards.length; i++) {
+      cards[i].rank = i + 1 + numPLaces;
+      cards[i].tied = false;
+    }
+
+    for (let k = 0; k < cards.length; k++) {
+      for (let h = 1; h < cards.length + 1; h++) {
+        if (cards[k + h] !== undefined) {
+          if (cards[k + h].tied !== true) {
+            if (cards[k].currentNetToPar === cards[h + k].currentNetToPar) {
+              cards[k].rank = k + 1 + numPLaces;
+              cards[h + k].rank = k + 1 + numPLaces;
+              cards[k].tied = true;
+              cards[h + k].tied = true;
+            }
+          }
+        }
+      }
+    }
+    noScoresYet.forEach(c => c.rank = c.teeTime as unknown as number);
+    return [...cards, ...noScoresYet];
   }
-
-  removeData() {
-    this.dataToDisplay = this.dataToDisplay.slice(0, -1);
-    this.dataSource.setData(this.dataToDisplay);
-  }*/
-
-
-  togglePlayerViews(teamId: string): void {
-    this.showScorecards[teamId] = !this.showScorecards[teamId];
-  }
-
 
 }

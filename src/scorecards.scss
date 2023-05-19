@@ -1,0 +1,60 @@
+
+
+.birdie {
+  height: 21px;
+  width: 22px;
+  border: 2px solid red;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.eagle {
+  height: 21px;
+  width: 22px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid red;
+  background-color: red;
+  color: #fff;
+}
+
+.double-eagle {
+  height: 21px;
+  width: 22px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  border:  2px solid $isag-blue;
+  background-color: $isag-blue;
+  color: #fff;
+}
+
+
+.bogie {
+  height: 21px;
+  width: 22px;
+  border: 2px solid #000;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.double-bogie {
+  height: 18px;
+  width: 18px;
+  border: 4px double #000;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.2rem;
+}
+
+.other {
+  height: 21px;
+  width: 22px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #000;
+  background-color: #000;
+  color: #fff;
+}

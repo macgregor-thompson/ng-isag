@@ -4,18 +4,22 @@
     </div>
   </th>
 
-  <td *ngFor="let hole of frontNine | keyValue">
+  <td *ngFor="let hole of frontNine | keyValue" class="score-td">
     <div class="score" [ngClass]="scoreClass[hole?.key]">
       {{scores.grossScores[hole?.key]}}
     </div>
+    <div *ngIf="scores.shotsByHole[hole?.key]" class="stoke-indicator"
+         [class.negative]="scores.shotsByHole[hole?.key] < 0">*</div>
   </td>
 
   <th>{{scores.frontNineGrossScore}}</th>
 
-  <td *ngFor="let hole of backNine | keyValue">
+  <td *ngFor="let hole of backNine | keyValue" class="score-td">
     <div class="score" [ngClass]="scoreClass[hole?.key]">
       {{scores.grossScores[hole?.key]}}
     </div>
+    <div *ngIf="scores.shotsByHole[hole?.key]" class="stoke-indicator"
+         [class.negative]="scores.shotsByHole[hole?.key] < 0">*</div>
   </td>
 
   <th>{{scores.backNineGrossScore}}</th>

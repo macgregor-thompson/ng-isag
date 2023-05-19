@@ -30,6 +30,7 @@ export class Scorecard {
   // for active leaderboard
   currentNetToPar: number;
   thru: number;
+  teeTime?: string;
 
   // aggregation
   course?: Course;

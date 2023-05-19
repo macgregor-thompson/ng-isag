@@ -4,6 +4,7 @@ import { Pairing } from '../../models/pairing';
 import { PairingService } from '../../../_core/services/pairing.service';
 import { StateService } from '../../../_core/services/state.service';
 import { CourseService } from '../../../_core/services/course.service';
+import { ScorecardService } from '../../../_core/services/scorecard.service';
 
 @Component({
   selector: 'isag-pairings',
@@ -17,7 +18,7 @@ export class PairingsComponent implements OnInit, OnChanges {
   pairingsData: MatTableDataSource<Pairing>;
   columns = ['teeTime', 'aPlayer', 'aPlayerHandicap', 'bPlayer', 'bPlayerHandicap'];
 
-  constructor(public pairingService: PairingService, public stateService: StateService) {}
+  constructor(public pairingService: PairingService, public stateService: StateService, private scorecardService: ScorecardService) {}
 
   ngOnInit() {
     if (!this.pairings) {
@@ -35,8 +36,9 @@ export class PairingsComponent implements OnInit, OnChanges {
   }
 
 
-  updateTeeTime({ _id, teeTime }: Pairing) {
+  updateTeeTime({ _id, teeTime, teamAId, teamBId }: Pairing) {
     this.pairingService.update(_id, { teeTime }).subscribe();
+    this.scorecardService.updateTeeTimes({ teamIds: [teamAId, teamBId], teeTime }).subscribe();
   }
 
 }

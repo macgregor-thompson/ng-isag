@@ -84,6 +84,11 @@ export class ScorecardService {
     return this.http.patch<Scorecard>(`${this.scorecardApi}/${scorecardId}/MyPairingScorecards`, update);
   }
 
+  @SpinnerAndCatchError
+  updateTeeTimes(update: { teamIds: string[]; teeTime: string }, year: number = this.stateService.year.year): Observable<Scorecard> {
+    return this.http.patch<Scorecard>(`${this.scorecardApi}/${year}/UpdateTeeTimes`, update);
+  }
+
 
   @SpinnerAndCatchError
   getLeaderboard(year: number = this.stateService.year.year): Observable<Scorecard[]> {

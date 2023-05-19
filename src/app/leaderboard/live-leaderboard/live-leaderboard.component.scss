@@ -4,6 +4,7 @@
 
 table {
   width: 100%;
+  font-size: 16px;
 }
 
 .team-row {
@@ -40,4 +41,40 @@ tr.team-row:not(.example-expanded-row):active {
 .team-names-th {
   position: sticky;
   left: 68px;
+}
+
+
+
+.center-align {
+  text-align: center;
+}
+
+
+tr.mat-row {
+//  height: 50px;
+}
+
+.not-mobile {
+  .player-names {
+    align-items: center;
+    font-size: 16px;
+    .name {
+      display: flex;
+      align-items: center;
+    }
+  }
+  th.mat-header-cell {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+}
+
+.rank-cell {
+  min-width: 50px
+}
+
+.larger-text {
+  font-size: 20px;
+  font-weight: 500;
 }

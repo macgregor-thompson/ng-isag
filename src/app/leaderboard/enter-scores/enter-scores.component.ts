@@ -7,6 +7,7 @@ import { flatMap as _flatMap, omitBy as _omitBy, isNil as _isNil } from 'lodash'
 import { Hole } from '../../_shared/models/course/hole';
 import { Scores } from '../../_shared/models/scorecards/scores';
 import { Score } from '../../_shared/models/scorecards/score';
+import { forEach } from 'lodash-es';
 
 @Component({
   selector: 'isag-enter-scores',
@@ -37,7 +38,7 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
           [this.cardA, this.cardB] = cards;
           this.setCurrentHole();
           // set this appropriately
-          this.currentHole = 1;
+          this.currentHole = this.cardA.thru + 1 || 1;
           this.checkIfCanSave();
         }
       })
@@ -72,11 +73,14 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
     if (this.currentHole === 1) this.currentHole = 18;
     else this.currentHole--;
     this.checkIfCanSave();
-
   }
 
   clearScores(): void {
-
+    this.cardA.playerAScores.grossScores[this.currentHole] = null;
+    this.cardA.playerBScores.grossScores[this.currentHole] = null;
+    this.cardB.playerAScores.grossScores[this.currentHole] = null;
+    this.cardB.playerBScores.grossScores[this.currentHole] = null;
+    this.canSave = false;
   }
 
   saveScores(): void {
@@ -84,6 +88,7 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
     this.setNetScores(this.cardB);
     this.scorecardService.updateScores(this.cardA._id, this.cardA).subscribe();
     this.scorecardService.updateScores(this.cardB._id, this.cardB).subscribe();
+    this.nextHole();
   }
 
   setNetScores(card: Scorecard): void {
@@ -147,6 +152,19 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
       if (card.playerAScores.netScores[h] && card.playerBScores.netScores[h])
         card.teamNetScores[h] = Math.min(card.playerAScores.netScores[h], card.playerBScores.netScores[h]);
     });
+
+    const nonNullScores = _omitBy(card.teamNetScores, _isNil);
+    let thruPar = 0;
+    if (nonNullScores) {
+      card.thru = Math.max(...Object.keys(nonNullScores).map(k => +k));
+      thruPar = Object.keys(nonNullScores).reduce((acc, key) => {
+        acc += this.holes[key].par;
+        return acc;
+      }, 0);
+    }
+    console.log('current net to par', this.sumHoles(card.teamNetScores, 1, 18), thruPar);
+    card.currentNetToPar = this.sumHoles(card.teamNetScores, 1, 18) - thruPar;
+
 
     const frontNineBCompleted = frontNine.every(h => !!card.playerBScores.netScores[h]);
     const backNineBCompleted = backNine.every(h => !!card.playerBScores.netScores[h]);

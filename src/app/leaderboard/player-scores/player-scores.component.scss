@@ -1,0 +1,14 @@
+@import '../../../colors';
+
+.score-td {
+  position: relative;
+}
+.stoke-indicator {
+  position: absolute;
+  top: -3px;
+  right: 1px;
+  font-size: 16px;
+  &.negative {
+    color: $isag-red;
+  }
+}
