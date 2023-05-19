@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
+import { Course } from '../../_shared/models/course/course';
 import { StateService } from '../../_core/services/state.service';
 import { ScorecardService } from '../../_core/services/scorecard.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,6 +23,7 @@ import { switchMap, tap } from 'rxjs/operators';
   ],
 })
 export class LiveLeaderboardComponent implements OnInit, OnDestroy {
+  course: Course;
   leaderboard: MatTableDataSource<Scorecard>;
 
   leaderboardColumns = ['position', 'team', 'playerA', 'playerB', 'totalNet', 'thru'];
@@ -34,6 +36,7 @@ export class LiveLeaderboardComponent implements OnInit, OnDestroy {
   constructor(public stateService: StateService,
               public scorecardService: ScorecardService,
               private pairingsService: PairingService) {
+    this.course = this.stateService.course;
     this.isMobile = (window.innerWidth || document.body.clientWidth) < 600;
     this.isLargeScreen = (window.innerWidth || document.body.clientWidth) > 960;
     if (this.isMobile) {
