@@ -3,7 +3,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Pairing } from '../../models/pairing';
 import { PairingService } from '../../../_core/services/pairing.service';
 import { StateService } from '../../../_core/services/state.service';
-import { CourseService } from '../../../_core/services/course.service';
 import { ScorecardService } from '../../../_core/services/scorecard.service';
 
 @Component({
@@ -18,7 +17,9 @@ export class PairingsComponent implements OnInit, OnChanges {
   pairingsData: MatTableDataSource<Pairing>;
   columns = ['teeTime', 'aPlayer', 'aPlayerHandicap', 'bPlayer', 'bPlayerHandicap'];
 
-  constructor(public pairingService: PairingService, public stateService: StateService, private scorecardService: ScorecardService) {}
+  constructor(public pairingService: PairingService, public stateService: StateService, private scorecardService: ScorecardService) {
+   if (this.stateService.isAdmin) this.columns = ['teeTime', 'scoringId', 'aPlayer', 'aPlayerHandicap', 'bPlayer', 'bPlayerHandicap'];
+  }
 
   ngOnInit() {
     if (!this.pairings) {
