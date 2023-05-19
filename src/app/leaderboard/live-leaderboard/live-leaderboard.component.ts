@@ -45,28 +45,18 @@ export class LiveLeaderboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.pairingsService.getByYear().subscribe();
-    this.leaderboardSub$ = this.scorecardService.teamScorecards$.pipe(
-      tap(cards => {
-        if (!cards) {
-          this.scorecardService.getLeaderboard().pipe(
-            switchMap(c => {
-              if (!c?.length) return this.pairingsService.getByYear().pipe(
-                filter(p => !!p && !!p.length),
-                tap(() => this.pairingsHaveBeenCreated = true)
-              );
-            })
-          ).subscribe();
-        }
-      }),
-      filter(c => !!c)
-    ).subscribe({
-      next: cards => {
-        const rankedCards = this.rankScorecards(cards);
-        if (!this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(rankedCards);
-        else this.leaderboard.connect().next(rankedCards);
-      }
-    });
+   setTimeout(() => {
+     this.pairingsService.getByYear().subscribe();
+     this.leaderboardSub$ = this.scorecardService.teamScorecards$.pipe(
+       filter(c => !!c)
+     ).subscribe({
+       next: cards => {
+         const rankedCards = this.rankScorecards(cards);
+         if (!this.leaderboard) this.leaderboard = new MatTableDataSource<Scorecard>(rankedCards);
+         else this.leaderboard.connect().next(rankedCards);
+       }
+     });
+   });
   }
 
   ngOnDestroy() {
