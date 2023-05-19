@@ -1,3 +1,4 @@
+@import '../../../../colors';
 .row {
   display: flex;
   align-items: center;
@@ -22,4 +23,10 @@
 
 :host {
   flex: 1;
+}
+
+.playing-handicap {
+  font-size: 18px;
+  font-weight: 500;
+  color: $isag-green;
 }

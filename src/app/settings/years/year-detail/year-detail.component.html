@@ -170,7 +170,8 @@
       <mat-toolbar class="header-btns">
         <h4 class="flex1 name-header">B Players</h4>
         <h4 class="handicap-header">Handicap</h4>
-        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">C. H.</h4>
+        <h4 class="handicap-header">C. H.</h4>
+        <h4 class="handicap-header" [class.header-right-margin]="stateService.isAdmin">P. H.</h4>
       </mat-toolbar>
       <mat-list id="bPlayers" class="isag-list" cdkDropList [cdkDropListData]="bPlayers"
                 (cdkDropListDropped)="dropPlayer($event)">

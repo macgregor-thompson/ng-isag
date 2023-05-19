@@ -772,13 +772,13 @@ button {
 
 @include md() {
   .player-list:last-of-type {
-    .handicap-header {
+  /*  .handicap-header {
       margin-right: 8px;
     }
 
     .handicap {
       margin-right: 13px;
-    }
+    }*/
   }
 }
 
