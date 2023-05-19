@@ -17,9 +17,6 @@
         <span *ngIf="editing"><mat-icon>save</mat-icon> SAVE</span>
       </button>
     </mat-card-header>
-
-    <isag-pairings *ngIf="pairings" [pairings]="pairings"></isag-pairings>
-
     <ng-container *ngIf="editing || !pairings?.length">
       <mat-toolbar class="header-btns">
         <h4 class="flex1 a-player-header hide-xs">A Players</h4>
@@ -171,4 +168,7 @@
       </mat-card-actions>
     </mat-card-footer>
   </mat-card>
+
+  <isag-pairings *ngIf="pairings" [pairings]="pairings"></isag-pairings>
+
 </div>

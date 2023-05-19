@@ -1,83 +1,86 @@
-<table mat-table [dataSource]="pairingsData" class="pairings-table">
+<mat-card class="isag-card">
+  <table mat-table [dataSource]="pairingsData" class="pairings-table">
 
-  <ng-container matColumnDef="teeTime">
-    <th mat-header-cell *matHeaderCellDef class="center-align"> Tee Time</th>
-    <td mat-cell *matCellDef="let pairing" class="center-align">
-      <mat-form-field *ngIf="stateService.isAdmin; else teeTime" floatLabel="never">
-        <input matInput [(ngModel)]="pairing.teeTime" type="time" required
-               (ngModelChange)="updateTeeTime(pairing)">
-      </mat-form-field>
-      <ng-template #teeTime>{{pairing.teeTime | twelveHour }}</ng-template>
-  </ng-container>
+    <ng-container matColumnDef="teeTime">
+      <th mat-header-cell *matHeaderCellDef class="center-align"> Tee Time</th>
+      <td mat-cell *matCellDef="let pairing let last = last;" class="center-align" [class.last]="last">
+        <mat-form-field *ngIf="stateService.isAdmin; else teeTime" floatLabel="never">
+          <input matInput [(ngModel)]="pairing.teeTime" type="time" required
+                 (ngModelChange)="updateTeeTime(pairing)">
+        </mat-form-field>
+        <ng-template #teeTime>{{pairing.teeTime | twelveHour }}</ng-template>
+    </ng-container>
 
-  <ng-container matColumnDef="aPlayer">
-    <th mat-header-cell *matHeaderCellDef> A Players</th>
-    <td mat-cell *matCellDef="let pairing">
-      <div class="pairing-cell">
-        <div class="teamA player-div">
-          {{pairing.teamA.playerA.firstName}} {{pairing.teamA.playerA.lastName}}
-          <isag-winner [player]="pairing.teamA.playerA"></isag-winner>
+    <ng-container matColumnDef="aPlayer">
+      <th mat-header-cell *matHeaderCellDef> A Players</th>
+      <td mat-cell *matCellDef="let pairing let last = last;" [class.last]="last">
+        <div class="pairing-cell">
+          <div class="teamA player-div">
+            {{pairing.teamA.playerA.firstName}} {{pairing.teamA.playerA.lastName}}
+            <isag-winner [player]="pairing.teamA.playerA"></isag-winner>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="teamB player-div">
+            {{pairing.teamB.playerA.firstName}} {{pairing.teamB.playerA.lastName}}
+            <isag-winner [player]="pairing.teamB.playerA"></isag-winner>
+          </div>
         </div>
-        <mat-divider></mat-divider>
-        <div class="teamB player-div">
-          {{pairing.teamB.playerA.firstName}} {{pairing.teamB.playerA.lastName}}
-          <isag-winner [player]="pairing.teamB.playerA"></isag-winner>
-        </div>
-      </div>
-    </td>
-  </ng-container>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="aPlayerHandicap">
-    <th mat-header-cell *matHeaderCellDef class="center-align"> Handicap</th>
-    <td mat-cell *matCellDef="let pairing">
-      <div class="pairing-cell center-align">
-        <div class="teamA">
-          <span matPrefix *ngIf="pairing.teamA.playerA.playingHandicap > 0">+</span>{{pairing.teamA.playerA.playingHandicap | absoluteValue}}
+    <ng-container matColumnDef="aPlayerHandicap">
+      <th mat-header-cell *matHeaderCellDef class="center-align"> Handicap</th>
+      <td mat-cell *matCellDef="let pairing let last = last;" [class.last]="last">
+        <div class="pairing-cell center-align">
+          <div class="teamA">
+            <span matPrefix *ngIf="pairing.teamA.playerA.playingHandicap > 0">+</span>{{pairing.teamA.playerA.playingHandicap | absoluteValue}}
+          </div>
+          <mat-divider></mat-divider>
+          <div class="teamB">
+            <span matPrefix *ngIf="pairing.teamB.playerA.playingHandicap > 0">+</span>{{pairing.teamB.playerA.playingHandicap | absoluteValue}}
+          </div>
         </div>
-        <mat-divider></mat-divider>
-        <div class="teamB">
-          <span matPrefix *ngIf="pairing.teamB.playerA.playingHandicap > 0">+</span>{{pairing.teamB.playerA.playingHandicap | absoluteValue}}
-        </div>
-      </div>
-    </td>
-  </ng-container>
+      </td>
+    </ng-container>
 
 
-  <ng-container matColumnDef="bPlayer">
-    <th mat-header-cell *matHeaderCellDef> B Players</th>
-    <td mat-cell *matCellDef="let pairing">
-      <div class="pairing-cell">
-        <div class="teamA player-div">
-          {{pairing.teamA.playerB.firstName}} {{pairing.teamA.playerB.lastName}}
-          <isag-winner [player]="pairing.teamA.playerB"></isag-winner>
-        </div>
-        <mat-divider></mat-divider>
-        <div class="teamB player-div">
-          {{pairing.teamB.playerB.firstName}} {{pairing.teamB.playerB.lastName}}
-          <isag-winner [player]="pairing.teamB.playerB"></isag-winner>
-        </div>
+    <ng-container matColumnDef="bPlayer">
+      <th mat-header-cell *matHeaderCellDef> B Players</th>
+      <td mat-cell *matCellDef="let pairing let last = last;" [class.last]="last">
+        <div class="pairing-cell">
+          <div class="teamA player-div">
+            {{pairing.teamA.playerB.firstName}} {{pairing.teamA.playerB.lastName}}
+            <isag-winner [player]="pairing.teamA.playerB"></isag-winner>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="teamB player-div">
+            {{pairing.teamB.playerB.firstName}} {{pairing.teamB.playerB.lastName}}
+            <isag-winner [player]="pairing.teamB.playerB"></isag-winner>
+          </div>
 
-      </div>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="bPlayerHandicap">
-    <th mat-header-cell *matHeaderCellDef class="center-align"> Handicap</th>
-    <td mat-cell *matCellDef="let pairing">
-      <div class="pairing-cell center-align">
-        <div class="teamA">
-          <span matPrefix *ngIf="pairing.teamA.playerB.playingHandicap > 0">+</span>
-          {{pairing.teamA.playerB.playingHandicap | absoluteValue}}
-      </div>
-        <mat-divider></mat-divider>
-        <div class="teamB">
-          <span matPrefix *ngIf="pairing.teamB.playerB.playingHandicap > 0">+</span>
-          {{pairing.teamB.playerB.playingHandicap | absoluteValue}}
         </div>
-      </div>
-    </td>
-  </ng-container>
+      </td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="columns"></tr>
-  <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-</table>
+    <ng-container matColumnDef="bPlayerHandicap">
+      <th mat-header-cell *matHeaderCellDef class="center-align"> Handicap</th>
+      <td mat-cell *matCellDef="let pairing; let last = last;" [class.last]="last">
+        <div class="pairing-cell center-align">
+          <div class="teamA">
+            <span matPrefix *ngIf="pairing.teamA.playerB.playingHandicap > 0">+</span>
+            {{pairing.teamA.playerB.playingHandicap | absoluteValue}}
+          </div>
+          <mat-divider></mat-divider>
+          <div class="teamB">
+            <span matPrefix *ngIf="pairing.teamB.playerB.playingHandicap > 0">+</span>
+            {{pairing.teamB.playerB.playingHandicap | absoluteValue}}
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+  </table>
+
+</mat-card>

@@ -29,9 +29,7 @@ tr.team-row:not(.example-expanded-row):active {
 }
 
 .scorecard-detail {
-  overflow: hidden;
-  display: flex;
-
+  overflow: scroll;
 }
 
 .detail-td {

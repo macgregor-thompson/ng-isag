@@ -39,8 +39,7 @@
         <td mat-cell *matCellDef="let scorecard" [attr.colspan]="leaderboardColumns.length" class="detail-td">
           <div class="scorecard-detail"
                [@detailExpand]="scorecard == expandedScorecard ? 'expanded' : 'collapsed'">
-            <isag-course-card [course]="course" [showNet]="true">
-
+            <isag-course-card [course]="course" [showNet]="true" *ngIf="scorecard == expandedScorecard">
               <tr isag-team-scores
                   [netScores]="scorecard.teamNetScores"
                   [frontNineNetScore]="scorecard.frontNineNetScore"

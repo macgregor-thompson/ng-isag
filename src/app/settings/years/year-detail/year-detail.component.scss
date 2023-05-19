@@ -44,34 +44,10 @@ mat-toolbar {
   margin: 30px 0 0;
 }
 
-.player-columns {
-  @include md() {
-    display: flex;
-    flex-direction: row;
-    .player-list {
-      margin-top: 15px;
-      flex: 1;
-      &:first-of-type {
-        .handicap-header {
-          margin-right: 24px;
-        }
-        .isag-list {
-          margin-right: 15px;
-        }
-      }
-      &:last-of-type {
-        .name-header {
-          margin-left: 44px;
-        }
-        .isag-list {
-          margin-left: 15px;
-        }
-        .handicap {
-          margin-right: 5px !important;
-        }
-      }
-    }
-  }
+.player-list {
+  margin-top: 15px;
+  flex: 1;
+
 }
 
 @include lt-md() {

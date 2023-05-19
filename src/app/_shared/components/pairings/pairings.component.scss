@@ -1,4 +1,5 @@
 .pairings-table {
+  padding-bottom: 5px !important;;
   width: 100%;
   td.mat-cell:first-of-type, th.mat-header-cell:first-of-type {
     padding-left: 0;
@@ -6,10 +7,13 @@
   th.mat-header-cell, td.mat-cell {
     border-bottom-width: 5px;
   }
-  td.mat-cell {
-    //padding: 20px 0;
+
+  td.last {
+    border-bottom-width: 0;
   }
+
 }
+
 .pairing-cell {
   div {
     margin: 10px 0;
@@ -28,4 +32,8 @@
 
 .center-align {
   text-align: center;
+}
+
+mat-card.pairings-table {
+  padding: 5px;
 }

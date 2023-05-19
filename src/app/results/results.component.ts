@@ -61,20 +61,20 @@ export class ResultsComponent implements OnInit {
     this.getData();
   }
 
-  getData(): void {
-    this.getTeams();
-    this.getCourse();
-    this.getScorecards();
+  getData(year = this.stateService.year.year): void {
+    this.getTeams(year);
+    this.getCourse(year);
+    this.getScorecards(year);
   }
 
-  getScorecards(): void {
-    this.scorecardService.getByYear(this.stateService.year.year).subscribe({
+  getScorecards(year = this.stateService.year.year): void {
+    this.scorecardService.getByYear(year).subscribe({
       next: scorecards => this.rankAllCards(scorecards)
     });
   }
 
-  getTeams(): void {
-    this.teamService.getByYear(this.stateService.year.year).subscribe({
+  getTeams(year = this.stateService.year.year): void {
+    this.teamService.getByYear(year).subscribe({
       next: t => {
         this.teams = t;
         this.setMoney();
@@ -82,7 +82,7 @@ export class ResultsComponent implements OnInit {
     });
   }
 
-  getCourse(): void {
+  getCourse(year = this.stateService.year.year): void {
     this.courseService.getByYear(this.stateService.year.year).subscribe({ next: c => this.course = c });
   }
 

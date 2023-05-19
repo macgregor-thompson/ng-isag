@@ -1,6 +1,10 @@
 @import "../../media-queries";
 @import "../../colors";
 
+:host {
+  flex: 1;
+}
+
 .container {
   @include lt-md() {
     flex-direction: column;
@@ -318,4 +322,9 @@
 
 .mat-chip.mat-standard-chip.mat-chip-selected.mat-other {
   background-color: $isag-yellow;
+}
+
+.large-text {
+  font-weight: 700;
+  font-size: 16px;
 }

@@ -129,8 +129,7 @@
   <div class="players-wrapper">
     <h4 class="checklist-header flex1">{{year.year}} Players</h4>
 
-    <isag-handicap-allowance class="right-space-15"
-                             (allowanceUpdate)="updatePlayingHandicaps()"></isag-handicap-allowance>
+    <isag-handicap-allowance (allowanceUpdate)="updatePlayingHandicaps()"></isag-handicap-allowance>
 
     <isag-player-multiple-select *ngIf="stateService.isAdmin"
                                  [playersToFilterOut]="allPlayers"
@@ -182,7 +181,7 @@
                [cdkDragHandleDisabled]="player.handicap !== aPlayers[aPlayers.length - 1].handicap">
             <mat-icon>drag_indicator</mat-icon>
           </div>
-          <isag-player [index]="i + 1"
+          <isag-player [index]="i + 1 + aPlayers?.length"
                        [player]="player"
                        (handicapUpdate)="updateHandicap(player, $event)"
                        [showCourseHandicap]="true"></isag-player>
