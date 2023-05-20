@@ -54,7 +54,7 @@
           <ng-container *ngIf="stateService.isAdmin">
             <mat-form-field floatLabel="never" class="bid-input">
               <span matPrefix>$&nbsp;</span>
-              <input matInput type="number" placeholder="Winning bid" [(ngModel)]="team.winningBid"
+              <input matInput type="number" placeholder="" [(ngModel)]="team.winningBid"
                      aria-label="bid" name="bid"
                      (ngModelChange)="updateSub.next({teamId: team._id, update: {winningBid: team.winningBid}}); updatePrizeMoney()"
                      [readonly]="!stateService.isAdmin">
