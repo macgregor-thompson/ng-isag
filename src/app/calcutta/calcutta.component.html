@@ -1,88 +1,4 @@
 <div class="container calcutta-page">
-<!--  <mat-card class="detail-card">
-    <mat-card-header>
-      <mat-card-title>Money</mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-
-      <h4>Winnings</h4>
-      <mat-list class="isag-list money-list">
-        <mat-list-item class="list-item no-hover" [disableRipple]="true">
-          <div class="money-title">1<sup>st</sup> Place:</div>
-          <div class="money-info">
-            <mat-chip-list>
-              <mat-chip selected class="first-place-chip">
-                {{ (totalCalcuttaMoney - totalExpenses - extraPrizes) * stateService.year.firstPlacePercentage / 100 | currency}}
-              </mat-chip>
-            </mat-chip-list>
-          </div>
-        </mat-list-item>
-        <mat-list-item class="list-item no-hover" [disableRipple]="true">
-          <div class="money-title">2<sup>nd</sup> Place:</div>
-          <div class="money-info">
-            <mat-chip-list>
-              <mat-chip selected color="other" class="second-place-chip">
-                {{(totalCalcuttaMoney - totalExpenses - extraPrizes) * stateService.year.secondPlacePercentage / 100 | currency}}
-              </mat-chip>
-            </mat-chip-list>
-          </div>
-        </mat-list-item>
-        <mat-list-item class="list-item no-hover" [disableRipple]="true">
-          <div class="money-title">3<sup>rd</sup> Place:</div>
-          <div class="money-info">
-            <mat-chip-list>
-              <mat-chip selected color="accent" class="third-place-chip">
-                {{(totalCalcuttaMoney - totalExpenses - extraPrizes) * stateService.year.thirdPlacePercentage / 100 | currency}}
-              </mat-chip>
-            </mat-chip-list>
-          </div>
-        </mat-list-item>
-        <mat-list-item class="list-item no-hover" [disableRipple]="true">
-          <div class="money-title">Total Payout:</div>
-          <div class="money-info large-text"> {{ totalCalcuttaMoney - totalExpenses | currency }}</div>
-        </mat-list-item>
-      </mat-list>
-
-      <ng-container *ngIf="stateService.year.prizes.length">
-        <h4>Prizes</h4>
-        <mat-list class="isag-list money-list">
-          <mat-list-item class="list-item no-hover" [disableRipple]="true"
-                         *ngFor="let prize of stateService.year.prizes">
-            <div class="money-title">{{ prize.name }}:</div>
-            <div class="money-info">{{ prize.cost | currency }}</div>
-          </mat-list-item>
-        </mat-list>
-      </ng-container>
-
-
-      <h4>Money Raised</h4>
-      <mat-list class="isag-list money-list">
-        &lt;!&ndash;<mat-list-item class="list-item no-hover" [disableRipple]="true">
-          <div class="money-title">Dues:</div>
-          <div class="money-info"> {{ playerDues | currency }}</div>
-        </mat-list-item>&ndash;&gt;
-        <mat-list-item class="list-item no-hover" [disableRipple]="true">
-          <div class="money-title">Calcutta Total:</div>
-          <div class="money-info"> {{ totalCalcuttaMoney | currency }}</div>
-        </mat-list-item>
-      </mat-list>
-
-
-      <ng-container *ngIf="stateService.year.expenses?.length">
-        <h4>Expenses <small>(not covered by dues)</small></h4>
-        <mat-list class="isag-list money-list">
-          <mat-list-item class="list-item no-hover" [disableRipple]="true"
-                         *ngFor="let expense of stateService.year.expenses">
-            <div class="money-title">{{ expense.name }}:</div>
-            <div class="money-info">{{ expense.cost | currency }}</div>
-          </mat-list-item>
-        </mat-list>
-      </ng-container>
-
-    </mat-card-content>
-
-  </mat-card>-->
   <mat-card class="isag-card calcutta-card" [class.not-admin]="!stateService.isAdmin">
     <mat-card-header>
       <mat-card-title class="PageHeader">Calcutta</mat-card-title>
@@ -112,8 +28,20 @@
         <div class="team-number">{{index + 1}}</div>
 
        <div class="players">
-          <div>{{team.playerA.firstName + ' ' + team.playerA.lastName}}</div>
-          <div>{{team.playerB.firstName + ' ' + team.playerB.lastName}}</div>
+         <div class="calcutta-player">
+           <div>{{team.playerA.firstName + ' ' + team.playerA.lastName}}</div>
+           <div class="playing-handicap">
+             <span matPrefix *ngIf="team.playerA?.playingHandicap > 0">+</span>
+             {{ team.playerA?.playingHandicap | absoluteValue  }}
+           </div>
+         </div>
+         <div class="calcutta-player">
+           <div>{{team.playerB.firstName + ' ' + team.playerB.lastName}}</div>
+           <div class="playing-handicap">
+             <span matPrefix *ngIf="team.playerB?.playingHandicap > 0">+</span>
+             {{ team.playerB?.playingHandicap | absoluteValue  }}
+           </div>
+         </div>
         </div>
 
         <div class="bidding">
