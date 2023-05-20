@@ -108,7 +108,7 @@ export class TeamsComponent implements OnInit {
       t.playerA.playingHandicap = -Math.round(-t.playerA.courseHandicap * this.stateService.year.handicapAllowance / 100);
 
       t.playerB.courseHandicap = -Math.round(-t.playerB.handicap * slope + rating);
-      t.playerB.playingHandicap = -Math.round(-t.playerB.handicap * this.stateService.year.handicapAllowance / 100);
+      t.playerB.playingHandicap = -Math.round(-t.playerB.courseHandicap * this.stateService.year.handicapAllowance / 100);
     });
   }
 
