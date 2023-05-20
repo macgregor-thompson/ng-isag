@@ -31,7 +31,7 @@
         <ng-container *ngIf="!editing">
           <h4 class="handicap">Handicap</h4>
           <h4 class="handicap">C. H.</h4>
-          <h4 class="handicap">Playing H.</h4>
+          <h4 class="handicap playing-handicap-header">Playing H.</h4>
         </ng-container>
       </mat-toolbar>
 
@@ -83,7 +83,7 @@
                   <span matPrefix *ngIf="team.playerA?.courseHandicap > 0">+</span>
                   {{ team.playerA?.courseHandicap | absoluteValue  }}
                 </div>
-                <div class="handicap">
+                <div class="handicap playing-handicap">
                   <span matPrefix *ngIf="team.playerA?.playingHandicap > 0">+</span>
                   {{ team.playerA?.playingHandicap | absoluteValue  }}
                 </div>
@@ -134,7 +134,7 @@
                   {{ team.playerB?.courseHandicap | absoluteValue  }}
                 </div>
 
-                <div class="handicap">
+                <div class="handicap playing-handicap">
                   <span matPrefix *ngIf="team.playerB?.playingHandicap > 0">+</span>
                   {{ team.playerB?.playingHandicap | absoluteValue  }}
                 </div>
