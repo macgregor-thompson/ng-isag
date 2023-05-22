@@ -2,12 +2,14 @@
 
 .score-td {
   position: relative;
+  padding: 5px;
 }
 .stoke-indicator {
   position: absolute;
-  top: -3px;
+  top: -5px;
   right: 1px;
-  font-size: 16px;
+  font-size: 10px;
+  font-weight: 700;
   &.negative {
     color: $isag-red;
   }

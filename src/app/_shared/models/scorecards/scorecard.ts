@@ -40,8 +40,8 @@ export class Scorecard {
     this.year = year;
     this.courseId = course._id;
     this.teamNetScores = new Scores();
-    this.playerAScores = new PlayerScores(course);
-    this.playerBScores = new PlayerScores(course);
+    this.playerAScores = new PlayerScores();
+    this.playerBScores = new PlayerScores();
 
   }
 }

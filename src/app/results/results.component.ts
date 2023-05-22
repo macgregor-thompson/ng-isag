@@ -21,6 +21,8 @@ import { ScorecardService } from '../_core/services/scorecard.service';
 import { PlayerScorecard } from '../_shared/models/scorecards/player-scorecard';
 import { Expense } from '../_shared/models/years/expense';
 import { Subscription } from 'rxjs';
+import { PlayerScores } from '../_shared/models/scorecards/player-scores';
+import { Sorted } from '../_shared/models/_shared/sorted';
 
 @Component({
   selector: 'isag-results',
@@ -40,15 +42,16 @@ import { Subscription } from 'rxjs';
 })
 export class ResultsComponent implements OnInit, OnDestroy {
   scorecards: Scorecard[];
-  playerScorecards: PlayerScorecard[];
+  playerScores: PlayerScores[];
   teams: Team[];
   course: Course;
   showPlayerScores: { [teamId: string]: boolean } = {};
   firstPlaceTeam: Team;
-  secondPlaceTeam: Team;
-  thirdPlaceTeam: Team;
+  secondPLaceTeams: Team[];
+  thirdPLaceTeams: Team[];
   moneyForWinnings: number;
   subscriptions = new Subscription();
+  secondPlaceMoney: number;
 
 
   constructor(public yearService: YearService,
@@ -75,7 +78,18 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   getScorecards(year = this.stateService.year.year): void {
     this.scorecardService.getByYear(year).subscribe({
-      next: scorecards => this.rankAllCards(scorecards)
+      next: scorecards => {
+        this.rankTeamScorecards(scorecards);
+        if (scorecards[0].hasOwnProperty('playerAScores')) {
+          const playerScores = [];
+          scorecards.forEach(c => {
+            playerScores.push({...c.playerAScores, player: c.team.playerA}, {...c.playerBScores, player: c.team.playerB});
+          });
+          this.playerScores = playerScores.sort((a, b) => {
+            return a.totalNetScore < b.totalNetScore ? -1 : b.totalNetScore < a.totalNetScore ? 1 : 0;
+          });
+        } else this.playerScores = null;
+      }
     });
   }
 
@@ -98,11 +112,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   setMoney(year: Year = this.stateService.year): void {
     const totalPLayers = (year.aPlayerIds?.length || 0) + (year.bPlayerIds?.length || 0);
-    const playerDues = year.playerDues * totalPLayers;
     const totalExpenses = year.expenses.reduce((a: number, b: Expense) => a + b.cost, 0);
     const extraPrizes = year.prizes.reduce((a: number, b: Expense) => a + b.cost, 0);
     const totalCalcuttaMoney = this.teams.reduce((a: number, b: Team) => a + (b.winningBid || 0), 0);
-    this.moneyForWinnings = playerDues + totalCalcuttaMoney - totalExpenses - extraPrizes;
+    this.moneyForWinnings = totalCalcuttaMoney - totalExpenses - extraPrizes;
   }
 
   openAddEditScorecardDialog(card?: Scorecard): void {
@@ -123,7 +136,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
         if (card?.deleted) {
           this.scorecards = this.scorecards.filter(s => s._id !== result._id);
         }
-        this.rankAllCards();
+        this.rankTeamScorecards(this.scorecards);
       }
     });
   }
@@ -132,10 +145,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.showPlayerScores[teamId] = !this.showPlayerScores[teamId];
   }
 
-  rankAllCards(cards: Scorecard[] = this.scorecards) {
-    this.rankTeamScorecards(cards);
-    this.rankPLayerScorecards(cards);
-  }
 
   rankTeamScorecards(cards: Scorecard[] = this.scorecards) {
     cards.forEach(c => {
@@ -143,14 +152,17 @@ export class ResultsComponent implements OnInit, OnDestroy {
       c.tied = null;
     });
     const first = this.setPlace(1, cards);
-    const second = this.setPlace(2, cards.filter(s => !s.rank));
-    const third = this.setPlace(3, cards.filter(s => !s.rank));
     const last = this.setPlace(cards.length, cards.filter(s => !s.rank), true);
-    const nonPLaceFinishers = this.rankScorecards(cards.filter(s => !s.rank), 3);
-    this.scorecards = [first, second, third, ...(nonPLaceFinishers || []), last].filter(c => !!c);
+    const nonPLaceFinishers = this.rankScorecards(cards.filter(s => !s.rank), 1);
+    this.scorecards = [first, ...(nonPLaceFinishers || []), last].filter(c => !!c);
+    this.secondPLaceTeams = cards.filter(c => c.rank === 2).map(c => c.team);
+    if (this.secondPLaceTeams.length === 1) {
+      this.thirdPLaceTeams = cards.filter(c => c.rank === 3).map(c => c.team);
+    } else {
+      this.secondPlaceMoney = this.moneyForWinnings
+        * (this.stateService.year.secondPlacePercentage + this.stateService.year.thirdPlacePercentage) / 100;
+    }
     this.firstPlaceTeam = first?.team;
-    this.secondPlaceTeam = second?.team;
-    this.thirdPlaceTeam = third?.team;
   }
 
   setPlace(place: number, cards: Scorecard[] = this.scorecards, reverse = false): Scorecard {
@@ -180,18 +192,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
       function(values) { return reverse ? _reverse(values) : values; },
       function(values) { return _map(values, '1'); }
     ])(cards);
-  }
-
-
-  rankPLayerScorecards(scorecards: Scorecard[] = this.scorecards): void {
-    const playerCards = [];
-    scorecards.forEach(s => {
-      playerCards.push(
-        new PlayerScorecard(s, 'playerA'),
-        new PlayerScorecard(s, 'playerB')
-      );
-    });
-    this.playerScorecards = this.rankScorecards(_sortBy(playerCards, 'totalNetScore'));
   }
 
   rankScorecards<T extends { rank: number, tied: boolean, totalNetScore: number }>(cards: Array<T>, numPLaces = 0): Array<T> {

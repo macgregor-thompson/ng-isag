@@ -15,8 +15,8 @@
         <div class="hole-header">
           <div class="hole-number">Hole {{ currentHole }}</div>
           <div class="hole-info">
-            <div>Par {{holes[currentHole].par}}</div>
-            <div>{{holes[currentHole].yardage}} yards</div>
+            <div>Par {{scorecardService.holes[currentHole].par}}</div>
+            <div>{{scorecardService.holes[currentHole].yardage}} yards</div>
           </div>
         </div>
         <button mat-button color="accent" (click)="nextHole()">

@@ -8,6 +8,7 @@ import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 import { Team } from '../../_shared/models/teams/team';
 import { Scores } from '../../_shared/models/scorecards/scores';
 import { ScorecardService } from '../../_core/services/scorecard.service';
+import { StateService } from '../../_core/services/state.service';
 
 @Component({
   selector: 'isag-add-scorecard-dialog',
@@ -22,7 +23,8 @@ export class AddScorecardDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddScorecardDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: { course: Course, year: number, teams: Team[], card?: Scorecard },
-              private scorecardService: ScorecardService) {
+              private scorecardService: ScorecardService,
+              public stateService: StateService) {
     this.card = data.card ? data.card : new Scorecard(data.year, data.course);
   }
 

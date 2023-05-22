@@ -9,7 +9,6 @@ import { Scores } from '../../_shared/models/scorecards/scores';
   styleUrls: ['./team-scores.component.scss']
 })
 export class TeamScoresComponent implements OnChanges {
-
   @Input() netScores: Scores;
   @Input() frontNineNetScore: number;
   @Input() backNineNetScore: number;
@@ -17,6 +16,8 @@ export class TeamScoresComponent implements OnChanges {
 
   @Input() frontNine: NineHoles;
   @Input() backNine: NineHoles;
+
+  @Input() ranking: string;
 
   scoreClass: { [key: number]: string } = {};
 

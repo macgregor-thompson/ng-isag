@@ -1,6 +1,6 @@
 import { Scores } from './scores';
 import { ShotsByHole } from './shots-by-hole';
-import { Course } from '../course/course';
+import { Player } from '../player';
 
 
 export class PlayerScores {
@@ -19,10 +19,11 @@ export class PlayerScores {
 
   shotsByHole: ShotsByHole;
 
-  constructor(course: Course) {
+  // for results only
+  player?: Player;
+
+  constructor() {
     this.grossScores = new Scores();
     this.netScores = new Scores();
-
-
   }
 }

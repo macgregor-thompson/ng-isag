@@ -1,4 +1,4 @@
-  <th class="sticky-header">
+  <th class="sticky-header left-th">
     <div class="player-names">
       <div class="name">{{ name }}</div>
     </div>
@@ -9,7 +9,9 @@
       {{scores.grossScores[hole?.key]}}
     </div>
     <div *ngIf="scores.shotsByHole[hole?.key]" class="stoke-indicator"
-         [class.negative]="scores.shotsByHole[hole?.key] < 0">*</div>
+         [class.negative]="scores.shotsByHole[hole?.key] < 0">
+      {{scores.shotsByHole[hole?.key] | absoluteValue}}
+    </div>
   </td>
 
   <th>{{scores.frontNineGrossScore}}</th>
@@ -19,7 +21,9 @@
       {{scores.grossScores[hole?.key]}}
     </div>
     <div *ngIf="scores.shotsByHole[hole?.key]" class="stoke-indicator"
-         [class.negative]="scores.shotsByHole[hole?.key] < 0">*</div>
+         [class.negative]="scores.shotsByHole[hole?.key] < 0">
+      {{scores.shotsByHole[hole?.key] | absoluteValue}}
+    </div>
   </td>
 
   <th>{{scores.backNineGrossScore}}</th>

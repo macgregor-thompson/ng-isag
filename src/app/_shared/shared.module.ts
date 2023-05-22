@@ -30,6 +30,8 @@ import { PlayerTableComponent } from './components/player-table/player-table.com
 import { PairingsComponent } from './components/pairings/pairings.component';
 import { TwelveHourPipe } from './pipes/twelve-hour.pipe';
 import { HandicapAllowanceComponent } from './components/handicap-allowance/handicap-allowance.component';
+import { PlayerScoresComponent } from '../leaderboard/player-scores/player-scores.component';
+import { TeamScoresComponent } from '../leaderboard/team-scores/team-scores.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { HandicapAllowanceComponent } from './components/handicap-allowance/hand
     PlayerTableComponent,
     PairingsComponent,
     TwelveHourPipe,
-    HandicapAllowanceComponent
+    HandicapAllowanceComponent,
+    PlayerScoresComponent,
+    TeamScoresComponent
   ],
   imports: [
     CommonModule,
@@ -94,7 +98,9 @@ import { HandicapAllowanceComponent } from './components/handicap-allowance/hand
     YearSelectComponent,
     HidePrivateYearsPipe,
     PairingsComponent,
-    HandicapAllowanceComponent
+    HandicapAllowanceComponent,
+    PlayerScoresComponent,
+    TeamScoresComponent
   ],
   providers: [
     FilterPlayersByYearPipe,

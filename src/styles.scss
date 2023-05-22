@@ -800,6 +800,23 @@ button {
   border-spacing: 0;
   position: relative;
 
+  .left-th, .team-names-th, holes, {
+    position: sticky;
+    z-index: 1;
+  }
+
+  // sticky headers
+  .hole-headers, .second-row, .third-row, .fourth-row {
+    th {
+      position: sticky;
+      z-index: 2;
+
+      &.left-th {
+        z-index: 3;
+      }
+    }
+  }
+
   td, th {
     border: 1px solid #dee2e6;
   }
@@ -830,11 +847,6 @@ button {
 
   .fourth-row th {
     top: 96px;
-  }
-
-  .left-th, .team-names-th {
-    position: sticky;
-    z-index: 1;
   }
 
   .left-th {
@@ -1000,4 +1012,14 @@ isag-pairings {
     color: $red;
   }
 
+}
+
+
+
+.courses-card {
+  tr.even {
+    th, td, {
+      background: #fff8e3;
+    }
+  }
 }

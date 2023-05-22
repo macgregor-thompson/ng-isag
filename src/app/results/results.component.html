@@ -51,7 +51,7 @@
       </mat-list>
     </mat-card>
 
-    <mat-card class="isag-card courses-card">
+    <mat-card class="isag-card courses-card" *ngIf="firstPlaceTeam">
       <mat-card-header>
         <mat-card-title>
           <div>{{stateService.year.year}} Calcutta Winnings</div>
@@ -65,12 +65,25 @@
         </mat-card>
         <mat-card>
           <h3 class="place">2<sup>nd</sup> Place</h3>
-          <h1>{{secondPlaceTeam?.winningBidder}}</h1>
-          <h3>{{moneyForWinnings * stateService.year.secondPlacePercentage / 100 | currency}}</h3>
+          <ng-container *ngIf="secondPLaceTeams.length === 1; else multipleSecond">
+            <h1>{{secondPLaceTeams[0]?.winningBidder}}</h1>
+            <h3>{{moneyForWinnings * stateService.year.secondPlacePercentage / 100 | currency}}</h3>
+          </ng-container>
+          <ng-template #multipleSecond>
+            <div class="multiple-winners">
+              <h1 *ngFor="let team of secondPLaceTeams">{{team.winningBidder}}</h1>
+            </div>
+            <h3>
+              {{ secondPlaceMoney | currency}}/{{ secondPLaceTeams.length }} = {{secondPlaceMoney / secondPLaceTeams.length | currency}} each
+            </h3>
+          </ng-template>
         </mat-card>
-        <mat-card>
+        <mat-card *ngIf="secondPLaceTeams.length === 1">
           <h3 class="place">3<sup>rd</sup> Place</h3>
-          <h1>{{thirdPlaceTeam?.winningBidder}}</h1>
+          <h1 *ngIf="thirdPLaceTeams.length === 1; else multipleThird">{{secondPLaceTeams[0]?.winningBidder}}</h1>
+          <ng-template #multipleThird>
+            <h2 *ngFor="let team of secondPLaceTeams">{{team.winningBidder}}</h2>
+          </ng-template>
           <h3>{{moneyForWinnings * stateService.year.thirdPlacePercentage / 100 | currency}}</h3>
         </mat-card>
       </div>
@@ -86,14 +99,15 @@
         <mat-slide-toggle color="primary" [(ngModel)]="stateService.year.scoresConfirmed"
                           class="confirm-scores"
                           (ngModelChange)="updateScoresConfirmed($event)"
-                          [disabled]="!stateService.isAdmin">Scores Confirmed</mat-slide-toggle>
+                          [disabled]="!stateService.isAdmin">Scores Confirmed
+        </mat-slide-toggle>
 
       </mat-card-header>
 
       <mat-card-content *ngIf="course" class="team-card-content">
         <isag-course-card [course]="course" [rankings]="true">
-          <ng-container *ngFor="let card of scorecards | orderBy: 'rank'; let even = even; let index = index">
-            <tr (click)="togglePlayerViews(card.teamId)" class="pointer" [class.even]="even">
+          <ng-container *ngFor="let card of scorecards | orderBy: 'rank'; let even = even;">
+            <tr [class.even]="even">
               <th class="left-th">
                 <div class="ranking">
                   {{(card.tied ? 'T' : '') + card.rank}}
@@ -126,102 +140,48 @@
               <th>{{card.backNineNetScore}}</th>
               <th>{{card.totalNetScore}}</th>
             </tr>
-
           </ng-container>
 
         </isag-course-card>
 
       </mat-card-content>
     </mat-card>
+
+    <mat-card class="isag-card courses-card" *ngIf="course && playerScores">
+      <mat-card-header>
+        <mat-card-title>
+          <div>{{stateService.year.year}} Individual Scores</div>
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <isag-course-card [course]="course" [showNet]="true">
+          <ng-container  *ngFor="let scores of playerScores; let even = even;">
+            <tr isag-player-scores [class.even]="even"
+                name="{{scores.player.firstName + ' ' + scores.player.lastName}}"
+                [scores]="scores"
+                [frontNine]="course.frontNine"
+                [backNine]="course.backNine"></tr>
+          </ng-container>
+
+
+        </isag-course-card>
+
+      </mat-card-content>
+    </mat-card>
+
   </ng-container>
+
 
   <ng-template #noResults>
     <mat-card class="isag-card">
       <isag-alert>
         <div class="no-results">
-          <p>Results for {{stateService.year.year}} have not been finalized yet.  Please check back later.</p>
-          <p>Visit the <strong><a routerLink="/leaderboard">Leaderboard</a></strong>  for unconfirmed results.</p>
+          <p>Results for {{stateService.year.year}} have not been finalized yet. Please check back later.</p>
+          <p>Visit the <strong><a routerLink="/leaderboard">Leaderboard</a></strong> for unconfirmed results.</p>
         </div>
       </isag-alert>
     </mat-card>
   </ng-template>
-
-  <!--<mat-card class="isag-card courses-card">
-    <mat-card-header>
-      <mat-card-title>
-        <div>{{stateService.year.year}} Individual Scores</div>
-      </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content *ngIf="course">
-      <isag-course-card [course]="course" [rankings]="true">
-        <ng-container *ngFor="let card of playerScorecards; let even = even;">
-          <tr [class.even]="even">
-            <th class="left-th">
-              <div class="individual-rank">{{(card.tied ? 'T' : '') + card.rank}}</div>
-            </th>
-            <th class="individual-name-th">
-              <div class="name">{{card.player.firstName + ' ' + card.player.lastName}}</div>
-            </th>
-            <td *ngFor="let hole of course.frontNine | keyvalue">
-              <div class="score" [ngClass]="scoreClass(card.netScores[hole.key], hole.value.par)">
-                {{card.netScores[hole.key]}}
-              </div>
-            </td>
-            <th>{{card.frontNineNetScore}}</th>
-            <td *ngFor="let hole of course.backNine | keyvalue">
-              <div class="score" [ngClass]="scoreClass(card.netScores[hole.key], hole.value.par)">
-                {{card.netScores[hole.key]}}
-              </div>
-            </td>
-            <th>{{card.backNineNetScore}}</th>
-            <th>{{card.totalNetScore}}</th>
-          </tr>
-        </ng-container>
-
-      </isag-course-card>
-
-    </mat-card-content>
-  </mat-card>-->
-
-  <!--<ng-container *ngIf="showPlayerScores[card.teamId]">
-    <tr class="player-score-row" [@rowsAnimation] [class.even]="even">
-      <th colspan="2" class="left-th">
-        <div class="name">{{card.team.playerA.firstName + ' ' + card.team.playerA.lastName}}</div>
-      </th>
-      <td *ngFor="let hole of course.frontNine | keyValue">
-        <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
-          {{card.playerANetScores[hole.key]}}
-        </div>
-      </td>
-      <th>{{card.playerAFrontNineNetScore}}</th>
-      <td *ngFor="let hole of course.backNine | keyValue">
-        <div class="score" [ngClass]="scoreClass(card.playerANetScores[hole.key], hole.value.par)">
-          {{card.playerANetScores[hole.key]}}
-        </div>
-      </td>
-      <th>{{card.playerABackNineNetScore}}</th>
-      <th>{{card.playerATotalNetScore}}</th>
-    </tr>
-    <tr class="player-score-row" [@rowsAnimation] [class.even]="even">
-      <th colspan="2" class="left-th">
-        <div class="name">{{card.team.playerB.firstName + ' ' + card.team.playerB.lastName}}</div>
-      </th>
-      <td *ngFor="let hole of course.frontNine | keyValue">
-        <div class="score" [ngClass]="scoreClass(card.playerBNetScores[hole.key], hole.value.par)">
-          {{card.playerBNetScores[hole.key]}}
-        </div>
-      </td>
-      <th>{{card.playerBFrontNineNetScore}}</th>
-      <td *ngFor="let hole of course.backNine | keyValue"
-      >
-        <div class="score" [ngClass]="scoreClass(card.playerBNetScores[hole.key], hole.value.par)">
-          {{card.playerBNetScores[hole.key]}}
-        </div>
-      </td>
-      <th>{{card.playerBBackNineNetScore}}</th>
-      <th>{{card.playerBTotalNetScore}}</th>
-    </tr>
-  </ng-container>-->
 </div>
 

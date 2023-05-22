@@ -83,12 +83,14 @@
               <tr isag-player-scores
                   name="{{scorecard.team.playerA.firstName + ' ' + scorecard.team.playerA.lastName}}"
                   [scores]="scorecard.playerAScores"
+                  [course]="stateService.course"
                   [frontNine]="course.frontNine"
                   [backNine]="course.backNine"></tr>
 
               <tr isag-player-scores
                   name="{{scorecard.team.playerB.firstName + ' ' + scorecard.team.playerB.lastName}}"
                   [scores]="scorecard.playerBScores"
+                  [course]="stateService.course"
                   [frontNine]="course.frontNine"
                   [backNine]="course.backNine"></tr>
 

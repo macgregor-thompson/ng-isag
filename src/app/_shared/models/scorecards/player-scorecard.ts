@@ -1,22 +1,6 @@
-import { Scores } from './scores';
 import { Player } from '../player';
-import { Scorecard } from './scorecard';
+import { PlayerScores } from './player-scores';
 
-export class PlayerScorecard {
+export class PlayerScorecard extends PlayerScores {
   player: Player;
-  netScores: Scores;
-  frontNineNetScore: number;
-  backNineNetScore: number;
-  totalNetScore: number;
-
-  rank: number;
-  tied: boolean;
-
-  constructor(card: Scorecard, player: 'playerA' | 'playerB' ) {
-    this.player = card.team[player];
-    this.netScores = card[`${player}NetScores`];
-    this.frontNineNetScore = card[`${player}FrontNineNetScore`];
-    this.backNineNetScore = card[`${player}BackNineNetScore`];
-    this.totalNetScore = card[`${player}TotalNetScore`];
-  }
 }
