@@ -167,7 +167,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
         * (this.stateService.year.secondPlacePercentage + this.stateService.year.thirdPlacePercentage) / 100;
     }
     this.firstPlaceTeam = first?.team;
-    this.firstPlaceMoney = this.moneyForWinnings * this.stateService.year.firstPlacePercentage / 100
+    this.firstPlaceMoney = this.moneyForWinnings * this.stateService.year.firstPlacePercentage / 100;
   }
 
   setPlace(place: number, cards: Scorecard[] = this.scorecards, reverse = false): Scorecard {
