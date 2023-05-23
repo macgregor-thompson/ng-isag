@@ -51,7 +51,9 @@ export class ResultsComponent implements OnInit, OnDestroy {
   thirdPLaceTeams: Team[];
   moneyForWinnings: number;
   subscriptions = new Subscription();
+  firstPlaceMoney: number;
   secondPlaceMoney: number;
+  thirdPlaceMoney: number;
 
 
   constructor(public yearService: YearService,
@@ -158,11 +160,14 @@ export class ResultsComponent implements OnInit, OnDestroy {
     this.secondPLaceTeams = cards.filter(c => c.rank === 2).map(c => c.team);
     if (this.secondPLaceTeams.length === 1) {
       this.thirdPLaceTeams = cards.filter(c => c.rank === 3).map(c => c.team);
+      this.secondPlaceMoney = this.moneyForWinnings * this.stateService.year.secondPlacePercentage / 100;
+      this.thirdPlaceMoney = this.moneyForWinnings * this.stateService.year.thirdPlacePercentage / 100;
     } else {
       this.secondPlaceMoney = this.moneyForWinnings
         * (this.stateService.year.secondPlacePercentage + this.stateService.year.thirdPlacePercentage) / 100;
     }
     this.firstPlaceTeam = first?.team;
+    this.firstPlaceMoney = this.moneyForWinnings * this.stateService.year.firstPlacePercentage / 100
   }
 
   setPlace(place: number, cards: Scorecard[] = this.scorecards, reverse = false): Scorecard {

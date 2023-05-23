@@ -227,6 +227,7 @@ mat-card-content {
 .winning-cards {
   display: flex;
   padding-bottom: 8px;
+  flex-wrap: wrap;
   mat-card {
     background-color: $isag-green;
     color: #fff;
@@ -240,6 +241,26 @@ mat-card-content {
     }
     * {
       text-align: center;
+    }
+    &.first-place {
+      flex: 1 1 30%;
+      &.full-first {
+        flex: 1 1 90%;
+      }
+    }
+    &.second-place {
+      flex: 1 1 30%;
+    }
+    &.multiple {
+      flex: 1 1 33%;
+    }
+
+    h1, h2, h3, h4 {
+      margin-bottom: 5px;
+    }
+
+    h1 small {
+      font-size: 16px;
     }
   }
 
@@ -303,5 +324,13 @@ mat-card-content {
   justify-content: center;
   h1 {
     margin: 5px 10px;
+  }
+}
+
+.panel-header {
+  padding: 0 16px;
+  mat-panel-title {
+    font-size: 20px;
+    font-weight: 500;
   }
 }
