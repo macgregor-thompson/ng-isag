@@ -141,10 +141,9 @@
         </mat-card-title>
         <div class="fill-remaining-space"></div>
 
-        <mat-slide-toggle color="primary" [(ngModel)]="stateService.year.scoresConfirmed"
+        <mat-slide-toggle color="primary" *ngIf="stateService.isAdmin" [(ngModel)]="stateService.year.scoresConfirmed"
                           class="confirm-scores"
-                          (ngModelChange)="updateScoresConfirmed($event)"
-                          [disabled]="!stateService.isAdmin">Scores Confirmed
+                          (ngModelChange)="updateScoresConfirmed($event)">Scores Confirmed
         </mat-slide-toggle>
 
       </mat-card-header>
