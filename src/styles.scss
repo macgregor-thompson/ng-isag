@@ -1043,4 +1043,12 @@ isag-pairings {
   }
 }
 
+.detail-card {
+  @include lt-sm() {
+    isag-winner {
+      display: none;
+    }
+  }
+}
+
 

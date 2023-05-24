@@ -54,7 +54,7 @@
                     <mat-autocomplete #playerA="matAutocomplete" [displayWith]="getPlayerName">
                       <mat-option  class="player-option" *ngFor="let player of aPlayers; let i = index;"
                                    [value]="player"  [class.hidden]="usedAPLayerIds[player._id]">
-                        <div>{{i + 1}}. {{player.firstName}} {{player.lastName}}</div>
+                        <div>{{i + aPlayers.length + 1}}. {{player.firstName}} {{player.lastName}}</div>
                         <div>
                           <span matPrefix *ngIf="team.playerB?.handicap > 0">+</span>
                           {{player.handicap | absoluteValue}}

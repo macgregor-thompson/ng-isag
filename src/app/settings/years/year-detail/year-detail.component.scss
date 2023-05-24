@@ -22,7 +22,7 @@ mat-form-field {
   margin-left: 14px;
 }
 
-.handicap-header {
+.handicap-header, .playing-handicap-header {
   width: 60px;
   display: flex;
   justify-content: center;
@@ -59,6 +59,7 @@ mat-toolbar {
 .expense-btn-wrapper, .prizes-btn-wrapper {
   display: flex;
   align-items: center;
+
   h4 {
     margin: 0;
   }
@@ -91,12 +92,47 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   h4 {
     margin: 0;
   }
+
   margin-bottom: 15px;
 }
 
 h4 {
   font-weight: 900;
 }
+
+@include lt-sm() {
+  .drag-handle, .handicap-header {
+    display: none !important;
+  }
+  .playing-handicap-header, .playing-handicap {
+    width: 35px;
+  }
+  .header-right-margin {
+    margin-right: 45px !important;
+  }
+  .players-wrapper {
+    flex-direction: column;
+  }
+  .checklist-header {
+    margin-bottom: 15px !important;
+  }
+
+  .allowance-edit {
+    width: 100%;
+  }
+
+}
+
+
+.players-wrapper, .allowance-edit {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex: 1;
+}
+
