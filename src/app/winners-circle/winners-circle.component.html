@@ -8,9 +8,9 @@
 
     <mat-list class="winners-list">
       <mat-list-item class="w-list-item no-hover no-pointer" *ngFor="let winner of winners" disableRipple>
-        <div>{{ winner.firstName + " " + winner.lastName }}</div>
-        <div class="fill-remaining-space"></div>
+        <div class="flex1">{{ winner.firstName + " " + winner.lastName }}</div>
         <isag-winner [player]="winner"></isag-winner>
+
       </mat-list-item>
     </mat-list>
   </mat-card>

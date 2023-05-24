@@ -1,3 +1,4 @@
+@import '../../media-queries';
 .row {
   display: flex;
   align-items: center;
@@ -16,6 +17,9 @@
     height: auto !important;
     border-bottom-color: #ddd;
   }
+  @include lt-sm() {
+    padding: 0!important;
+  }
 }
 
 
@@ -33,6 +37,8 @@
   color: rgba(0, 0, 0, 0.87);
   box-sizing: border-box;
   background: white;
+  display: flex;
+  align-items: center;
 
   &:last-child {
     border: none;

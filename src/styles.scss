@@ -1028,3 +1028,19 @@ isag-pairings {
     }
   }
 }
+
+.winners-list {
+  .mat-list-item-content {
+    flex: 1 !important;
+    @include lt-sm() {
+      padding-right: 0px !important;
+    }
+  }
+  .winner-chips {
+    .mat-chip-list-wrapper {
+      flex-wrap: nowrap;
+    }
+  }
+}
+
+

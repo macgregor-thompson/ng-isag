@@ -1,4 +1,4 @@
-<mat-chip-list *ngIf="player.yearsWon?.length">
+<mat-chip-list *ngIf="player.yearsWon?.length" class="winner-chips">
   <mat-chip selected *ngFor="let year of player.yearsWon">
     {{ year }}
     <mat-icon svgIcon="jacket" class="isag-icon"></mat-icon>
