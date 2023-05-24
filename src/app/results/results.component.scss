@@ -264,19 +264,25 @@ mat-card-content {
     }
   }
 
-  @include xs() {
+  @include lt-sm() {
     flex-direction: column;
     mat-card {
-      flex-direction: row;
-      h1 {
+      flex-direction: column;
+      .place {
+        font-size: 16px;
+        font-weight: 700;
+      }
+      h1, h2 {
         flex: 3;
         font-size: 16px;
         margin-bottom: 0;
+        font-weight: 400;
       }
       h3 {
         flex: 1;
         font-size: 14px;
         margin-bottom: 0;
+        font-weight: 400;
       }
       .place {
         margin-top: -5px;
@@ -289,6 +295,14 @@ mat-card-content {
 .name {
   display: flex;
   align-items: center;
+}
+
+.team-card-content {
+  @include lt-sm() {
+    .name {
+      font-size: 12px;
+    }
+  }
 }
 
 .first-place {

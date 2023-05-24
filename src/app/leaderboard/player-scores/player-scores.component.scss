@@ -1,4 +1,5 @@
 @import '../../../colors';
+@import '../../../media-queries';
 
 .score-td {
   position: relative;
@@ -12,5 +13,14 @@
   font-weight: 700;
   &.negative {
     color: $isag-red;
+  }
+}
+
+@include lt-sm() {
+  .player-names {
+    font-size: 12px;
+  }
+  .left-th {
+    padding: 5px 3px !important;
   }
 }

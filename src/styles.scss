@@ -830,6 +830,11 @@ button {
   th {
     padding: 5px 8px;
     background-color: $white;
+    &.player-names {
+      @include lt-sm() {
+        padding: 5px 3px;
+      }
+    }
   }
 
 

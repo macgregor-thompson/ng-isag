@@ -61,16 +61,18 @@
           </mat-expansion-panel-header>
           <div class="winning-cards">
             <mat-card class="calcutta-card first-place" [class.full-first]="secondPLaceTeams.length > 2">
-              <h3 class="place">1<sup>st</sup> Place</h3>
-              <h1>{{firstPlaceTeam?.winningBidder}} <small>(owner)</small> - {{firstPlaceMoney / 2 | currency}}</h1>
+              <h2 class="place">1<sup>st</sup> Place</h2>
+              <h2>{{firstPlaceTeam?.winningBidder}} <small>(owner)</small> - {{firstPlaceMoney / 2 | currency}}</h2>
               <h2>{{ firstPlaceTeam.playerA.firstName + ' ' + firstPlaceTeam.playerA.lastName}} - {{firstPlaceMoney / 4 | currency}}</h2>
               <h2>{{ firstPlaceTeam.playerB.firstName + ' ' + firstPlaceTeam.playerB.lastName}} - {{firstPlaceMoney / 4 | currency}}</h2>
               <h3>Total: {{firstPlaceMoney | currency}}</h3>
             </mat-card>
 
             <mat-card *ngFor="let team of secondPLaceTeams" class="calcutta-card" [ngClass]="{'second-place': secondPLaceTeams.length === 1, 'multiple': secondPLaceTeams.length > 2}">
-              <h3 class="place">2<sup>nd</sup> Place</h3>
-              <h1>{{team?.winningBidder}} <small>(owner)</small> - {{secondPlaceMoney / secondPLaceTeams.length / 2 | currency}}</h1>
+              <h2 class="place">
+                <span *ngIf="secondPLaceTeams.length > 1">Tied</span> 2<sup>nd</sup> Place
+              </h2>
+              <h2>{{team?.winningBidder}} <small>(owner)</small> - {{secondPlaceMoney / secondPLaceTeams.length / 2 | currency}}</h2>
               <h2>{{ team.playerA.firstName + ' ' + team.playerA.lastName}} - {{secondPlaceMoney / secondPLaceTeams.length / 4 | currency}}</h2>
               <h2>{{ team.playerB.firstName + ' ' + team.playerB.lastName}} - {{secondPlaceMoney / secondPLaceTeams.length / 4 | currency}}</h2>
               <h3 *ngIf="secondPLaceTeams.length === 1; else splitSecond">Total: {{secondPlaceMoney | currency }}</h3>
@@ -81,8 +83,10 @@
 
             <ng-container *ngIf="thirdPLaceTeams">
               <mat-card *ngFor="let team of thirdPLaceTeams" class="calcutta-card">
-                <h3 class="place">3<sup>rd</sup> Place</h3>
-                <h1>{{team?.winningBidder}} <small>(owner)</small> - {{moneyForWinnings * stateService.year.firstPlacePercentage / 100 / secondPLaceTeams.length / 2 | currency}}</h1>
+                <h2 class="place">
+                  <span *ngIf="thirdPLaceTeams.length > 1">Tied</span> 3<sup>rd</sup> Place
+                </h2>
+                <h2>{{team?.winningBidder}} <small>(owner)</small> - {{moneyForWinnings * stateService.year.firstPlacePercentage / 100 / secondPLaceTeams.length / 2 | currency}}</h2>
                 <h2>{{ team.playerA.firstName + ' ' + team.playerA.lastName}} - {{thirdPlaceMoney / secondPLaceTeams.length / 4 | currency}}</h2>
                 <h2>{{ team.playerB.firstName + ' ' + team.playerB.lastName}} - {{thirdPlaceMoney / secondPLaceTeams.length / 4 | currency}}</h2>
                 <h3 *ngIf="thirdPLaceTeams.length === 1; else splitThird">Total: {{thirdPlaceMoney | currency }}</h3>
