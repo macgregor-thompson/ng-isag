@@ -20,9 +20,11 @@ import { AddScorecardDialogComponent } from './add-scorecard-dialog/add-scorecar
 import { ScorecardService } from '../_core/services/scorecard.service';
 import { PlayerScorecard } from '../_shared/models/scorecards/player-scorecard';
 import { Expense } from '../_shared/models/years/expense';
-import { Subscription } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { PlayerScores } from '../_shared/models/scorecards/player-scores';
 import { Sorted } from '../_shared/models/_shared/sorted';
+import { Score } from '../_shared/models/scorecards/score';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'isag-results',
@@ -73,15 +75,24 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   getData(year = this.stateService.year.year): void {
-    this.getTeams(year);
-    this.getCourse(year);
-    this.getScorecards(year);
+    forkJoin({
+      scorecards: this.getScorecards(year),
+      teams: this.getTeams(year),
+      course: this.getCourse(year),
+    }).subscribe({
+      next: ({teams, course, scorecards}) => {
+        this.scorecards = scorecards;
+        this.teams = teams;
+        this.course = course;
+        this.setMoney();
+        this.rankTeamScorecards(scorecards);
+      }
+    });
   }
 
-  getScorecards(year = this.stateService.year.year): void {
-    this.scorecardService.getByYear(year).subscribe({
-      next: scorecards => {
-        this.rankTeamScorecards(scorecards);
+  getScorecards(year = this.stateService.year.year): Observable<Scorecard[]> {
+    return this.scorecardService.getByYear(year).pipe(
+      tap(scorecards => {
         if (scorecards[0].hasOwnProperty('playerAScores')) {
           const playerScores = [];
           scorecards.forEach(c => {
@@ -91,21 +102,15 @@ export class ResultsComponent implements OnInit, OnDestroy {
             return a.totalNetScore < b.totalNetScore ? -1 : b.totalNetScore < a.totalNetScore ? 1 : 0;
           });
         } else this.playerScores = null;
-      }
-    });
+      }));
   }
 
-  getTeams(year = this.stateService.year.year): void {
-    this.teamService.getByYear(year).subscribe({
-      next: t => {
-        this.teams = t;
-        this.setMoney();
-      }
-    });
+  getTeams(year = this.stateService.year.year): Observable<Team[]> {
+    return this.teamService.getByYear(year);
   }
 
-  getCourse(year = this.stateService.year.year): void {
-    this.courseService.getByYear(this.stateService.year.year).subscribe({ next: c => this.course = c });
+  getCourse(year = this.stateService.year.year): Observable<Course> {
+    return this.courseService.getByYear(this.stateService.year.year);
   }
 
   updateScoresConfirmed(scoresConfirmed: boolean): void {
