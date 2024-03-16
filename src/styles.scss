@@ -13,10 +13,14 @@
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.typography-hierarchy(mat.define-typography-config());
+/* TODO(mdc-migration): Remove all-legacy-component-typographies once all legacy components are migrated*/
 @include mat.all-legacy-component-typographies();
+@include mat.all-component-typographies();
+/* TODO(mdc-migration): Remove legacy-core once all legacy components are migrated*/
 @include mat.legacy-core();
+@include mat.core();
 
 
 // this is for the rich text editor
@@ -54,7 +58,9 @@ $isag-theme: mat.define-light-theme((
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
+/* TODO(mdc-migration): Remove all-legacy-component-themes once all legacy components are migrated*/
 @include mat.all-legacy-component-themes($isag-theme);
+@include mat.all-component-themes($isag-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -692,7 +698,7 @@ quill-editor {
   padding: 16px;
 }
 
-.mat-body p, .mat-body-1 p, .mat-typography p {
+.mat-body p, .mat-subtitle-2 p, .mat-typography p {
   margin: 0;
 }
 
