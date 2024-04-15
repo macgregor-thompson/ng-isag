@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { merge as _merge, cloneDeep as _cloneDeep } from 'lodash-es';
 
 import { Course } from '../../_shared/models/course/course';

@@ -94,31 +94,31 @@
           <mat-list-item class="list-item no-hover" [disableRipple]="true">
             <div class="money-title">1<sup>st</sup> Place:</div>
             <div class="money-info">
-              <mat-chip-list>
-                <mat-chip selected class="first-place-chip">
+              <mat-chip-listbox>
+                <mat-chip-option selected class="first-place-chip">
                   {{ (totalCalcuttaMoney - totalExpenses - extraPrizes) * stateService.year.firstPlacePercentage / 100 | currency}}
-                </mat-chip>
-              </mat-chip-list>
+                </mat-chip-option>
+              </mat-chip-listbox>
             </div>
           </mat-list-item>
           <mat-list-item class="list-item no-hover" [disableRipple]="true">
             <div class="money-title">2<sup>nd</sup> Place:</div>
             <div class="money-info">
-              <mat-chip-list>
-                <mat-chip selected color="other" class="second-place-chip">
+              <mat-chip-listbox>
+                <mat-chip-option color="other" selected class="second-place-chip">
                   {{(totalCalcuttaMoney - totalExpenses - extraPrizes) * stateService.year.secondPlacePercentage / 100 | currency}}
-                </mat-chip>
-              </mat-chip-list>
+                </mat-chip-option>
+              </mat-chip-listbox>
             </div>
           </mat-list-item>
           <mat-list-item class="list-item no-hover" [disableRipple]="true">
             <div class="money-title">3<sup>rd</sup> Place:</div>
             <div class="money-info">
-              <mat-chip-list>
-                <mat-chip selected color="accent" class="third-place-chip">
+              <mat-chip-listbox>
+                <mat-chip-option color="accent" selected class="third-place-chip">
                   {{(totalCalcuttaMoney - totalExpenses - extraPrizes) * stateService.year.thirdPlacePercentage / 100 | currency}}
-                </mat-chip>
-              </mat-chip-list>
+                </mat-chip-option>
+              </mat-chip-listbox>
             </div>
           </mat-list-item>
           <mat-list-item class="list-item no-hover" [disableRipple]="true">
