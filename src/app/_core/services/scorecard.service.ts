@@ -12,6 +12,7 @@ import { SpinnerAndCatchError } from '../decorators/spinner-and-catch-error';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 import { Scores } from '../../_shared/models/scorecards/scores';
 import { Hole } from '../../_shared/models/course/hole';
+import { HoleNumber } from '../../_shared/models/course/hole-number';
 
 @Injectable({
   providedIn: 'root'
@@ -218,7 +219,7 @@ export class ScorecardService {
     const nonNullScores = _omitBy(card.teamNetScores, _isNil);
     let thruPar = 0;
     if (nonNullScores) {
-      card.thru = Math.max(...Object.keys(nonNullScores).map(k => +k));
+      card.thru = Math.max(...Object.keys(nonNullScores).map(k => +k)) as HoleNumber;
       thruPar = Object.keys(nonNullScores).reduce((acc, key) => {
         acc += this.holes[key].par;
         return acc;

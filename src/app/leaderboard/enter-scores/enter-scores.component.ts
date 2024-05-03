@@ -5,6 +5,8 @@ import { filter, Subscription } from 'rxjs';
 import { Scorecard } from '../../_shared/models/scorecards/scorecard';
 import { flatMap as _flatMap, omitBy as _omitBy, isNil as _isNil } from 'lodash';
 import { Scores } from '../../_shared/models/scorecards/scores';
+import { HoleNumber } from '../../_shared/models/course/hole-number';
+import { HOLE_NUMBERS } from '../../_shared/models/course/hole-numbers';
 
 @Component({
   selector: 'isag-enter-scores',
@@ -16,8 +18,9 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription();
   cardA: Scorecard;
   cardB: Scorecard;
-  currentHole: number;
+  currentHole: HoleNumber;
   canSave: boolean;
+  notAllScoresEntered: boolean;
 
   constructor(public stateService: StateService, public scorecardService: ScorecardService) {
   }
@@ -33,6 +36,7 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
           [this.cardA, this.cardB] = cards;
           this.setCurrentHole(this.cardA.thru, this.cardB.thru);
           this.checkIfCanSave();
+          this.notAllScoresEntered = !HOLE_NUMBERS.every(h => this.allHoleScoresEntered(h));
         }
       })
     );
@@ -42,16 +46,16 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  setCurrentHole(thruA, thruB): void {
+  setCurrentHole(thruA: HoleNumber, thruB: HoleNumber): void {
     if (!thruA || !thruB || (thruA === 18 && thruB === 18)) {
       this.currentHole = 1;
       return;
     }
     if (thruA !== thruB) {
-      this.currentHole = Math.min(thruA, thruB);
+      this.currentHole = Math.min(thruA, thruB) as HoleNumber;
       return;
     }
-    this.currentHole = thruA + 1;
+    this.currentHole = thruA + 1 as HoleNumber;
   }
 
   nextHole(): void {
@@ -80,15 +84,20 @@ export class EnterScoresComponent implements OnInit, OnDestroy {
     this.scorecardService.updateScores(this.cardA._id, this.cardA).subscribe();
     this.scorecardService.updateScores(this.cardB._id, this.cardB).subscribe();
     this.nextHole();
+    this.notAllScoresEntered = !HOLE_NUMBERS.every(h => this.allHoleScoresEntered(h));
   }
-
 
   checkIfCanSave(): void {
-    this.canSave = [
-      this.cardA.playerAScores.grossScores[this.currentHole],
-      this.cardA.playerBScores.grossScores[this.currentHole],
-      this.cardB.playerAScores.grossScores[this.currentHole],
-      this.cardB.playerBScores.grossScores[this.currentHole]
+    this.canSave = this.allHoleScoresEntered(this.currentHole);
+  }
+
+  allHoleScoresEntered(hole: HoleNumber): boolean {
+    return [
+      this.cardA.playerAScores.grossScores[hole],
+      this.cardA.playerBScores.grossScores[hole],
+      this.cardB.playerAScores.grossScores[hole],
+      this.cardB.playerBScores.grossScores[hole]
     ].every(s => !!s);
   }
+
 }

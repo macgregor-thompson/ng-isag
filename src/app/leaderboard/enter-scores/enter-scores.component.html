@@ -1,7 +1,6 @@
 <div class="container">
 
 
-
   <isag-scorecard-id-login *ngIf="(!cardA && !cardB) || !currentHole; else enterScores"></isag-scorecard-id-login>
 
   <ng-template #enterScores>
@@ -46,20 +45,36 @@
 
       </mat-list>
 
-     <div class="alert-div">
-         <p>Enter <strong>GROSS</strong> scores!</p>
-     </div>
+      <ng-container  *ngIf="stateService.isAdmin || notAllScoresEntered; else noMoreScores">
+        <div class="alert-div">
+          <p>Enter <strong>GROSS</strong> scores!</p>
+        </div>
 
-      <div class="enter-score-buttons">
-        <button mat-raised-button (click)="clearScores()" class="right-space-15">
-          <mat-icon>clear</mat-icon>
-          Clear
-        </button>
-        <button mat-raised-button color="primary" (click)="saveScores()" [disabled]="!canSave" class="left-space-15">
-          <mat-icon>check</mat-icon>
-          Save Scores
-        </button>
-      </div>
+        <div class="enter-score-buttons">
+          <button mat-raised-button (click)="clearScores()" class="right-space-15">
+            <mat-icon>clear</mat-icon>
+            Clear
+          </button>
+          <button mat-raised-button color="primary" (click)="saveScores()" [disabled]="!canSave" class="left-space-15">
+            <mat-icon>check</mat-icon>
+            Save Scores
+          </button>
+        </div>
+      </ng-container>
+
+
+      <ng-template #noMoreScores>
+        <isag-alert alertClass="primary">
+         <div class="text-center">
+           <div>
+             All Scores Saved!  Go to the <strong>Leaderboard</strong>.
+           </div>
+           <div class="top-space-5">
+             If there's a mistake with your scores, show MacGregor.
+           </div>
+         </div>
+        </isag-alert>
+      </ng-template>
 
     </mat-card>
   </ng-template>

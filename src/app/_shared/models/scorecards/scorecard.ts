@@ -2,6 +2,7 @@ import { Course } from '../course/course';
 import { Team } from '../teams/team';
 import { Scores } from './scores';
 import { PlayerScores } from './player-scores';
+import { HoleNumber } from '../course/hole-number';
 
 export class Scorecard {
   _id: string;
@@ -29,7 +30,7 @@ export class Scorecard {
 
   // for active leaderboard
   currentNetToPar: number;
-  thru: number;
+  thru: HoleNumber;
   teeTime?: string;
 
   // aggregation

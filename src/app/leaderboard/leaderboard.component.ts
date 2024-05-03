@@ -14,11 +14,11 @@ export class LeaderboardComponent implements OnInit {
     { path: 'live', title: 'Leaderboard', icon: 'scoreboard' },
     { path: 'scores', title: 'Enter Scores', icon: 'edit' },
   ];
-  selectedIndex: 0 | 1 = 0;
+  selectedIndex: 0 | 1 | 2 = 0;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
-              private stateService: StateService) {}
+              public stateService: StateService) {}
 
   ngOnInit(): void {
     this.setTab();
@@ -32,6 +32,11 @@ export class LeaderboardComponent implements OnInit {
         this.stateService.setTitle(`Leaderboard`);
         this.router.navigate(['leaderboard/', 'live'] );
         break;
+      case 'admin':
+        this.selectedIndex = 2;
+        this.stateService.setTitle(`Admin Scores`);
+        this.router.navigate(['leaderboard/', 'admin'] );
+        break;
       default:
         this.selectedIndex = 1;
         this.stateService.setTitle(`Enter Scores`);
@@ -41,7 +46,16 @@ export class LeaderboardComponent implements OnInit {
   }
 
   updateQueryParam(tab: MatTabChangeEvent): void {
-    const name = tab.index === 1 ? 'scores' : 'live';
+    const name = (() => {
+      switch (tab.index) {
+        case 1:
+          return 'scores';
+        case 2:
+          return 'admin';
+        default:
+          return 'live';
+      }
+    })();
     this.router.navigate(['leaderboard/', name] );
 
   }

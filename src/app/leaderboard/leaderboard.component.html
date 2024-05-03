@@ -16,4 +16,16 @@
     <isag-enter-scores></isag-enter-scores>
   </mat-tab>
 
+  <mat-tab label="Enter Scores" *ngIf="stateService.isAdmin">
+    <ng-template mat-tab-label>
+      <mat-icon>admin_panel_settings</mat-icon>
+      Admin
+    </ng-template>
+
+    <div class="admin-panel">
+      <isag-scorecard-id-login></isag-scorecard-id-login>
+    </div>
+
+  </mat-tab>
+
 </mat-tab-group>
